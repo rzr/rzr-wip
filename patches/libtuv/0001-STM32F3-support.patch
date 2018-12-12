@@ -1,0 +1,28 @@
+From 02751576043c86708a3d9d64e9787c80eedf509b Mon Sep 17 00:00:00 2001
+From: Philippe Coval <p.coval@samsung.com>
+Date: Wed, 12 Dec 2018 14:58:47 +0100
+Subject: [PATCH] STM32F3 support
+
+Change-Id: I30f59e49353083d46ad70b19a3df0a3deca756b3
+Signed-off-by: Philippe Coval <p.coval@samsung.com>
+---
+ include/uv-nuttx.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/uv-nuttx.h b/include/uv-nuttx.h
+index 7dac257..12c18b3 100644
+--- a/include/uv-nuttx.h
++++ b/include/uv-nuttx.h
+@@ -98,7 +98,9 @@ ssize_t writev(int __fd, const struct iovec* __iovec, int __count);
+ int getpeername(int sockfd, struct sockaddr* addr, socklen_t* addrlen);
+ 
+ // Maximum queue length specifiable by listen
++#ifndef SOMAXCONN
+ #define SOMAXCONN 8
++#endif
+ 
+ //-----------------------------------------------------------------------------
+ // structure extension for nuttx                                                          
+-- 
+2.17.1
+
