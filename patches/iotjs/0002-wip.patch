@@ -1,0 +1,21 @@
+From b4ea1ec49398ce9a30baff3c82472182c9ea5c7d Mon Sep 17 00:00:00 2001
+From: Philippe Coval <p.coval@samsung.com>
+Date: Wed, 12 Dec 2018 16:50:32 +0100
+Subject: [PATCH 2/2] wip
+
+Change-Id: Icc4edaa9aaf866af7d135bcb06747ea63b351b06
+Signed-off-by: Philippe Coval <p.coval@samsung.com>
+---
+ deps/libtuv | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/deps/libtuv b/deps/libtuv
+index 0bfc04d..a600f35 160000
+--- a/deps/libtuv
++++ b/deps/libtuv
+@@ -1 +1 @@
+-Subproject commit 0bfc04d1018a9f042c999998a78ffc3437803e41
++Subproject commit a600f35d79fb6c2f66767ae48b608fc083281868
+-- 
+2.17.1
+
