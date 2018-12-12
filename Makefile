@@ -29,22 +29,36 @@
 #
 ############################################################################
 
-default: help
-	echo "TODO"
+default: help all
+	sync
 
 st-flash?=/usr/bin/st-flash
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
+nuttx_dir?=nuttx
+V?=1
+export V
 
-nuttx:
+machine?=stm32f4dis
+iotjs_dir=iotjs
+IOTJS_ROOT_DIR="${iotjs_dir}"
+export IOTJS_ROOT_DIR
+IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
+export IOTJS_ABSOLUTE_ROOT_DIR
+
+${nuttx_dir}:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/nuttx
 	ls $@
-apps: nuttx
+apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
 	ls $@
 
 stlink:
 	git clone --depth 1 --recursive https://github.com/texane/stlink
+	ls $@
+
+iotjs:
+	git clone --depth 1 --recursive https://github.com/Samsung/iotjs
 	ls $@
 
 st-flash: stlink
@@ -69,23 +83,38 @@ stlink-tools \
 screen \
 #EOL
 
+nuttx/%: nuttx
+	ls $@
 
-nuttx/.config: nuttx/tools/configure.sh
+nuttx/.config: nuttx/tools/configure.sh apps/system/iotjs
 	cd ${@D} && ${CURDIR}/$< nucleo-f303re/hello
 	ls $<
 
 configure: nuttx/.config
 	ls $<
 
-build: nuttx
+build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	make -C $<
+	${MAKE} \
+ IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
+ IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
+ -C ${nuttx_dir}
 
-${image_file}: build
+iotjs/build/arm-nuttx/debug/lib/%: iotjs/build
 	ls $@
 
-prep: nuttx apps stlink
-	ls $^
+build: nuttx/.config build/base iotjs/build
+	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
+	${MAKE} \
+ IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
+ IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
+ -C ${nuttx_dir}
+
+${image_file}: build
+	ls -l $@
+
+prep: nuttx apps stlink patch
+	sync
 
 deploy: ${image_file} ${st-flash}
 	-lsusb # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
@@ -103,3 +132,49 @@ docker/run:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
 
+menuconfig: nuttx/Kconfig
+	ls nuttx/.config || make configure
+	make -C ${<D} ${@}
+
+apps/system/iotjs: iotjs apps
+	@mkdir -p $@
+	cp -rf iotjs/config/nuttx/stm32f4dis/app/* $@/
+
+meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
+	$@ $^
+
+iotjs/build: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}
+	cd iotjs && ./tools/build.py \
+--target-arch=arm \
+--target-os=nuttx \
+--nuttx-home=../${nuttx_dir} \
+--target-board=${machine} \
+--jerry-heaplimit=78
+
+iotjs/clean:
+	rm -rf iotjs/build
+
+devel: menuconfig build run
+
+
+tmp/done/patch/iotjs/%: patches/iotjs/% iotjs
+	cd iotjs && git am ${CURDIR}/$<
+	mkdir -p ${@D}
+	touch $@
+
+tmp/done/patch/libtuv/%: patches/libtuv/% iotjs/deps/libtuv
+	cd iotjs/deps/libtuv && patch -p1 < ${CURDIR}/$<
+	mkdir -p ${@D}
+	touch $@
+
+patch/%: patches/% tmp/done/patch/%
+	wc -l $<
+
+patch: \
+ tmp/done/patch/iotjs/0001-STM32F3-support.patch \
+ tmp/done/patch/libtuv/0001-STM32F3-support.patch \
+ # EOL
+ # TODO: tmp/done/patch/iotjs/0002-wip.patch 
+	ls $^
+
+build/iotjs: apps/system/iotjs menuconfig build
