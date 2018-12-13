@@ -95,6 +95,7 @@ dsc: dsc/kconfig-frontends/4.11.0.1+dfsg-2
 nuttx/.config: nuttx/tools/configure.sh
 	cd ${@D} && ${CURDIR}/$< nucleo-f303re/hello
 	ls $<
+	cp -av configs/F303/.config $@
 
 configure: nuttx/.config
 	ls $<
