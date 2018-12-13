@@ -39,6 +39,7 @@ monitor_rate?=115200
 nuttx:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/nuttx
 	ls $@
+
 apps: nuttx
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
 	ls $@
@@ -60,15 +61,28 @@ setup/stlink: stlink
 setup/debian:
 	sudo apt-get update -y 
 	sudo apt-get install -y \
-gcc-arm-none-eabi \
-git \
-make \
-sudo \
-libusb-dev \
-stlink-tools \
-screen \
-#EOL
+ aptitude \
+ gcc-arm-none-eabi \
+ git \
+ make \
+ sudo \
+ libusb-dev \
+ screen \
+ # EOL
+	sudo aptitude install -y \
+ stlink-tools \
+ # EOL
 
+
+setup/debian/amd64/1.5.0+ds-2~bpo9+1:
+	wget -c http://ftp.us.debian.org/debian/pool/main/s/stlink/libstlink1_${@F}_amd64.deb
+	wget -c http://http.us.debian.org/debian/pool/main/s/stlink/stlink-tools_${@F}_amd64.deb
+	sudo dpkg -i *.deb
+
+dsc:
+	sudo apt-get install libusb-1.0-0-dev libgtk-3-dev sudo devscripts cmake
+	dget -xu http://deb.debian.org/debian/pool/main/s/stlink/stlink_1.5.0+ds-2~bpo9+1.dsc
+	cd stlink* && debuild -uc -us && sudo debi
 
 nuttx/.config: nuttx/tools/configure.sh
 	cd ${@D} && ${CURDIR}/$< nucleo-f303re/hello
@@ -102,4 +116,3 @@ docker/run:
 	docker-compose up ||:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
-
