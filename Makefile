@@ -71,7 +71,8 @@ setup/debian:
  # EOL
 	sudo aptitude install -y \
  stlink-tools \
- # EOL
+ kconfig-frontends \
+# EOL
 
 
 setup/debian/amd64/1.5.0+ds-2~bpo9+1:
@@ -79,10 +80,17 @@ setup/debian/amd64/1.5.0+ds-2~bpo9+1:
 	wget -c http://http.us.debian.org/debian/pool/main/s/stlink/stlink-tools_${@F}_amd64.deb
 	sudo dpkg -i *.deb
 
-dsc:
+dsc/stlink:
 	sudo apt-get install libusb-1.0-0-dev libgtk-3-dev sudo devscripts cmake
 	dget -xu http://deb.debian.org/debian/pool/main/s/stlink/stlink_1.5.0+ds-2~bpo9+1.dsc
 	cd stlink* && debuild -uc -us && sudo debi
+
+dsc/kconfig-frontends/4.11.0.1+dfsg-2:
+	sudo apt-get install  flex bison gperf libncurses5-dev libglade2-dev
+	dget -xu http://deb.debian.org/debian/pool/main/k/kconfig-frontends/kconfig-frontends_${@F}.dsc
+	cd kconfig-frontends* && debuild -uc -us && sudo debi
+
+dsc: dsc/kconfig-frontends/4.11.0.1+dfsg-2
 
 nuttx/.config: nuttx/tools/configure.sh
 	cd ${@D} && ${CURDIR}/$< nucleo-f303re/hello
