@@ -124,3 +124,9 @@ docker/run:
 	docker-compose up ||:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
+clean:
+	rm -f nuttx/.config
+
+menuconfig: nuttx/Kconfig
+	ls nuttx/.config || make configure
+	make -C ${<D} ${@}
