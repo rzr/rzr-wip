@@ -43,14 +43,9 @@ machine?=stm32f4dis
 nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
+nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_config?=nucleo-f767zi/nsh
-
-iotjs_dir=iotjs
-IOTJS_ROOT_DIR="${iotjs_dir}"
-export IOTJS_ROOT_DIR
-IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
-export IOTJS_ABSOLUTE_ROOT_DIR
 
 ${nuttx_dir}:
 	git clone --depth 1 --recursive ${nuttx_url}
@@ -61,10 +56,6 @@ apps:
 
 stlink:
 	git clone --depth 1 --recursive https://github.com/texane/stlink
-	ls $@
-
-iotjs:
-	git clone --depth 1 --recursive https://github.com/Samsung/iotjs
 	ls $@
 
 st-flash: stlink
@@ -92,7 +83,7 @@ screen \
 nuttx/%: nuttx
 	ls $@
 
-nuttx/.config: nuttx/tools/configure.sh apps/system/iotjs
+nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 
@@ -102,18 +93,11 @@ configure: nuttx/.config
 build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} \
- IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
- IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-iotjs/build/arm-nuttx/debug/lib/%: iotjs/build
-	ls $@
-
-build: nuttx/.config build/base iotjs/build
+build: nuttx/.config build/base
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} \
- IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
- IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
 ${image_file}: build
@@ -142,45 +126,13 @@ menuconfig: nuttx/Kconfig
 	ls nuttx/.config || make configure
 	make -C ${<D} ${@}
 
-apps/system/iotjs: iotjs apps
-	@mkdir -p $@
-	cp -rf iotjs/config/nuttx/stm32f4dis/app/* $@/
-
 meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
 	$@ $^
 
-iotjs/build: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}
-	cd iotjs && ./tools/build.py \
---target-arch=arm \
---target-os=nuttx \
---nuttx-home=../${nuttx_dir} \
---target-board=${machine} \
---jerry-heaplimit=78
-
-iotjs/clean:
-	rm -rf iotjs/build
-
 devel: menuconfig build run
-
-
-tmp/done/patch/iotjs/%: patches/iotjs/% iotjs
-	cd iotjs && git am ${CURDIR}/$<
-	mkdir -p ${@D}
-	touch $@
-
-tmp/done/patch/libtuv/%: patches/libtuv/% iotjs/deps/libtuv
-	cd iotjs/deps/libtuv && patch -p1 < ${CURDIR}/$<
-	mkdir -p ${@D}
-	touch $@
 
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
 
-patch: \
- tmp/done/patch/iotjs/0001-STM32F3-support.patch \
- tmp/done/patch/libtuv/0001-STM32F3-support.patch \
- # EOL
- # TODO: tmp/done/patch/iotjs/0002-wip.patch 
+patch:
 	ls $^
-
-build/iotjs: apps/system/iotjs menuconfig build
