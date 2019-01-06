@@ -43,6 +43,7 @@ machine?=stm32f4dis
 nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
+nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_config?=nucleo-f767zi/nsh
 
 iotjs_dir=iotjs
@@ -52,7 +53,7 @@ IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
 export IOTJS_ABSOLUTE_ROOT_DIR
 
 ${nuttx_dir}:
-	git clone --depth 1 --recursive https://bitbucket.org/nuttx/nuttx
+	git clone --depth 1 --recursive ${nuttx_url}
 	ls $@
 apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
