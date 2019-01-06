@@ -43,9 +43,12 @@ machine?=stm32f4dis
 nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
+nuttx_config?=nucleo-f767zi/nsh
+
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
-nuttx_config?=nucleo-f767zi/nsh
+
+-include rules/st.mk
 
 ${nuttx_dir}:
 	git clone --depth 1 --recursive ${nuttx_url}
@@ -54,7 +57,8 @@ apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
 	ls $@
 
--include rules/st.mk
+
+
 help:
 	echo TODO
 
@@ -126,3 +130,14 @@ patch/%: patches/% tmp/done/patch/%
 
 patch:
 	ls $^
+
+rule/nuttx/%: nuttx
+	make -C $< ${@F}
+
+rule/%: nuttx
+	make -C $< rule/nuttx/${@F}
+
+distclean: rule/distclean
+	sync
+
+
