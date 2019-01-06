@@ -39,8 +39,8 @@ nuttx_dir?=nuttx
 V?=1
 export V
 
-machine?=stm32f4dis
-nuttx_config?=nucleo-f303re/hello
+#machine?=stm32f4dis
+#nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
 nuttx_config?=nucleo-f767zi/nsh
@@ -135,9 +135,9 @@ rule/nuttx/%: nuttx
 	make -C $< ${@F}
 
 rule/%: nuttx
-	make -C $< rule/nuttx/${@F}
+	make rule/nuttx/${@F}
 
-distclean: rule/distclean
+distclean: rule/nuttx/distclean
 	sync
 
 
