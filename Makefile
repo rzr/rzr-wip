@@ -39,7 +39,12 @@ nuttx_dir?=nuttx
 V?=1
 export V
 
+machine?=stm32f4dis
+nuttx_config?=nucleo-f303re/hello
+
 machine?=stm32f767zi
+nuttx_config?=nucleo-f767zi/nsh
+
 iotjs_dir=iotjs
 IOTJS_ROOT_DIR="${iotjs_dir}"
 export IOTJS_ROOT_DIR
@@ -87,7 +92,7 @@ nuttx/%: nuttx
 	ls $@
 
 nuttx/.config: nuttx/tools/configure.sh apps/system/iotjs
-	cd ${@D} && ${CURDIR}/$< nucleo-f303re/hello
+	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 
 configure: nuttx/.config
