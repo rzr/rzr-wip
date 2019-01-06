@@ -39,7 +39,7 @@ nuttx_dir?=nuttx
 V?=1
 export V
 
-machine?=stm32f4dis
+machine?=stm32f767zi
 iotjs_dir=iotjs
 IOTJS_ROOT_DIR="${iotjs_dir}"
 export IOTJS_ROOT_DIR
