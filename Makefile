@@ -54,19 +54,9 @@ apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
 	ls $@
 
-stlink:
-	git clone --depth 1 --recursive https://github.com/texane/stlink
-	ls $@
-
-st-flash: stlink
-	make -C $< || cat $</build/Release/CMakeFiles/CMakeError.log
-	find . -iname "st-flash"
-
+-include rules/st.mk
 help:
 	echo TODO
-
-setup/stlink: stlink
-	make -C $<
 
 setup/debian:
 	sudo apt-get update -y 
