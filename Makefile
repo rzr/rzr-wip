@@ -43,8 +43,7 @@ export V
 #nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
-nuttx_config?=nucleo-f767zi/nsh
-
+nuttx_config?=nucleo-144/f746
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 
