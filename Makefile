@@ -39,6 +39,8 @@ nuttx_dir?=nuttx
 V?=1
 export V
 
+
+LDSCRIPT ?= f767-flash.ld
 #machine?=stm32f4dis
 #nuttx_config?=nucleo-f303re/hello
 
