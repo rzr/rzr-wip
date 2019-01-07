@@ -69,7 +69,6 @@ git \
 make \
 sudo \
 libusb-dev \
-stlink-tools \
 screen \
 #EOL
 
@@ -96,7 +95,7 @@ build: nuttx/.config build/base
 ${image_file}: build
 	ls -l $@
 
-prep: nuttx apps stlink patch
+prep: nuttx apps patch
 	sync
 
 deploy: ${image_file} ${st-flash}
