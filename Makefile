@@ -80,14 +80,14 @@ nuttx/%: nuttx
 nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
+	grep -i BOARD $@
 
 configure: nuttx/.config
 	ls $<
 
 build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	${MAKE} \
- -C ${nuttx_dir}
+	${MAKE} -C ${<D}
 
 build: nuttx/.config build/base
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
@@ -118,6 +118,7 @@ docker/run:
 
 menuconfig: nuttx/Kconfig
 	ls nuttx/.config || make configure
+	ls nuttx/.config
 	make -C ${<D} ${@}
 
 meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
