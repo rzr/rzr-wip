@@ -85,14 +85,9 @@ nuttx/.config: nuttx/tools/configure.sh apps
 configure: nuttx/.config
 	ls $<
 
-build/base: nuttx/.config
+build: nuttx/Make.defs
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	${MAKE} -C ${<D}
-
-build: nuttx/.config build/base
-	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	${MAKE} \
- -C ${nuttx_dir}
+	${MAKE} -C ${<D} LDSCRIPT=f767-flash.ld
 
 ${image_file}: build
 	ls -l $@
@@ -100,12 +95,10 @@ ${image_file}: build
 prep: nuttx apps patch
 	sync
 
-deploy: ${image_file} ${st-flash}
+stm32/deploy: ${image_file} ${st-flash}
 	-lsusb # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
 	${st-flash} write ${image_file} 0x8000000
 
-monitor: /dev/ttyACM0 deploy
-	screen $< ${monitor_rate}
 
 all: prep configure build
 
@@ -124,8 +117,6 @@ menuconfig: nuttx/Kconfig
 meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
 	$@ $^
 
-devel: menuconfig build run
-
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
 
@@ -140,5 +131,22 @@ rule/%: nuttx
 
 distclean: rule/nuttx/distclean
 	sync
+
+deploy:
+	udisksctl mount -b /dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0 ||:
+	cp -av nuttx/nuttx.bin /media/philippe/NODE_F767ZI1/
+	sleep 10
+
+monitor: /dev/ttyACM0 # deploy
+	${sudo} screen $< ${monitor_rate}
+
+devel: menuconfig build deploy monitor
+
+
+#ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
+ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
+diff:
+	meld ${ref_file} \
+./nuttx/configs/${nuttx_config}/defconfig
 
 
