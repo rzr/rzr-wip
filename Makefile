@@ -143,7 +143,7 @@ monitor: /dev/ttyACM0 # deploy
 devel: menuconfig build deploy monitor
 
 
-#ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
+ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
 ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
 diff:
 	meld ${ref_file} \
