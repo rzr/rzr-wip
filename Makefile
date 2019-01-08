@@ -48,11 +48,12 @@ machine?=stm32f767zi
 nuttx_config?=nucleo-f767zi/nsh
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
+nuttx_branch=sandbox/rzr/devel/stm32f7/master
 
 -include rules/st.mk
 
 ${nuttx_dir}:
-	git clone --depth 1 --recursive ${nuttx_url}
+	git clone --depth 1 --recursive --branch ${nuttx_branch} ${nuttx_url} 
 	ls $@
 apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
