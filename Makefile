@@ -29,7 +29,7 @@
 #
 ############################################################################
 
-default: help all
+default: help
 	sync
 
 V?=1
@@ -101,11 +101,6 @@ ${image_file}: build
 prep: nuttx apps patch
 	sync
 
-stm32/deploy: ${image_file} ${st-flash}
-	-lsusb # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
-	${st-flash} write ${image_file} 0x8000000
-
-
 all: prep configure build
 
 run: deploy monitor
@@ -160,4 +155,6 @@ diff: ${nuttx_dir}
 	meld ${ref_file} \
 ./nuttx/configs/${nuttx_config}/defconfig
 
+
+#-include rule/iotjs.mk
 
