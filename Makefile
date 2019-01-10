@@ -32,15 +32,8 @@
 default: help all
 	sync
 
-image_file?=nuttx/nuttx.bin
-monitor_rate?=115200
 V?=1
 export V
-
-
-LDSCRIPT ?= f767-flash.ld
-#machine?=stm32f4dis
-#nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
 
@@ -49,6 +42,16 @@ nuttx_config?=nucleo-f767zi/nsh
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch=sandbox/rzr/devel/stm32f7/master
+
+
+image_file?=nuttx/nuttx.bin
+monitor_rate?=115200
+
+LDSCRIPT ?= f767-flash.ld
+#machine?=stm32f4dis
+#nuttx_config?=nucleo-f303re/hello
+
+
 
 -include rules/st.mk
 
