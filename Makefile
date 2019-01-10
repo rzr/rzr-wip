@@ -87,7 +87,8 @@ nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	grep -i BOARD $@
-
+meld:
+	meld 
 
 rule/nuttx/diff:
 	ls nuttx/.config.old nuttx/.config
@@ -120,8 +121,8 @@ menuconfig: nuttx/Kconfig
 	ls nuttx/.config
 	make -C ${<D} ${@}
 
-meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
-	$@ $^
+#meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
+#	$@ $^
 
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
@@ -154,4 +155,6 @@ devel: menuconfig build deploy monitor
 
 
 #-include rule/iotjs.mk
+
+include rules/devel/index.mk
 
