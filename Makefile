@@ -35,13 +35,13 @@ default: help
 V?=1
 export V
 
-machine?=stm32f767zi
-
-machine?=nucleo-f767zi/master
+#machine?=stm32f767zi
+machine?=nucleo-f767zi
 
 nuttx_dir?=nuttx
-nuttx_config?=nucleo-144/f767-netnsh
-#nuttx_config?=nucleo-f767zi/netnsh
+#nuttx_config?=nucleo-144/f767-netnsh
+nuttx_config?=nucleo-f767zi/nsh
+
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch=sandbox/rzr/devel/${machine}/master
@@ -150,18 +150,6 @@ monitor: /dev/ttyACM0 # deploy
 	${sudo} screen $< ${monitor_rate}
 
 devel: menuconfig build deploy monitor
-
-
-ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
-ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
-
-rule/nuttx/diff: ${nuttx_dir}
-	meld ${ref_file} \
-
-
-rule/nuttx/cmp: ./nuttx/configs/${nuttx_config}/defconfig
-	ls nuttx/.config
-	make difftool nuttx/.config $<
 
 #-include rule/iotjs.mk
 
