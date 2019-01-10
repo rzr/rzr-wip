@@ -59,7 +59,8 @@ LDSCRIPT ?= f767-flash.ld
 -include rules/st.mk
 
 ${nuttx_dir}:
-	git clone --depth 1 --recursive --branch ${nuttx_branch} ${nuttx_url} 
+	# --depth 1
+	git clone --recursive --branch ${nuttx_branch} ${nuttx_url} 
 	ls $@
 apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
