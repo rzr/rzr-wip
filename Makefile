@@ -39,8 +39,8 @@ export V
 machine?=nucleo-f767zi
 
 nuttx_dir?=nuttx
-#nuttx_config?=nucleo-144/f767-netnsh
-nuttx_config?=nucleo-f767zi/nsh
+nuttx_config?=nucleo-144/f767-netnsh
+#nuttx_config?=nucleo-f767zi/nsh
 
 #nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_url?=file:///${HOME}/mnt/nuttx
@@ -151,6 +151,7 @@ monitor: /dev/ttyACM0 # deploy
 	${sudo} screen $< ${monitor_rate}
 
 devel: menuconfig build deploy monitor
+
 
 #-include rule/iotjs.mk
 
