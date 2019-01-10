@@ -44,7 +44,8 @@ nuttx_config?=nucleo-144/f767-netnsh
 
 #nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_url?=file:///${HOME}/mnt/nuttx
-nuttx_branch=sandbox/rzr/devel/${machine}/master
+nuttx_branch?=sandbox/rzr/devel/review/master
+#nuttx_branch=sandbox/rzr/devel/${machine}/master
 #nuttx_branch=sandbox/rzr/devel/stm32f7/master
 
 image_file?=nuttx/nuttx.bin
