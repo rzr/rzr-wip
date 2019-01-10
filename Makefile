@@ -36,12 +36,16 @@ V?=1
 export V
 
 machine?=stm32f767zi
+
+machine?=nucleo-f767zi/master
+
 nuttx_dir?=nuttx
-nuttx_config?=nucleo-f767zi/netnsh
+nuttx_config?=nucleo-144/f767-netnsh
+#nuttx_config?=nucleo-f767zi/netnsh
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
-nuttx_branch=sandbox/rzr/devel/stm32f7/master
-
+nuttx_branch=sandbox/rzr/devel/${machine}/master
+#nuttx_branch=sandbox/rzr/devel/stm32f7/master
 
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
@@ -153,7 +157,6 @@ ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig
 
 rule/nuttx/diff: ${nuttx_dir}
 	meld ${ref_file} \
-
 
 
 rule/nuttx/cmp: ./nuttx/configs/${nuttx_config}/defconfig
