@@ -59,10 +59,8 @@ apps:
 	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
 	ls $@
 
-
-
 help:
-	echo TODO
+	echo " make devel"
 
 setup/debian:
 	sudo apt-get update -y 
