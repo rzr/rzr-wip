@@ -32,10 +32,8 @@
 default: help all
 	sync
 
-st-flash?=/usr/bin/st-flash
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
-nuttx_dir?=nuttx
 V?=1
 export V
 
@@ -45,6 +43,8 @@ LDSCRIPT ?= f767-flash.ld
 #nuttx_config?=nucleo-f303re/hello
 
 machine?=stm32f767zi
+
+nuttx_dir?=nuttx
 nuttx_config?=nucleo-f767zi/nsh
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
@@ -144,7 +144,8 @@ devel: menuconfig build deploy monitor
 
 ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
 ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
-diff:
+
+diff: ${nuttx_dir}
 	meld ${ref_file} \
 ./nuttx/configs/${nuttx_config}/defconfig
 
