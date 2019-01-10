@@ -50,7 +50,7 @@ nuttx_branch=sandbox/rzr/devel/${machine}/master
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
 
-LDSCRIPT ?= f767-flash.ld
+#LDSCRIPT ?= f767-flash.ld
 #machine?=stm32f4dis
 #nuttx_config?=nucleo-f303re/hello
 
@@ -98,7 +98,7 @@ configure: nuttx/.config
 
 build: nuttx/Make.defs
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	${MAKE} -C ${<D} LDSCRIPT=f767-flash.ld
+	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
 ${image_file}: build
 	ls -l $@
