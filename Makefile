@@ -36,7 +36,6 @@ V?=1
 export V
 
 machine?=stm32f767zi
-
 nuttx_dir?=nuttx
 nuttx_config?=nucleo-f767zi/nsh
 nuttx_url?=file:///${HOME}/mnt/nuttx
@@ -83,6 +82,11 @@ nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	grep -i BOARD $@
+
+
+rule/nuttx/diff:
+	ls nuttx/.config.old nuttx/.config
+	diff nuttx/.config.old nuttx/.config
 
 configure: nuttx/.config
 	ls $<
@@ -134,8 +138,12 @@ rule/%: nuttx
 distclean: rule/nuttx/distclean
 	sync
 
+dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
+
 deploy:
-	udisksctl mount -b /dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0 ||:
+	ls -l ${dev_file}
+	sudo umount -f ${dev_file} || echo $$?
+	udisksctl mount -b ${dev_file} ||:
 	cp -av nuttx/nuttx.bin /media/philippe/NODE_F767ZI1/
 	sleep 10
 
