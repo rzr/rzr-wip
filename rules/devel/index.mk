@@ -7,6 +7,6 @@ rule/nuttx/diff: ${nuttx_dir}
 	meld ${ref_file} \
 
 
-rule/nuttx/cmp: ./nuttx/configs/${nuttx_config}/defconfig
+rule/nuttx/meld: ./nuttx/configs/${nuttx_config}/defconfig
 	ls nuttx/.config
-	make difftool nuttx/.config $<
+	meld nuttx/.config $<
