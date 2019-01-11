@@ -41,6 +41,7 @@ machine?=stm32f7nucleo
 nuttx_dir?=nuttx
 nuttx_config?=nucleo-144/f767-netnsh
 nuttx_config_file=${nuttx_dir}/.config
+nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 #nuttx_config?=stm32f7nucleo/nsh
 
 #nuttx_url?=https://bitbucket.org/nuttx/nuttx
