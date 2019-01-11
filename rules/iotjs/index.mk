@@ -13,6 +13,8 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 #iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_url?=https://github.com/tizenteam/iotjs
 iotjs_branch?=sandbox/rzr/devel/nucleo-f767zi/master
+
+
 iotjs:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
@@ -58,12 +60,11 @@ rule/iotjs/build: ${iotjs_config_file} ${nuttx_dir}
 
 apps/system/iotjs: iotjs apps
 	@mkdir -p $@
-	cp -rf iotjs/config/nuttx/stm32f4dis/app/* $@/
+	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
 	make -C apps Kconfig TOPDIR=${CURDIR}/nuttx
 
 iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
 	$@ $^
-
 
 iotjs/clean:
 	rm -rf iotjs/build
@@ -99,25 +100,6 @@ rule/build/iotjs: apps/system/iotjs menuconfig build
 rule/iotjs/cleanall:
 	rm -rf iotjs/build
 
-rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
-	${MAKE} distclean
-	-rm -rfv ${iotjs_nuttx_dir}
-	${MAKE} rule/nuttx/configure
-	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-	${MAKE} menuconfig
-	${MAKE} rule/nuttx/build
-	${MAKE} rule/iotjs/config
-	${MAKE} rule/iotjs/cleanall
-	${MAKE} rule/iotjs/build
-	${MAKE} apps/system/iotjs
-	-rm apps/Kconfig
-	-rm -rfv ${nuttx_config_file}
-	${MAKE} rule/nuttx/configure
-	${MAKE} rule/iotjs/menuconfig
-	${MAKE} rule/iotjs/nuttx/build
 
 # philippe@wsf1127:rzr-wip (sandbox/rzr/nuttx/devel/master %)$ mv apps/system/Kconfig  apps/system/Kconfig.mine
 
@@ -129,12 +111,11 @@ rule/iotjs/config:
 
 rule/iotjs/menuconfig:
 	ls ${nuttx_config_file}
-	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
-	${MAKE} menuconfig
-	make -C ${nuttx_dir} savedefconfig
+#	${MAKE} menuconfig
+#	make -C ${nuttx_dir} savedefconfig
 # cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/
-	-grep CONFIG_IOTJS ${nuttx_config_file}
-	grep PIPES ${nuttx_config_file}
+#	-grep CONFIG_IOTJS ${nuttx_config_file}
+#	grep PIPES ${nuttx_config_file}
 
 
 todo:
@@ -144,3 +125,30 @@ todo:
 #meld  iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
 # uses VFP register arguments
+
+rule/iotjs/configure:
+	${MAKE} rule/nuttx/configure
+	cp -av ${iotjs_config_file} ${nuttx_config_file}
+	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+	${MAKE} menuconfig
+
+rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
+	${MAKE} distclean
+	-rm -rfv ${iotjs_nuttx_dir}
+	${MAKE} rule/nuttx/configure
+	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
+	${MAKE} menuconfig
+	${MAKE} rule/nuttx/build
+#	${MAKE} rule/iotjs/config
+	${MAKE} rule/iotjs/cleanall
+	${MAKE} rule/iotjs/build
+	${MAKE} apps/system/iotjs
+	-rm apps/Kconfig
+	-rm -rfv ${nuttx_config_file}
+	${MAKE} rule/iotjs/configure
+	${MAKE} rule/iotjs/nuttx/build
+	${MAKE} deploy monitor
