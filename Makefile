@@ -91,9 +91,9 @@ nuttx/.config: nuttx/tools/configure.sh apps
 meld:
 	meld 
 
-rule/nuttx/diff:
-	ls nuttx/.config.old nuttx/.config
-	diff nuttx/.config.old nuttx/.config
+#rule/nuttx/diff:
+#	ls nuttx/.config.old nuttx/.config
+#	diff nuttx/.config.old nuttx/.config
 
 configure: nuttx/.config
 	ls $<
@@ -154,8 +154,7 @@ monitor: /dev/ttyACM0 # deploy
 
 devel: menuconfig build deploy monitor
 
-
-#-include rule/iotjs.mk
+include rules/iotjs.mk
 
 include rules/devel/index.mk
 
