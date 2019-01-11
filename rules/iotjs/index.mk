@@ -1,5 +1,5 @@
 iotjs_machine?=${machine}
-#iotjs_machine?=stm32f4dis
+iotjs_machine?=stm32f7nucleo
 iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
@@ -103,6 +103,10 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 	${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
+	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
 	${MAKE} rule/iotjs/config
@@ -119,16 +123,24 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 
 rule/iotjs/config:
 	ls nuttx/.config
-	make savedefconfig
-	cp -av defconfig  > ${iotjs_config_file}
+	make -C ${nuttx_dir} savedefconfig
+	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/menuconfig:
+	ls ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
-	@echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
-	make savedefconfig
+	make -C ${nuttx_dir} savedefconfig
+# cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/
 	-grep CONFIG_IOTJS ${nuttx_config_file}
 	grep PIPES ${nuttx_config_file}
+
+
+todo:
+	cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
+	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
+
+#meld  iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
 # uses VFP register arguments
