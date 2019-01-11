@@ -85,7 +85,10 @@ tmp/done/patch/libtuv/%: patches/libtuv/% iotjs/deps/libtuv
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
 
-rule/iotjs/patch: \
+rule/iotjs/patch:
+	echo TODO
+
+todo/rule/iotjs/patch: \
  tmp/done/patch/iotjs/0001-STM32F3-support.patch \
  tmp/done/patch/libtuv/0001-STM32F3-support.patch \
  # EOL
@@ -94,4 +97,4 @@ rule/iotjs/patch: \
 
 rule/build/iotjs: apps/system/iotjs menuconfig build
 
-rule/iotjs/devel: build rule/iotjs/patch rule/iotjs/build
+rule/iotjs/devel: build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
