@@ -83,8 +83,8 @@ libusb-dev \
 screen \
 #EOL
 
-#nuttx/%: ${nuttx_dir}
-#	ls $@
+nuttx/%: ${nuttx_dir}
+	ls $@
 
 nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
@@ -110,7 +110,7 @@ rule/nuttx/build: nuttx/Make.defs
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
-nuttx: rule/nuttx/build
+#nuttx: rule/nuttx/build
 
 ${image_file}: build
 	ls -l $@
