@@ -38,8 +38,10 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-rule/iotjs/build: ${iotjs_config_file} ${nuttx_dir}
-	ls ./nuttx/include/nuttx/config.h
+${nuttx_dir}/include/nuttx/config.h:
+	make rule/nuttx/build
+
+rule/iotjs/build: ${nuttx_dir}/include/nuttx/config.h ${iotjs_config_file}
 	cd iotjs && ./tools/build.py \
 --target-arch=arm \
 --target-os=nuttx \
@@ -129,8 +131,8 @@ todo:
 # uses VFP register arguments
 
 rule/iotjs/configure: iotjs
-	rm -rfv nuttx/.config
-	${MAKE} rule/iotjs/cleanall
+#	rm -rfv nuttx/.config
+#	${MAKE} rule/iotjs/cleanall
 #	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
