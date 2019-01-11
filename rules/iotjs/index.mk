@@ -1,7 +1,7 @@
 iotjs_machine?=${machine}
 iotjs_machine?=stm32f7nucleo
 iotjs_dir=iotjs
-iotjs_config_dir?=iotjs/config/nuttx/${machine}
+iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=apps/system/iotjs
 IOTJS_ROOT_DIR="${iotjs_dir}"
