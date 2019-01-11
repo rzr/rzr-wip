@@ -14,7 +14,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 #iotjs_url?=https://github.com/tizenteam/iotjs
 iotjs_url?=file:///home/${USER}/mnt/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-
+nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
 iotjs:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
@@ -149,7 +149,7 @@ rule/iotjs/base:
 
 rule/iotjs/build:
 	grep FPU ${iotjs_config_file}
-	ls ${nuttx_dir}/include/nuttx/config.h
+	ls ${nuttx_include_file}
 	cd iotjs && ./tools/build.py \
 --target-arch=arm \
 --target-os=nuttx \
