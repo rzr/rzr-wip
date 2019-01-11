@@ -109,6 +109,7 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 	${MAKE} rule/iotjs/cleanall
 	${MAKE} rule/iotjs/build
 	${MAKE} apps/system/iotjs
+	-rm apps/Kconfig
 	-rm -rfv ${nuttx_config_file}
 	${MAKE} rule/nuttx/configure
 	${MAKE} rule/iotjs/menuconfig
@@ -120,9 +121,10 @@ rule/iotjs/config:
 	ls nuttx/.config
 	cp -av nuttx/.config ${iotjs_config_file}
 
-rule/iotjs/menuconfig: menuconfig
-	-grep CONFIG_IOTJS ${nuttx_config_file}
+rule/iotjs/menuconfig:
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+	${MAKE} menuconfig
+	-grep CONFIG_IOTJS ${nuttx_config_file}
 	grep PIPES ${nuttx_config_file}
 
 # uses VFP register arguments
