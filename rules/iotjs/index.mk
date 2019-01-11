@@ -160,13 +160,12 @@ rule/iotjs/build:
 
 
 rule/iotjs/lib:
-	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/build
 
 rule/iotjs/link:
 	${MAKE} apps/system/iotjs
 	-rm apps/Kconfig
-	-rm -rfv ${nuttx_config_file}
+#	-rm -rfv ${nuttx_config_file}
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
