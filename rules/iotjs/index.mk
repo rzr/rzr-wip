@@ -134,6 +134,7 @@ rule/iotjs/configure:
 	${MAKE} menuconfig
 
 rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
+	${MAKE} nuttx apps
 	${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
