@@ -38,8 +38,10 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-${nuttx_dir}/include/nuttx/config.h:
-	make rule/nuttx/build
+#${nuttx_dir}/include/nuttx/config.h:
+#	grep -v CONFIG_IOTJS nuttx/.config > nuttx/base.config
+#	cp -av nuttx/base.config nuttx/.config
+#	make rule/nuttx/build
 
 rule/iotjs/build:
 	ls ${nuttx_dir}/include/nuttx/config.h ${iotjs_config_file}
