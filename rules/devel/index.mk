@@ -10,3 +10,11 @@ rule/nuttx/diff: ${nuttx_dir}
 rule/nuttx/meld: ./nuttx/configs/${nuttx_config}/defconfig
 	ls nuttx/.config
 	meld nuttx/.config $<
+
+#run: deploy monitor
+
+#docker/run:
+#	docker-compose up ||:
+#	docker build -t "rzrwip_default" .
+#	docker run --privileged --rm -ti "rzrwip_default" run
+
