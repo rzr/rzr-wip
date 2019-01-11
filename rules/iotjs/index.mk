@@ -105,6 +105,7 @@ rule/iotjs/config: iotjs
 	ls nuttx/.config
 	make -C ${nuttx_dir} savedefconfig
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
+#	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/menuconfig:
@@ -120,7 +121,8 @@ todo:
 	cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
 	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
-#meld  iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
+rule/iotjs/meld:
+	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/${iotjs_machine}
 
 # uses VFP register arguments
 
@@ -146,7 +148,6 @@ rule/iotjs/base:
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
-	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
 	ls ${nuttx_include_file}
 
 rule/iotjs/build:
