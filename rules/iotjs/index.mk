@@ -144,6 +144,7 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
+	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
 	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
 	ls ${nuttx_include_file}
