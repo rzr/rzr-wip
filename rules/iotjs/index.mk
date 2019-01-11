@@ -122,7 +122,9 @@ todo:
 	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
 rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.alloptions
+	meld $< ${nuttx_config_file}
 	meld $< ${nuttx_defconfig_file}
+
 #	ls iotjs/config/nuttx/${iotjs_machine}
 
 # uses VFP register arguments
@@ -147,7 +149,7 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
-#	${MAKE} deploy monitor
+	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
 	ls ${nuttx_include_file}
 
