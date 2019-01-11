@@ -41,7 +41,8 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
 ${nuttx_dir}/include/nuttx/config.h:
 	make rule/nuttx/build
 
-rule/iotjs/build: ${nuttx_dir}/include/nuttx/config.h ${iotjs_config_file}
+rule/iotjs/build:
+	ls ${nuttx_dir}/include/nuttx/config.h ${iotjs_config_file}
 	cd iotjs && ./tools/build.py \
 --target-arch=arm \
 --target-os=nuttx \
@@ -107,7 +108,7 @@ rule/iotjs/cleanall:
 
 # philippe@wsf1127:rzr-wip (sandbox/rzr/nuttx/devel/master %)$ mv apps/system/Kconfig  apps/system/Kconfig.mine
 
-rule/iotjs/config:
+rule/iotjs/config: iotjs
 	ls nuttx/.config
 	make -C ${nuttx_dir} savedefconfig
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
