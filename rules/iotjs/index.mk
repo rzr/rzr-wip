@@ -43,15 +43,6 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
 #	cp -av nuttx/base.config nuttx/.config
 #	make rule/nuttx/build
 
-rule/iotjs/build:
-	ls ${nuttx_dir}/include/nuttx/config.h ${iotjs_config_file}
-	cd iotjs && ./tools/build.py \
---target-arch=arm \
---target-os=nuttx \
---nuttx-home=../${nuttx_dir} \
---target-board=${iotjs_machine} \
---jerry-heaplimit=78
-
 #$ rm -rfv iotjs/build
 
 #${image_file}: build
@@ -154,6 +145,17 @@ rule/iotjs/base:
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
 	${MAKE} rule/iotjs/config # TODO
+
+rule/iotjs/build:
+	grep VFP ${iotjs_config_file}
+	ls ${nuttx_dir}/include/nuttx/config.h
+	cd iotjs && ./tools/build.py \
+--target-arch=arm \
+--target-os=nuttx \
+--nuttx-home=../${nuttx_dir} \
+--target-board=${iotjs_machine} \
+--jerry-heaplimit=78
+
 
 rule/iotjs/lib:
 	${MAKE} rule/iotjs/configure
