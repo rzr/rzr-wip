@@ -138,7 +138,7 @@ rule/iotjs/configure: iotjs
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 
-rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
+rule/iotjs/base:
 	${MAKE} nuttx apps
 	${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
@@ -150,15 +150,20 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
+	${MAKE} rule/iotjs/config # TODO
 
-next:
+rule/iotjs/lib:
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/build
 
-final:
+rule/iotjs/link:
 	${MAKE} apps/system/iotjs
 	-rm apps/Kconfig
 	-rm -rfv ${nuttx_config_file}
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
+
+rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
+
+#build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
