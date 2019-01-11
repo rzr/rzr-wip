@@ -105,7 +105,7 @@ rule/iotjs/config: iotjs
 	ls nuttx/.config
 	make -C ${nuttx_dir} savedefconfig
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
-#	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
+	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/menuconfig:
@@ -121,8 +121,9 @@ todo:
 	cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
 	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
-rule/iotjs/meld:
-	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/${iotjs_machine}
+rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.alloptions
+	meld $< ${nuttx_defconfig_file}
+#	ls iotjs/config/nuttx/${iotjs_machine}
 
 # uses VFP register arguments
 
@@ -146,12 +147,12 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
-	${MAKE} deploy monitor
+#	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
 	ls ${nuttx_include_file}
 
 rule/iotjs/build:
-	grep FPU ${iotjs_config_file}
+#	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd iotjs && ./tools/build.py \
 --target-arch=arm \
