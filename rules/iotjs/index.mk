@@ -127,7 +127,7 @@ todo:
 
 # uses VFP register arguments
 
-rule/iotjs/configure:
+rule/iotjs/configure: iotjs
 	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
@@ -145,7 +145,7 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
-#	${MAKE} rule/iotjs/config
+	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/cleanall
 	${MAKE} rule/iotjs/build
 	${MAKE} apps/system/iotjs
