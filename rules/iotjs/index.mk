@@ -146,6 +146,7 @@ rule/iotjs/base:
 	${MAKE} rule/nuttx/build
 	${MAKE} rule/iotjs/config # TODO
 	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
+	ls ${nuttx_include_file}
 
 rule/iotjs/build:
 	grep FPU ${iotjs_config_file}
