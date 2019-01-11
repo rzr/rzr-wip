@@ -119,11 +119,15 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 
 rule/iotjs/config:
 	ls nuttx/.config
-	cp -av nuttx/.config ${iotjs_config_file}
+	make savedefconfig
+	cp -av defconfig  > ${iotjs_config_file}
+#	grep -v '#' nuttx/.config
 
 rule/iotjs/menuconfig:
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+	@echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
+	make savedefconfig
 	-grep CONFIG_IOTJS ${nuttx_config_file}
 	grep PIPES ${nuttx_config_file}
 
