@@ -12,7 +12,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 
 #iotjs_url?=https://github.com/Samsung/iotjs
 #iotjs_url?=https://github.com/tizenteam/iotjs
-itojs_url?=file:///home/${USER}/mnt/iotjs
+iotjs_url?=file:///home/${USER}/mnt/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 
 
@@ -39,6 +39,7 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  -C ${nuttx_dir}
 
 rule/iotjs/build: ${iotjs_config_file} ${nuttx_dir}
+	ls ./nuttx/include/nuttx/config.h
 	cd iotjs && ./tools/build.py \
 --target-arch=arm \
 --target-os=nuttx \
@@ -128,7 +129,9 @@ todo:
 # uses VFP register arguments
 
 rule/iotjs/configure: iotjs
-	${MAKE} rule/nuttx/configure
+	rm -rfv nuttx/.config
+	${MAKE} rule/iotjs/cleanall
+#	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
@@ -145,9 +148,12 @@ rule/iotjs/devel: #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
+
+next:
 	${MAKE} rule/iotjs/configure
-	${MAKE} rule/iotjs/cleanall
 	${MAKE} rule/iotjs/build
+
+final:
 	${MAKE} apps/system/iotjs
 	-rm apps/Kconfig
 	-rm -rfv ${nuttx_config_file}
