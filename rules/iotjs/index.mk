@@ -11,8 +11,9 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 
 
 #iotjs_url?=https://github.com/Samsung/iotjs
-iotjs_url?=https://github.com/tizenteam/iotjs
-iotjs_branch?=sandbox/rzr/devel/nucleo-f767zi/master
+#iotjs_url?=https://github.com/tizenteam/iotjs
+itojs_url?=file:///home/${USER}/mnt/iotjs
+iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 
 
 iotjs:
