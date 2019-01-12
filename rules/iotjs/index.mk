@@ -179,7 +179,8 @@ rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
 
 
 rule/iotjs/distclean:
+	rm -rf iotjs/build
 	find . -iname "*.obj" -exec rm -v {} \;
-
+	rm -rf ./apps/system/iotjs/lib*.a
 
 #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
