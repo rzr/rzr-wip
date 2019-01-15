@@ -137,7 +137,7 @@ rule/nuttx/menuconfig:
 	ls nuttx/Kconfig
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
-	make -C nuttx ${@F}
+#	make -C nuttx ${@F}
 
 
 
