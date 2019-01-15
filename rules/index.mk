@@ -131,7 +131,7 @@ docker/run:
 	docker run --privileged --rm -ti "rzrwip_default" run
 
 
-nuttx/include/arch: configure
+nuttx/include/arch: rule/nuttx/configure
 	ls $@
 
 menuconfig: nuttx/Kconfig nuttx/include/arch
