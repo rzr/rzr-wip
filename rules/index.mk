@@ -140,11 +140,6 @@ rule/nuttx/menuconfig:
 #	make -C nuttx ${@F}
 
 
-
-
-#meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
-#	$@ $^
-
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
 
@@ -183,9 +178,9 @@ monitor: /dev/ttyACM0 # deploy
 
 build: rule/nuttx/build
 
-devel: rule/iotjs/menuconfig build deploy monitor
+devel: rule/nuttx/menuconfig build deploy monitor
 
-include rules/iotjs/index.mk
+#include rules/iotjs/index.mk
 
 include rules/devel/index.mk
 
