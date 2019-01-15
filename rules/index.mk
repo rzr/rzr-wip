@@ -182,7 +182,8 @@ monitor: /dev/ttyACM0 # deploy
 
 build: rule/nuttx/build
 
-devel: rule/iotjs/menuconfig build deploy monitor
+devel:
+	echo rule/iotjs/menuconfig build deploy monitor
 
 include rules/iotjs/index.mk
 
