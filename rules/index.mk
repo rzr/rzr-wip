@@ -183,7 +183,7 @@ monitor: /dev/ttyACM0 # deploy
 build: rule/nuttx/build
 
 devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
-	@echo '#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
+	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
