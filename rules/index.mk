@@ -96,7 +96,7 @@ nuttx/.config: nuttx/tools/configure.sh apps
 
 rule/nuttx/configure: nuttx/tools/configure.sh apps
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
-	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
+#	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	grep -i BOARD ${nuttx_config_file}
 
 meld:
