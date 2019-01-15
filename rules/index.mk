@@ -175,6 +175,9 @@ deploy:
 monitor: /dev/ttyACM0 # deploy
 	${sudo} screen $< ${monitor_rate}
 
+
+build: rule/nuttx/build
+
 devel: menuconfig build deploy monitor
 
 include rules/iotjs/index.mk
