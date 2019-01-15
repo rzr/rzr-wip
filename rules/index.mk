@@ -142,8 +142,10 @@ docker/run:
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config || make configure
 	ls nuttx/.config
-	make -C nuttx ${@F} savedefconfig
+	make -C nuttx ${@F}
 
+rule/nuttx/%: ${nuttx_dir}
+	make -C $< ${@F}
 
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
@@ -153,9 +155,6 @@ patch:
 
 rule/nuttx/%:
 	make -C ${nuttx_dir} ${@F}
-
-rule/%: nuttx
-	make rule/nuttx/${@F}
 
 
 rule/nuttx/diff:
@@ -183,7 +182,7 @@ monitor: /dev/ttyACM0 # deploy
 
 build: rule/nuttx/build
 
-devel: rule/nuttx/menuconfig build deploy monitor
+devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 
 #include rules/iotjs/index.mk
 
