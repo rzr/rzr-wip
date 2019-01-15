@@ -94,7 +94,6 @@ nuttx/.config: nuttx/tools/configure.sh apps
 	ls $<
 	grep -i BOARD $@
 
-
 rule/nuttx/configure: nuttx/tools/configure.sh apps
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
@@ -131,8 +130,7 @@ docker/run:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
 
-menuconfig:
-	ls nuttx/Kconfig
+menuconfig: nuttx/Kconfig
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
 	make -C nuttx ${@}
