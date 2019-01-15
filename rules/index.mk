@@ -44,7 +44,8 @@ nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 #nuttx_config?=stm32f7nucleo/nsh
 
-#nuttx_url?=https://bitbucket.org/nuttx/nuttx
+nuttx_url?=https://bitbucket.org/nuttx/nuttx
+nuttx_branch?=master
 nuttx_url?=file:///${HOME}/mnt/nuttx
 nuttx_branch?=sandbox/rzr/review/master
 #nuttx_branch=sandbox/rzr/devel/${machine}/master
