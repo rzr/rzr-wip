@@ -186,7 +186,7 @@ devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
-	meld $<
+	meld $^
 
 #include rules/iotjs/index.mk
 
