@@ -130,14 +130,16 @@ docker/run:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
 
-
-nuttx/include/arch: rule/nuttx/configure
+nuttx/include/arch: rule/nuttx/menuconfig
 	ls $@
 
-menuconfig: nuttx/Kconfig # nuttx/include/arch
+rule/nuttx/menuconfig: nuttx/Kconfig # 
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
 	make -C nuttx ${@}
+
+
+
 
 #meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
 #	$@ $^
