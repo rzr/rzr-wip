@@ -133,8 +133,7 @@ docker/run:
 nuttx/include/arch: rule/nuttx/menuconfig
 	ls $@
 
-rule/nuttx/menuconfig:
-	ls nuttx/Kconfig
+rule/nuttx/menuconfig: nuttx/Kconfig
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
 #	make -C nuttx ${@F}
