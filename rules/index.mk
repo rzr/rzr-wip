@@ -188,6 +188,11 @@ devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
 
+
+meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
+ ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
+	meld $^
+
 #include rules/iotjs/index.mk
 
 include rules/devel/index.mk
