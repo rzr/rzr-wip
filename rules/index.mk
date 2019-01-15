@@ -86,7 +86,7 @@ libusb-dev \
 screen \
 #EOL
 
-nuttx/%: ${nuttx_dir}
+nuttx/%: ${nuttx_dir} apps
 	ls $@
 
 nuttx/.config: nuttx/tools/configure.sh apps
@@ -94,7 +94,8 @@ nuttx/.config: nuttx/tools/configure.sh apps
 	ls $<
 	grep -i BOARD $@
 
-rule/nuttx/configure: nuttx/tools/configure.sh apps
+rule/nuttx/configure: nuttx/tools/configure.sh
+	ls apps
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	grep -i BOARD ${nuttx_config_file}
@@ -106,10 +107,14 @@ meld:
 configure: nuttx/.config
 	ls $<
 
+
+${nuttx_dir}/Make.defs: rule/nuttx/configure
+	ls $@
+
 reconfigure:
 	mv nuttx/.config 
 
-rule/nuttx/build: nuttx/Make.defs
+rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
@@ -133,7 +138,7 @@ docker/run:
 #nuttx/include/arch: rule/nuttx/menuconfig
 #	ls $@
 
-rule/nuttx/menuconfig: nuttx/Kconfig
+rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
 #	make -C nuttx ${@F}
