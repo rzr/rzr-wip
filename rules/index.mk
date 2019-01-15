@@ -136,7 +136,7 @@ nuttx/include/arch: rule/nuttx/menuconfig
 rule/nuttx/menuconfig: nuttx/Kconfig # 
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
-	make -C nuttx ${@}
+	make -C nuttx ${@F}
 
 
 
