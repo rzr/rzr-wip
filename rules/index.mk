@@ -130,7 +130,11 @@ docker/run:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
 
-menuconfig: nuttx/Kconfig
+
+nuttx/include/arch: configure
+	ls $@
+
+menuconfig: nuttx/Kconfig nuttx/include/arch
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
 	make -C nuttx ${@}
