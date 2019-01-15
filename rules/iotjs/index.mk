@@ -184,3 +184,6 @@ rule/iotjs/distclean:
 	rm -rf ./apps/system/iotjs/lib*.a
 
 #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
+
+#meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
+#	$@ $^
