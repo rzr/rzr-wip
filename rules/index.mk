@@ -141,8 +141,8 @@ docker/run:
 
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config || make configure
-#	ls nuttx/.config
-#	make -C nuttx ${@F}
+	ls nuttx/.config
+	make -C nuttx ${@F}
 
 
 patch/%: patches/% tmp/done/patch/%
