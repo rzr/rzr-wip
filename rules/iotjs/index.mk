@@ -147,6 +147,7 @@ rule/iotjs/base:
 	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
+#TODO: MTD PARTS TELNET
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor
