@@ -8,7 +8,6 @@ nuttx_branch?=master
 #nuttx_branch?=sandbox/rzr/review/master
 #nuttx_branch=sandbox/rzr/devel/${machine}/master
 #nuttx_branch=sandbox/rzr/devel/stm32f7/master
-nuttx_config?=nucleo-144/f767-nsh
 nuttx_config=nucleo-144/f767-netnsh
 nuttx_apps_dir?=apps
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
