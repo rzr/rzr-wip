@@ -40,7 +40,7 @@ export V
 -include rules/nuttx/index.mk
 
 help:
-	echo " make devel"
+	@echo " make devel"
 
 setup/debian:
 	sudo apt-get update -y 
@@ -95,14 +95,14 @@ distclean: rule/nuttx/distclean
 
 build: rule/nuttx/build
 
-devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
+rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
 meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
  ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
 	meld $^
 
-#include rules/iotjs/index.mk
+include rules/iotjs/index.mk
 
 include rules/devel/index.mk
 
@@ -113,3 +113,8 @@ include rules/devel/index.mk
 
 monitor: /dev/ttyACM0 # deploy
 	${sudo} screen $< ${monitor_rate}
+
+
+menuconfig: rule/nuttx/menuconfig
+
+devel: rule/iotjs/devel
