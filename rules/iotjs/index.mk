@@ -149,9 +149,9 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/nuttx/build
-#	${MAKE} deploy monitor
+	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
-	ls ${nuttx_include_file}
+#	ls ${nuttx_include_file}
 
 rule/iotjs/build:
 #	grep FPU ${iotjs_config_file}
