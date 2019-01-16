@@ -19,6 +19,7 @@ nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
 
+dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 #LDSCRIPT ?= f767-flash.ld
@@ -78,13 +79,10 @@ rule/nuttx/diff:
 	ls nuttx/.config.old nuttx/.config
 	diff nuttx/.config.old nuttx/.config
 
-
-dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
-
 deploy:
-	ls -l ${dev_file}sudo umount -f ${dev_file} || echo $$?
+	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
-	cp -av nuttx/nuttx.bin
+	cp -av nuttx/nuttx.bin  ${deploy_dir}
 	sleep 10
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
