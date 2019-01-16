@@ -18,3 +18,9 @@ rule/nuttx/meld: ./nuttx/configs/${nuttx_config}/defconfig
 #	docker build -t "rzrwip_default" .
 #	docker run --privileged --rm -ti "rzrwip_default" run
 
+
+rule/tizenrt/diff:
+
+
+rule/stm32/diff:
+	meld nuttx/configs/stm32f429i-disco  nuttx/configs/nucleo-144/
