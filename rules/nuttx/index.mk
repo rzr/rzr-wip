@@ -29,7 +29,7 @@ deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 
 
-${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile:
+${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
 	ls $@ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${nuttx_dir}
 	ls $@
 #	# --depth 1
