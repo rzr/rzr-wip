@@ -51,7 +51,7 @@ rule/nuttx/configure: nuttx/tools/configure.sh
 	ls apps
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	grep -i BOARD ${nuttx_config_file}
+	-grep -i BOARD ${nuttx_config_file}
 
 rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
