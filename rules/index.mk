@@ -35,43 +35,9 @@ default: help
 V?=1
 export V
 
-#machine?=stm32f767zi
-machine?=stm32f7nucleo
-
-nuttx_dir?=nuttx
-#nuttx_url?=https://bitbucket.org/nuttx/nuttx
-#nuttx_branch?=master
-nuttx_url?=file:///${HOME}/mnt/nuttx
-nuttx_branch?=sandbox/rzr/review/master
-#nuttx_branch=sandbox/rzr/devel/${machine}/master
-#nuttx_branch=sandbox/rzr/devel/stm32f7/master
-nuttx_config?=nucleo-144/f767-nsh
-nuttx_config=nucleo-144/f767-netnsh
-
-nuttx_config_file=${nuttx_dir}/.config
-nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
-#nuttx_config?=stm32f7nucleo/nsh
-
-
-image_file?=nuttx/nuttx.bin
-monitor_rate?=115200
-
-#LDSCRIPT ?= f767-flash.ld
-#machine?=stm32f4dis
-#nuttx_config?=nucleo-f303re/hello
-
-
 
 -include rules/st.mk
-
-${nuttx_dir}:
-	ls $@ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} 
-	ls $@
-#	# --depth 1
-
-apps:
-	git clone --depth 1 --recursive https://bitbucket.org/nuttx/apps
-	ls $@
+-include rules/nuttx/index.mk
 
 help:
 	echo " make devel"
@@ -87,19 +53,6 @@ libusb-dev \
 screen \
 #EOL
 
-nuttx/%: ${nuttx_dir} apps
-	ls $@
-
-nuttx/.config: nuttx/tools/configure.sh apps
-	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
-	ls $<
-	grep -i BOARD $@
-
-rule/nuttx/configure: nuttx/tools/configure.sh
-	ls apps
-	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
-#	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	grep -i BOARD ${nuttx_config_file}
 
 meld:
 	meld 
@@ -115,14 +68,6 @@ ${nuttx_dir}/Make.defs: rule/nuttx/configure
 reconfigure:
 	mv nuttx/.config 
 
-rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
-	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
-
-#nuttx: rule/nuttx/build
-
-${image_file}: build
-	ls -l $@
 
 prep: nuttx apps patch
 	sync
@@ -136,58 +81,22 @@ docker/run:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
 
-#nuttx/include/arch: rule/nuttx/menuconfig
-#	ls $@
-
-rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
-#	ls nuttx/.config || make configure
-	ls nuttx/.config
-	make -C nuttx ${@F}
-
-rule/nuttx/%: ${nuttx_dir}
-	make -C $< ${@F}
-
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
 
 patch:
 	ls $^
 
-rule/nuttx/%:
-	make -C ${nuttx_dir} ${@F}
-
-
-rule/nuttx/diff:
-	ls nuttx/.config.old nuttx/.config
-	diff nuttx/.config.old nuttx/.config
-
-
 distclean: rule/nuttx/distclean
 	find . -iname "*.a" -exec rm {} \;
 #	rm -fv nuttx/staging/*.a
 	sync
-
-dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
-
-deploy:
-	ls -l ${dev_file}
-	sudo umount -f ${dev_file} || echo $$?
-	udisksctl mount -b ${dev_file} ||:
-	cp -av nuttx/nuttx.bin /media/philippe/NODE_F767ZI1/
-	sleep 10
-
-monitor: /dev/ttyACM0 # deploy
-	${sudo} screen $< ${monitor_rate}
 
 
 build: rule/nuttx/build
 
 devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
-
-rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
-	meld $^
-
 
 meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
  ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
@@ -201,3 +110,6 @@ include rules/devel/index.mk
 #  make -C apps Kconfig
 # make -C apps Kconfig TOPDIR=$CURDIR/nuttx
 # make -C apps system/Kconfig TOPDIR=$CURDIR/nuttx APPDIR=$CURDIR/apps
+
+monitor: /dev/ttyACM0 # deploy
+	${sudo} screen $< ${monitor_rate}
