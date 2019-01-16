@@ -61,10 +61,6 @@ meld:
 configure: nuttx/.config
 	ls $<
 
-
-${nuttx_dir}/Make.defs: rule/nuttx/configure
-	ls $@
-
 reconfigure:
 	mv nuttx/.config 
 
