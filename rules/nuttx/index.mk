@@ -27,29 +27,25 @@ deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #machine?=stm32f4dis
 #nuttx_config?=nucleo-f303re/hello
 
-
+${nuttx_apps_dir}/%:
+	git clone --depth 1 --recursive ${nuttx_apps_url} ${nuttx_apps_dir}
+	ls $@
 
 ${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
 	ls $@ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${nuttx_dir}
 	ls $@
 #	# --depth 1
 
+${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
+	ls $<
+
 ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
-	grep -i BOARD $@
+	-grep -i BOARD ${nuttx_config}
 
-${nuttx_apps_dir}/%:
-	git clone --depth 1 --recursive ${nuttx_apps_url} ${nuttx_apps_dir}
+nuttx/.config:  ${nuttx_dir}/Make.defs
 	ls $@
-
-#nuttx/%: ${nuttx_dir} apps
-#	ls $@
-
-${nuttx_dir}: ${nuttx_dir}/Make.defs ${nuttx_apps_dir}
-	ls $<
-
-nuttx/.config: 
 
 rule/nuttx/configure: nuttx/tools/configure.sh
 	ls apps
