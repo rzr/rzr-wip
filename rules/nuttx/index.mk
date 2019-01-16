@@ -29,7 +29,7 @@ deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 
 
-${nuttx_dir}:
+${nuttx_dir}/%:
 	ls $@ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} 
 	ls $@
 #	# --depth 1
@@ -37,9 +37,11 @@ ${nuttx_dir}:
 ${nuttx_apps_dir}:
 	git clone --depth 1 --recursive ${nuttx_apps_url}
 	ls $@
+#nuttx/%: ${nuttx_dir} apps
+#	ls $@
 
-nuttx/%: ${nuttx_dir} apps
-	ls $@
+${nuttx_dir}: ${nuttx_dir}/Make.defs ${nuttx_apps_dir}
+	ls $<
 
 nuttx/.config: nuttx/tools/configure.sh apps
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
@@ -66,8 +68,8 @@ ${image_file}: build
 
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config || make configure
-	ls nuttx/.config
-	make -C nuttx ${@F}
+#	ls nuttx/.config
+#	make -C nuttx ${@F}
 
 rule/nuttx/%: ${nuttx_dir}
 	make -C $< ${@F}
