@@ -64,7 +64,6 @@ configure: nuttx/.config
 reconfigure:
 	mv nuttx/.config 
 
-
 prep: nuttx apps patch
 	sync
 
