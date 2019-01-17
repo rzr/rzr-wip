@@ -1,9 +1,9 @@
 #machine?=stm32f767zi
 machine?=stm32f7nucleo
 
-nuttx_dir?=nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch?=master
+nuttx_dir?=deps/nuttx
 nuttx_config=nucleo-144/f767-netnsh
 
 # nuttx_url=file:///${HOME}/mnt/nuttx
@@ -18,7 +18,7 @@ nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 #nuttx_config?=stm32f7nucleo/nsh
 
-image_file?=nuttx/nuttx.bin
+image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
 
 dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
@@ -53,7 +53,7 @@ ${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
 	ls $@
 #	ls $@ || 
 
-rule/nuttx/configure: nuttx/tools/configure.sh ${nuttx_apps_dir}/Make.defs
+rule/nuttx/configure: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Make.defs
 	ls $^
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
@@ -62,7 +62,7 @@ rule/nuttx/configure: nuttx/tools/configure.sh ${nuttx_apps_dir}/Make.defs
 ${nuttx_apps_dir}/Kconfig: rule/nuttx/configure
 	ls $@
 
-rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
+rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
@@ -71,12 +71,12 @@ rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
 ${image_file}: build
 	ls -l $@
 
-#nuttx/include/arch: rule/nuttx/menuconfig
+#${nuttx_dir}/include/arch: rule/nuttx/menuconfig
 #	ls $@
 
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
-#	ls nuttx/.config || make configure
-#	ls nuttx/.config
+#	ls ${nuttx_dir}/.config || make configure
+#	ls ${nuttx_dir}/.config
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	make -C ${nuttx_dir} ${@F}
 	make -C ${nuttx_dir} savedefconfig
@@ -93,16 +93,16 @@ rule/nuttx/%:
 
 
 rule/nuttx/diff:
-	ls nuttx/.config.old nuttx/.config
-	diff nuttx/.config.old nuttx/.config
+	ls ${nuttx_dir}/.config.old ${nuttx_dir}/.config
+	diff ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 
 deploy:
 	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
-	cp -av nuttx/nuttx.bin  ${deploy_dir}
+	cp -av ${nuttx_dir}/nuttx.bin  ${deploy_dir}
 	sleep 6
 
-rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
+rule/nuttx/diff: ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
 	meld $^
 
 rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
