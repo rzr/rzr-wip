@@ -16,6 +16,7 @@ iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
+
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
@@ -83,9 +84,9 @@ rule/iotjs/base:
 	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS_IMAGEFILE=y' >> ${nuttx_config_file}
-# 	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
-# 	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
-# 	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
+ 	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
+ 	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
+ 	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
 #TODO: MTD PARTS TELNET MUTEX
 	${MAKE} menuconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
