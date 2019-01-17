@@ -78,6 +78,8 @@ rule/iotjs/base:
 	${MAKE} menuconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
+	${MAKE} -C ${nuttx_dir} savedefconfig
+	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor # TOOD
 #	${MAKE} rule/iotjs/config # TODO
