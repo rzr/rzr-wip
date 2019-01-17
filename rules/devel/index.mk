@@ -24,3 +24,9 @@ rule/tizenrt/diff:
 
 rule/stm32/diff:
 	meld nuttx/configs/stm32f429i-disco  nuttx/configs/nucleo-144/
+
+
+rule/nucleo: \
+ ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
+ ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
+	meld $^
