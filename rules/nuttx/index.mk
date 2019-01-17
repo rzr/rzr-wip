@@ -101,3 +101,5 @@ deploy:
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
 
+rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
+	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
