@@ -44,7 +44,7 @@ ${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
 ${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
 	ls $<
 
-${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile
+${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	-grep -i BOARD ${nuttx_config}
@@ -79,7 +79,7 @@ rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config
 	make -C ${nuttx_dir} ${@F}
 	make -C ${nuttx_dir} savedefconfig
-	meld ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
+#	meld ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
 
 rule/nuttx/%: ${nuttx_dir}
 	make -C $< ${@F}
