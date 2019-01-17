@@ -30,3 +30,6 @@ rule/nucleo: \
  ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
  ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
 	meld $^
+
+
+devel: rule/nuttx/devel
