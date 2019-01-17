@@ -82,8 +82,8 @@ rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 	make -C ${nuttx_dir} savedefconfig
 #	meld ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
-	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
-	-diff -u ${nuttx_defconfig_file} ${iotjs_config_file}
+	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp | tee ${nuttx_config_file}.diff
+	-diff -u ${nuttx_defconfig_file} ${nuttx_dir}/defconfig | tee ${nuttx_dir}/defconfig.diff
 
 rule/nuttx/%: ${nuttx_dir}
 	make -C $< ${@F}
