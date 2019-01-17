@@ -97,7 +97,7 @@ rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefc
 
 monitor: /dev/ttyACM0 # deploy
 	echo "# TODO: use C-a k to quit"
-	sleep 10
+	sleep 1
 	${sudo} screen $< ${monitor_rate}
 
 
