@@ -47,12 +47,14 @@ ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile
 nuttx/.config:  ${nuttx_dir}/Make.defs
 	ls $@
 
-rule/nuttx/configure: nuttx/tools/configure.sh
-	ls apps
+rule/nuttx/configure: nuttx/tools/configure.sh ${nuttx_apps_dir}/Make.defs
+	ls $^
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	exit 10
 	-grep -i BOARD ${nuttx_config_file}
+
+${nuttx_apps_dir}/Kconfig: rule/nuttx/configure
+	ls $@
 
 rule/nuttx/build: nuttx/Make.defs nuttx/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
