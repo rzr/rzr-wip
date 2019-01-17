@@ -13,6 +13,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 #iotjs_url?=https://github.com/tizenteam/iotjs
 iotjs_url?=file:///home/${USER}/mnt/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
+iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
 iotjs/%:
@@ -74,15 +75,17 @@ rule/iotjs/base:
 	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
+#
 	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
+#
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
-# STM32_ROMFS
-# STM32_ROMFS_IMAGEFILE
-# PTABLE_PARTITION
-# FS_PROCFS_EXCLUDE_VERSION
-# FS_HOSTFS
-# NSH_ROMFSDEVNO
-# EXAMPLES_MODULE_ROMFS
+	echo 'CONFIG_PTABLE_PARTITION=y' >> ${nuttx_config_file}
+	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=y' >> ${nuttx_config_file}
+# 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
+# 	echo 'CONFIG_STM32_ROMFS_IMAGEFILE=y' >> ${nuttx_config_file}
+# 	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
+# 	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
+# 	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
 #TODO: MTD PARTS TELNET MUTEX
 	${MAKE} menuconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
@@ -90,7 +93,7 @@ rule/iotjs/base:
 	${MAKE} -C ${nuttx_dir} savedefconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	${MAKE} rule/nuttx/build
-	${MAKE} deploy monitor # TOOD
+	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
@@ -190,7 +193,12 @@ todo:
 	cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
 	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
-rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.alloptions
+rule/iotjs/meld: iotjs/config/nuttx/${iotjs_machine}/config.alloptions
+	meld $< ${nuttx_config_file}
+	meld $< ${nuttx_defconfig_file}
+
+
+rule/iotjs/stm32f4dis: iotjs/config/nuttx/stm32f4dis/config.alloptions
 	meld $< ${nuttx_config_file}
 	meld $< ${nuttx_defconfig_file}
 
@@ -211,5 +219,5 @@ rule/iotjs/distclean:
 
 #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 
-#meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
+#rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default 
 #	$@ $^
