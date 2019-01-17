@@ -73,7 +73,7 @@ rule/iotjs/base:
 	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-	echo 'PTHREAD_MUTEX_TYPES=y'>> ${nuttx_config_file}
+	echo 'CONfIG_PTHREAD_MUTEX_TYPES=y'>> ${nuttx_config_file}
 #TODO: MTD PARTS TELNET MUTEX
 	${MAKE} menuconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
