@@ -103,12 +103,5 @@ monitor: /dev/ttyACM0 # deploy
 
 menuconfig: rule/nuttx/menuconfig
 
-
-
-
-include rules/devel/index.mk
-
-devel: rule/nuttx/devel
-
-
-#include rules/iotjs/index.mk
+-include rules/devel/index.mk
+-include rules/iotjs/index.mk
