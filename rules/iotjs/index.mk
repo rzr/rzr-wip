@@ -18,12 +18,11 @@ nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
 
 #TODO
-rule/nuttx/configure: nuttx/tools/configure.sh
+rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
 	ls apps
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
-
 
 iotjs:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
