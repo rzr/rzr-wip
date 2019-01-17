@@ -6,17 +6,17 @@ nuttx_branch?=master
 nuttx_dir?=deps/nuttx
 nuttx_dir=nuttx-dir
 nuttx_config=nucleo-144/f767-netnsh
+nuttx_config_file=${nuttx_dir}/.config
+nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
 # nuttx_url=file:///${HOME}/mnt/nuttx
 # nuttx_branch?=sandbox/rzr/review/master
 # nuttx_branch=sandbox/rzr/devel/${machine}/master
 # nuttx_branch=sandbox/rzr/devel/stm32f7/master
 
-nuttx_apps_dir?=apps
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
+nuttx_apps_dir?=apps-dir
 
-nuttx_config_file=${nuttx_dir}/.config
-nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 #nuttx_config?=stm32f7nucleo/nsh
 
 image_file?=${nuttx_dir}/nuttx.bin
@@ -45,7 +45,7 @@ ${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
 ${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
 	ls $<
 
-${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile ${nuttx_defconfig_file}
+${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Makefile ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	-grep -i BOARD ${nuttx_config}
