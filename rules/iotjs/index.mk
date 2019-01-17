@@ -81,17 +81,14 @@ rule/iotjs/base:
 #
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PTABLE_PARTITION=y' >> ${nuttx_config_file}
-	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
 	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
+#	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=n' >> ${nuttx_config_file}
 #	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS_IMAGEFILE=y' >> ${nuttx_config_file}
 #TODO: MTD PARTS TELNET MUTEX
 	${MAKE} menuconfig
-	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
-	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
-	${MAKE} -C ${nuttx_dir} savedefconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor # TODO
