@@ -79,7 +79,7 @@ rule/iotjs/base:
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
 	${MAKE} rule/nuttx/build
-	${MAKE} deploy monitor
+	${MAKE} deploy monitor # TOOD
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
