@@ -3,7 +3,7 @@ iotjs_machine?=stm32f7nucleo
 iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
-iotjs_nuttx_dir?=apps/system/iotjs
+iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 IOTJS_ROOT_DIR="${iotjs_dir}"
 export IOTJS_ROOT_DIR
 IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
@@ -60,7 +60,7 @@ rule/iotjs/config: ${iotjs_dir}
 
 rule/iotjs/configure: iotjs
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
-	-rm apps/Kconfig
+	-rm ${nuttx_apps_dir}/Kconfig
 #	-rm -rfv ${nuttx_config_file}
 	rm -rfv ${nuttx_dir}/.config
 #	${MAKE} rule/iotjs/cleanall
@@ -133,7 +133,7 @@ rule/iotjs/lib:
 	${MAKE} rule/iotjs/build
 
 rule/iotjs/link:
-	${MAKE} apps/system/iotjs
+	${MAKE} ${nuttx_app_dir}/system/iotjs
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
@@ -164,10 +164,10 @@ rule/iotjs/menuconfig:
 
 #all: prep configure build
 
-apps/system/iotjs: iotjs apps
+apps/system/iotjs: iotjs ${nuttx_apps_dir}
 	@mkdir -p $@
 	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
-	make -C apps Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
+	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
 iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}/.config
 	$@ $^
@@ -199,7 +199,7 @@ todo/rule/iotjs/patch: \
  # TODO: tmp/done/patch/iotjs/0002-wip.patch 
 	ls $^
 
-rule/build/iotjs: apps/system/iotjs menuconfig build
+rule/build/iotjs: ${nuttx_apps_dir}/system/iotjs menuconfig build
 
 rule/iotjs/cleanall:
 	rm -rf iotjs/build
@@ -235,7 +235,7 @@ rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
 rule/iotjs/distclean:
 	rm -rf iotjs/build
 	find . -iname "*.obj" -exec rm -v {} \;
-	rm -rf ./apps/system/iotjs/lib*.a
+	rm -rf ${nuttx_apps_dir}/system/iotjs/lib*.a
 
 #build rule/iotjs/patch rule/iotjs/patch rule/iotjs/build
 
