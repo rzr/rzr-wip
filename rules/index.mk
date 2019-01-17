@@ -54,10 +54,6 @@ screen \
 #EOL
 
 
-meld:
-	meld 
-
-
 configure: nuttx/.config
 	ls $<
 
