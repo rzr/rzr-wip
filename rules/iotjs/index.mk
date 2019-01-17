@@ -23,11 +23,11 @@ iotjs/%:
 iotjs: ${iotjs_config_file}
 	ls $^
 
-rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
-	ls apps
-	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
-	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	-grep -i BOARD ${nuttx_config_file}
+#rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
+#	ls apps
+#	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
+#	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
+#	-grep -i BOARD ${nuttx_config_file}
 
 rule/iotjs/build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
@@ -80,7 +80,7 @@ rule/iotjs/base:
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor
-	${MAKE} rule/iotjs/config # TODO
+#	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
 rule/iotjs/build:
