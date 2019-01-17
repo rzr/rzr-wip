@@ -107,6 +107,8 @@ include rules/devel/index.mk
 # make -C apps system/Kconfig TOPDIR=$CURDIR/nuttx APPDIR=$CURDIR/apps
 
 monitor: /dev/ttyACM0 # deploy
+	echo "# TODO: use C-a k to quit"
+	sleep 10
 	${sudo} screen $< ${monitor_rate}
 
 
