@@ -89,13 +89,6 @@ build: rule/nuttx/build
 rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
-meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
- ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
-	meld $^
-
-#include rules/iotjs/index.mk
-
-include rules/devel/index.mk
 
 
 #  make -C apps Kconfig
@@ -110,4 +103,15 @@ monitor: /dev/ttyACM0 # deploy
 
 menuconfig: rule/nuttx/menuconfig
 
-devel: rule/iotjs/devel
+
+
+
+include rules/devel/index.mk
+
+meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
+ ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
+	meld $^
+
+devel: rule/nutt/devel
+
+#include rules/iotjs/index.mk
