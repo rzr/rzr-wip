@@ -18,7 +18,6 @@ nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 #nuttx_config?=stm32f7nucleo/nsh
 
-
 image_file?=nuttx/nuttx.bin
 monitor_rate?=115200
 
@@ -34,9 +33,12 @@ ${nuttx_apps_dir}/%:
 	ls $@
 
 ${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
-	ls $@ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${nuttx_dir}
+	ls $@ || git clone \
+--recursive \
+--depth 1 \
+--branch ${nuttx_branch} ${nuttx_url} ${nuttx_dir}
 	ls $@
-#	# --depth 1
+#	# 
 
 ${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
 	ls $<
