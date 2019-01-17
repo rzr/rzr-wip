@@ -11,10 +11,11 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 
 #iotjs_url?=https://github.com/Samsung/iotjs
 #iotjs_url?=https://github.com/tizenteam/iotjs
-iotjs_url?=file:///home/${USER}/mnt/iotjs
-iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
-nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
+#iotjs_url?=file:///home/${USER}/mnt/iotjs
+#iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
+#iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
+
+#nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
 
 iotjs/%:
@@ -95,6 +96,17 @@ rule/iotjs/base:
 # 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS_IMAGEFILE=y' >> ${nuttx_config_file}
 #TODO: MTD PARTS TELNET MUTEX
+# CONFIG_CDCACM=y
+#CONFIG_FAT_LFN=y
+#CONFIG_FS_FAT=y
+#CONFIG_LIBM=y
+#CONFIG_MMCSD=y
+#CONFIG_NETDEVICES=y
+#CONFIG_NETDEV_LATEINIT=y
+#CONFIG_NET_LOCAL=y
+#CONFIG_NET_TCP_WRITE_BUFFERS=y
+#CONFIG_NSH_LIBRARY=y
+
 	${MAKE} menuconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	${MAKE} rule/nuttx/build
