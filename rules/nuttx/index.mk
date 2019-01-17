@@ -44,8 +44,9 @@ ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh apps/Makefile
 	ls $<
 	-grep -i BOARD ${nuttx_config}
 
-nuttx/.config:  ${nuttx_dir}/Make.defs
+${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
 	ls $@
+#	ls $@ || 
 
 rule/nuttx/configure: nuttx/tools/configure.sh ${nuttx_apps_dir}/Make.defs
 	ls $^
@@ -88,7 +89,7 @@ deploy:
 	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
 	cp -av nuttx/nuttx.bin  ${deploy_dir}
-	sleep 10
+	sleep 5
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
