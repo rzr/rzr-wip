@@ -57,7 +57,10 @@ rule/iotjs/config: iotjs
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/configure: iotjs
-#	rm -rfv nuttx/.config
+	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
+	-rm apps/Kconfig
+#	-rm -rfv ${nuttx_config_file}
+	rm -rfv nuttx/.config
 #	${MAKE} rule/iotjs/cleanall
 #	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
@@ -83,6 +86,10 @@ rule/iotjs/base:
 	echo 'CONFIG_PTABLE_PARTITION=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
 	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
+	echo 'CONFIG_STM32F7_RNG=y' >> ${nuttx_config_file}
+	echo 'CONFIG_SYSTEM_NSH_CXXINITIALIZE=y' >> ${nuttx_config_file}
+	echo 'CONFIG_SYSLOG_NONE=y' >> ${nuttx_config_file}
+	echo 'CONFIG_EXPERIMENTAL=y' >> ${nuttx_config_file}
 #	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=n' >> ${nuttx_config_file}
 #	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
@@ -110,8 +117,6 @@ rule/iotjs/lib:
 
 rule/iotjs/link:
 	${MAKE} apps/system/iotjs
-	-rm apps/Kconfig
-#	-rm -rfv ${nuttx_config_file}
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
