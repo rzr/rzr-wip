@@ -85,7 +85,7 @@ rule/iotjs/base:
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
-rule/iotjs/build:
+rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
