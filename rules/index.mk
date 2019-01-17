@@ -108,10 +108,6 @@ menuconfig: rule/nuttx/menuconfig
 
 include rules/devel/index.mk
 
-meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
- ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
-	meld $^
-
 devel: rule/nuttx/devel
 
 
