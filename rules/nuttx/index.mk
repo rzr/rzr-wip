@@ -4,6 +4,7 @@ machine?=stm32f7nucleo
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch?=master
 nuttx_dir?=deps/nuttx
+nuttx_dir=nuttx-dir
 nuttx_config=nucleo-144/f767-netnsh
 
 # nuttx_url=file:///${HOME}/mnt/nuttx
