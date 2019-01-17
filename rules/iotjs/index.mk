@@ -24,7 +24,7 @@ rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
 	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
 
-iotjs:
+iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
 	ls $@
