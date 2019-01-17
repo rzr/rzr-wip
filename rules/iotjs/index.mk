@@ -9,7 +9,6 @@ export IOTJS_ROOT_DIR
 IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
 export IOTJS_ABSOLUTE_ROOT_DIR
 
-
 #iotjs_url?=https://github.com/Samsung/iotjs
 #iotjs_url?=https://github.com/tizenteam/iotjs
 iotjs_url?=file:///home/${USER}/mnt/iotjs
@@ -28,6 +27,9 @@ iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
 	ls $@
+
+iotjs: ${iotjs_config_file}
+	ls $^
 
 rule/iotjs/build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
@@ -74,8 +76,6 @@ iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
 
 iotjs/clean:
 	rm -rf iotjs/build
-
-iotjs/devel: menuconfig build run
 
 
 tmp/done/patch/iotjs/%: patches/iotjs/% iotjs
@@ -150,13 +150,17 @@ rule/iotjs/base:
 	${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.cfg
 	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
 	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
 	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-#TODO: MTD PARTS TELNET
+	echo 'PTHREAD_MUTEX_TYPES=y'>> ${nuttx_config_file}
+#TODO: MTD PARTS TELNET MUTEX
 	${MAKE} menuconfig
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.cfg
+	-diff -u ${nuttx_config_file}._pre.cfg ${nuttx_config_file}._post.cfg
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor
 	${MAKE} rule/iotjs/config # TODO
@@ -165,7 +169,7 @@ rule/iotjs/base:
 rule/iotjs/build:
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
-	cd iotjs && ./tools/build.py \
+	cd ${iotjs_dir} && ./tools/build.py \
 --target-arch=arm \
 --target-os=nuttx \
 --nuttx-home=../${nuttx_dir} \
@@ -183,6 +187,8 @@ rule/iotjs/link:
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
+
+# iotjs/devel: menuconfig build run
 
 rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
 
