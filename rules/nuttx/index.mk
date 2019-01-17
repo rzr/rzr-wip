@@ -77,9 +77,13 @@ ${image_file}: build
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 #	ls nuttx/.config || make configure
 #	ls nuttx/.config
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	make -C ${nuttx_dir} ${@F}
 	make -C ${nuttx_dir} savedefconfig
 #	meld ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
+	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
+	-diff -u ${nuttx_defconfig_file} ${iotjs_config_file}
 
 rule/nuttx/%: ${nuttx_dir}
 	make -C $< ${@F}
@@ -96,7 +100,7 @@ deploy:
 	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
 	cp -av nuttx/nuttx.bin  ${deploy_dir}
-	sleep 5
+	sleep 7
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
