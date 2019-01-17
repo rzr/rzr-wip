@@ -112,6 +112,7 @@ meld: ${nuttx_dir}/configs/nucleo-144/f767-nsh/defconfig \
  ${nuttx_dir}/configs/nucleo-144/f767-netnsh/defconfig 
 	meld $^
 
-devel: rule/nutt/devel
+devel: rule/nuttx/devel
+
 
 #include rules/iotjs/index.mk
