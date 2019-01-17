@@ -67,28 +67,8 @@ all: prep configure build
 
 run: deploy monitor
 
-docker/run:
-	docker-compose up ||:
-	docker build -t "rzrwip_default" .
-	docker run --privileged --rm -ti "rzrwip_default" run
-
-patch/%: patches/% tmp/done/patch/%
-	wc -l $<
-
-patch:
-	ls $^
-
-distclean: rule/nuttx/distclean
-	find . -iname "*.a" -exec rm {} \;
-#	rm -fv nuttx/staging/*.a
-	sync
-
 
 build: rule/nuttx/build
-
-rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
-	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
-
 
 
 #  make -C apps Kconfig
