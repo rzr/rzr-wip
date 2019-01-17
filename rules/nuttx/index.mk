@@ -100,7 +100,7 @@ deploy:
 	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
 	cp -av nuttx/nuttx.bin  ${deploy_dir}
-	sleep 7
+	sleep 6
 
 rule/nuttx/diff: nuttx/defconfig ${nuttx_defconfig_file}
 	meld $^
