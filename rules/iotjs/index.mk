@@ -81,6 +81,7 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
 #
+	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
 	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
@@ -106,7 +107,7 @@ rule/iotjs/base:
 #CONFIG_NET_LOCAL=y
 #CONFIG_NET_TCP_WRITE_BUFFERS=y
 #CONFIG_NSH_LIBRARY=y
-# echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
+# 
 
 	${MAKE} menuconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
