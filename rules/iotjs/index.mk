@@ -222,3 +222,5 @@ rule/iotjs/distclean:
 
 #rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default 
 #	$@ $^
+
+devel: rule/iotjs/devel
