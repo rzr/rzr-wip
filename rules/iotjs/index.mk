@@ -9,10 +9,10 @@ export IOTJS_ROOT_DIR
 IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
 export IOTJS_ABSOLUTE_ROOT_DIR
 
-#iotjs_url?=https://github.com/Samsung/iotjs
-#iotjs_url?=https://github.com/tizenteam/iotjs
+iotjs_url?=https://github.com/Samsung/iotjs
+iotjs_url=https://github.com/tizenteam/iotjs
+iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_url?=file:///home/${USER}/mnt/iotjs
-#iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 
 #nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
