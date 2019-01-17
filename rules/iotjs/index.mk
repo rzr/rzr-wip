@@ -133,7 +133,7 @@ rule/iotjs/lib:
 	${MAKE} rule/iotjs/build
 
 rule/iotjs/link:
-	${MAKE} ${nuttx_app_dir}/system/iotjs
+	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	${MAKE} rule/iotjs/configure
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
@@ -164,7 +164,7 @@ rule/iotjs/menuconfig:
 
 #all: prep configure build
 
-apps/system/iotjs: iotjs ${nuttx_apps_dir}
+${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	@mkdir -p $@
 	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
