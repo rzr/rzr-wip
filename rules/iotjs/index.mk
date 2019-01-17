@@ -32,7 +32,7 @@ iotjs: ${iotjs_config_file}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 #	-grep -i BOARD ${nuttx_config_file}
 
-rule/iotjs/build/base: nuttx/.config
+rule/iotjs/build/base: ${nuttx_dir}/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} \
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
@@ -51,18 +51,18 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  -C ${nuttx_dir}
 
 rule/iotjs/config: ${iotjs_dir}
-	ls nuttx/.config
+	ls ${nuttx_dir}/.config
 	make -C ${nuttx_dir} savedefconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
-	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
+	cp ${nuttx_dir}/.config ${iotjs_dir}/config/nuttx/${iotjs_machine}/config.default
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/configure: iotjs
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
 	-rm apps/Kconfig
 #	-rm -rfv ${nuttx_config_file}
-	rm -rfv nuttx/.config
+	rm -rfv ${nuttx_dir}/.config
 #	${MAKE} rule/iotjs/cleanall
 #	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
@@ -70,7 +70,7 @@ rule/iotjs/configure: iotjs
 	${MAKE} menuconfig
 
 rule/iotjs/base:
-	${MAKE} nuttx apps
+	${MAKE} ${nuttx_dir}
 	${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
@@ -167,9 +167,9 @@ rule/iotjs/menuconfig:
 apps/system/iotjs: iotjs apps
 	@mkdir -p $@
 	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
-	make -C apps Kconfig TOPDIR=${CURDIR}/nuttx
+	make -C apps Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
-iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default nuttx/.config
+iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}/.config
 	$@ $^
 
 iotjs/clean:
@@ -210,7 +210,7 @@ rule/iotjs/cleanall:
 
 
 todo:
-	cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
+	cp ${nuttx_dir}/defconfig iotjs/config/nuttx/nucleo-f767zi/config.default
 	meld iotjs/config/nuttx/stm32f4dis/  iotjs/config/nuttx/nucleo-f767zi/
 
 rule/iotjs/meld: iotjs/config/nuttx/${iotjs_machine}/config.alloptions
