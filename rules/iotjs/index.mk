@@ -12,7 +12,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_url=https://github.com/tizenteam/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-#iotjs_url?=file:///home/${USER}/mnt/iotjs
+iotjs_url?=file:///home/${USER}/mnt/iotjs
 iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 
 #nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
@@ -106,6 +106,7 @@ rule/iotjs/base:
 #CONFIG_NET_LOCAL=y
 #CONFIG_NET_TCP_WRITE_BUFFERS=y
 #CONFIG_NSH_LIBRARY=y
+# echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
 
 	${MAKE} menuconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
