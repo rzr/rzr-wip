@@ -15,14 +15,6 @@ iotjs_url?=file:///home/${USER}/mnt/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
-
-#TODO
-rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
-	ls apps
-	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
-	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	-grep -i BOARD ${nuttx_config_file}
-
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
@@ -31,12 +23,19 @@ iotjs/%:
 iotjs: ${iotjs_config_file}
 	ls $^
 
+rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
+	ls apps
+	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
+	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
+	-grep -i BOARD ${nuttx_config_file}
+
 rule/iotjs/build/base: nuttx/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} \
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
+
 
 iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 	ls $@
@@ -47,6 +46,71 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
+
+rule/iotjs/config: iotjs
+	ls nuttx/.config
+	make -C ${nuttx_dir} savedefconfig
+	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
+	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
+#	grep -v '#' nuttx/.config
+
+rule/iotjs/configure: iotjs
+#	rm -rfv nuttx/.config
+#	${MAKE} rule/iotjs/cleanall
+#	${MAKE} rule/nuttx/configure
+	cp -av ${iotjs_config_file} ${nuttx_config_file}
+	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+	${MAKE} menuconfig
+
+rule/iotjs/base:
+	${MAKE} nuttx apps
+	${MAKE} distclean
+	-rm -rfv ${iotjs_nuttx_dir}
+	${MAKE} rule/nuttx/configure
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
+	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
+	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
+	echo 'PTHREAD_MUTEX_TYPES=y'>> ${nuttx_config_file}
+#TODO: MTD PARTS TELNET MUTEX
+	${MAKE} menuconfig
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
+	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp
+	${MAKE} rule/nuttx/build
+	${MAKE} deploy monitor
+	${MAKE} rule/iotjs/config # TODO
+#	ls ${nuttx_include_file}
+
+rule/iotjs/build:
+#	grep FPU ${iotjs_config_file}
+	ls ${nuttx_include_file}
+	cd ${iotjs_dir} && ./tools/build.py \
+--target-arch=arm \
+--target-os=nuttx \
+--nuttx-home=../${nuttx_dir} \
+--target-board=${iotjs_machine} \
+--jerry-heaplimit=78
+
+rule/iotjs/lib:
+	${MAKE} rule/iotjs/build
+
+rule/iotjs/link:
+	${MAKE} apps/system/iotjs
+	-rm apps/Kconfig
+#	-rm -rfv ${nuttx_config_file}
+	${MAKE} rule/iotjs/configure
+	${MAKE} rule/iotjs/nuttx/build
+	${MAKE} deploy monitor
+
+rule/iotjs/menuconfig:
+	ls ${nuttx_config_file}
+#	${MAKE} menuconfig
+#	make -C ${nuttx_dir} savedefconfig
+# cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/
+#	-grep CONFIG_IOTJS ${nuttx_config_file}
+#	grep PIPES ${nuttx_config_file}
 
 #${nuttx_dir}/include/nuttx/config.h:
 #	grep -v CONFIG_IOTJS nuttx/.config > nuttx/base.config
@@ -109,20 +173,6 @@ rule/iotjs/cleanall:
 
 # philippe@wsf1127:rzr-wip (sandbox/rzr/nuttx/devel/master %)$ mv apps/system/Kconfig  apps/system/Kconfig.mine
 
-rule/iotjs/config: iotjs
-	ls nuttx/.config
-	make -C ${nuttx_dir} savedefconfig
-	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
-	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
-#	grep -v '#' nuttx/.config
-
-rule/iotjs/menuconfig:
-	ls ${nuttx_config_file}
-#	${MAKE} menuconfig
-#	make -C ${nuttx_dir} savedefconfig
-# cp nuttx/defconfig iotjs/config/nuttx/nucleo-f767zi/
-#	-grep CONFIG_IOTJS ${nuttx_config_file}
-#	grep PIPES ${nuttx_config_file}
 
 
 todo:
@@ -137,56 +187,6 @@ rule/iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.alloptions
 
 # uses VFP register arguments
 
-rule/iotjs/configure: iotjs
-#	rm -rfv nuttx/.config
-#	${MAKE} rule/iotjs/cleanall
-#	${MAKE} rule/nuttx/configure
-	cp -av ${iotjs_config_file} ${nuttx_config_file}
-	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
-	${MAKE} menuconfig
-
-rule/iotjs/base:
-	${MAKE} nuttx apps
-	${MAKE} distclean
-	-rm -rfv ${iotjs_nuttx_dir}
-	${MAKE} rule/nuttx/configure
-	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.cfg
-	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-	echo 'PTHREAD_MUTEX_TYPES=y'>> ${nuttx_config_file}
-#TODO: MTD PARTS TELNET MUTEX
-	${MAKE} menuconfig
-	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.cfg
-	-diff -u ${nuttx_config_file}._pre.cfg ${nuttx_config_file}._post.cfg
-	${MAKE} rule/nuttx/build
-	${MAKE} deploy monitor
-	${MAKE} rule/iotjs/config # TODO
-#	ls ${nuttx_include_file}
-
-rule/iotjs/build:
-#	grep FPU ${iotjs_config_file}
-	ls ${nuttx_include_file}
-	cd ${iotjs_dir} && ./tools/build.py \
---target-arch=arm \
---target-os=nuttx \
---nuttx-home=../${nuttx_dir} \
---target-board=${iotjs_machine} \
---jerry-heaplimit=78
-
-
-rule/iotjs/lib:
-	${MAKE} rule/iotjs/build
-
-rule/iotjs/link:
-	${MAKE} apps/system/iotjs
-	-rm apps/Kconfig
-#	-rm -rfv ${nuttx_config_file}
-	${MAKE} rule/iotjs/configure
-	${MAKE} rule/iotjs/nuttx/build
-	${MAKE} deploy monitor
 
 # iotjs/devel: menuconfig build run
 
