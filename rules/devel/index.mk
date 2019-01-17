@@ -32,4 +32,21 @@ rule/nucleo: \
 	meld $^
 
 
+docker/run:
+	docker-compose up ||:
+	docker build -t "rzrwip_default" .
+	docker run --privileged --rm -ti "rzrwip_default" run
+
+patch/%: patches/% tmp/done/patch/%
+	wc -l $<
+
+patch:
+	ls $^
+
+distclean: rule/nuttx/distclean
+	find . -iname "*.a" -exec rm {} \;
+#	rm -fv nuttx/staging/*.a
+	sync
+
 devel: rule/nuttx/devel
+
