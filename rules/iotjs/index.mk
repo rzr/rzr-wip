@@ -12,7 +12,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_url=https://github.com/tizenteam/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-iotjs_url?=file:///home/${USER}/mnt/iotjs
+iotjs_url=file:///home/${USER}/mnt/iotjs
 iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 
 #nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
@@ -50,9 +50,10 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-rule/iotjs/config: iotjs
+rule/iotjs/config: ${iotjs_dir}
 	ls nuttx/.config
 	make -C ${nuttx_dir} savedefconfig
+	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
 	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
 	cp nuttx/.config iotjs/config/nuttx/stm32f7nucleo/config.default
 #	grep -v '#' nuttx/.config
@@ -82,6 +83,8 @@ rule/iotjs/base:
 	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
+	echo 'CONFIG_NET_ICMPv6=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
 	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
@@ -107,7 +110,6 @@ rule/iotjs/base:
 #CONFIG_NET_LOCAL=y
 #CONFIG_NET_TCP_WRITE_BUFFERS=y
 #CONFIG_NSH_LIBRARY=y
-# 
 
 	${MAKE} menuconfig
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
@@ -127,6 +129,7 @@ rule/iotjs/build: ${iotjs_config_file}
 --jerry-heaplimit=78
 
 rule/iotjs/lib:
+	rm -rf ${iotjs_dir}/build
 	${MAKE} rule/iotjs/build
 
 rule/iotjs/link:
