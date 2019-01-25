@@ -17,7 +17,7 @@
 var webthing = require('webthing');
 
 function main () {
-  var thing = new webthing.Thing('ColorSensor', ['Color'], 'A RGB color sensor');
+  var thing = new webthing.Thing('ColorSensor', ['Color']);
   var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 4280);
   process.on('SIGINT', function () {
     server.stop();
