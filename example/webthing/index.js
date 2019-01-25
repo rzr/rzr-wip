@@ -17,12 +17,8 @@
 var webthing = require('webthing');
 
 function main () {
-  var port = process.argv[2]
-      ? Number(process.argv[2])
-      : 8889;
-
-  var thing = new webthing.Thing('ColorSensor', [], 'A RGB color sensor');
-  var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
+  var thing = new webthing.Thing('ColorSensor', ['Color'], 'A RGB color sensor');
+  var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 4280);
   process.on('SIGINT', function () {
     server.stop();
   });
