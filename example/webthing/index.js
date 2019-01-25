@@ -16,9 +16,18 @@
  */
 var webthing = require('webthing');
 
+function ColorProperty(thing) {
+  webthing.Property.call(this, thing, 'Color',
+                         new webthing.Value('0x000000'),
+                         { '@type': 'ColorProperty', type: 'string' });
+}
+
+
 function main () {
-  var thing = new webthing.Thing('SomeSensor');
+  var thing = new webthing.Thing('ColorSensor', ['Color']);
+  thing.addProperty(new ColorProperty(thing));
   var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 4280);
+  
   process.on('SIGINT', function () {
     server.stop();
   });
