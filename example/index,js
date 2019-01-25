@@ -105,20 +105,12 @@ Color.prototype.start = function start() {
   }
 }
 
-
 module.exports = Color;
 
-
-module.exports.main = function() {
+if ( module.parent === null) {
   var sensor = new Color();
   sensor.onreading = function() {
     console.log("log: " + sensor.color);
   }
   sensor.start();
-  
-};
-
-console.log(module);
-if (process.argv.length > 0 ) {
-  module.exports.main();
-}
+}  
