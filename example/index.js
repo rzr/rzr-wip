@@ -39,7 +39,7 @@ function ColorSensor(options) {
   };
   this.onactivate = function() {};
   this.onreading = function() {};
-  
+
   this.options = options || {};
   this.options.frequency = this.options.frequency || 1;
   this.options.controller = this.options.controller || 'simulator';
@@ -110,4 +110,4 @@ if (module.parent === null) {
     console.log("log: " + sensor.color);
   }
   sensor.start();
-}  
+}
