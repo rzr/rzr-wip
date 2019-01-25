@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 var webthing = require('webthing');
+var ColorSensor = require('../index.js'); // HAL
 
 function ColorProperty(thing) {
+  var self = this;
   webthing.Property.call(this, thing, 'Color',
-                         new webthing.Value('0x000000'),
+                         new webthing.Value('#000000'),
                          { '@type': 'ColorProperty', type: 'string' });
+  this.sensor = new ColorSensor();
+  this.sensor.onreading = function() {
+    self.value.notifyOfExternalUpdate(self.sensor.color);
+  }
+  this.sensor.start();
 }
 
 
