@@ -15,14 +15,22 @@
  * limitations under the License.
  */
 var webthing = require('webthing-iotjs');
+var mqtt = require('mqtt');
 
 
-function SomeProperty(thing) {
-  webthing.Property.call(this, thing, 'SomeProperty', new webthing.Value(0));
+function MqttProperty(thing) {
+  var self=this;
+  webthing.Property.call(this, thing, 'Humidity', new webthing.Value(0));
+  thing.client.subscribe('workgroup/TODO/air/humidity');
+  thing.client.on('message', function(data) {
+    var updatedValue = JSON.parse(data.message.toString())['humidity'];
+    self.value.notifyOfExternalUpdate(updatedValue);
+  });
 }
 
 
-var thing = new webthing.Thing('SomeThing');
-thing.addProperty(new SomeProperty(thing));
+var thing = new webthing.Thing('MqttSensor');
+thing.client = new mqtt.connect({host: 'iot.eclipse.org', port: 1883},
+                                function(){thing.addProperty(new MqttProperty(thing));});
 var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8888);
 server.start();
