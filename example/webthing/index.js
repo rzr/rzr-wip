@@ -21,7 +21,7 @@ function ColorProperty(thing) {
   var self = this;
   webthing.Property.call(this, thing, 'Color',
                          new webthing.Value('#000000'),
-                         { '@type': 'ColorProperty', type: 'string' });
+                         { '@type': 'ColorProperty', type: 'string', readOnly: true });
   this.sensor = new ColorSensor();
   this.sensor.onreading = function() {
     self.value.notifyOfExternalUpdate(self.sensor.color);
@@ -31,10 +31,9 @@ function ColorProperty(thing) {
 
 
 function main () {
-  var thing = new webthing.Thing('ColorSensor', ['Color']);
+  var thing = new webthing.Thing('ColorSensor' , ['ColorControl']);
   thing.addProperty(new ColorProperty(thing));
-  var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 4280);
-  
+  var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 58888); 
   process.on('SIGINT', function () {
     server.stop();
   });
