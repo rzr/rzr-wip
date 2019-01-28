@@ -1,4 +1,4 @@
-/* -*- mode: js; js-indent-level:2;  -*-
+/* -*- mode: js; js-indent-level:4;  -*-
  * SPDX-License-Identifier: Apache-2.0
  * Copyright 2018-present Samsung Electronics Co., Ltd. and other contributors
  *
@@ -14,15 +14,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var console = require('console');
+
 var webthing = require('webthing-iotjs');
+var mqtt = require('mqtt');
+var fs = require('fs');
 
 
-function SomeProperty(thing) {
-  webthing.Property.call(this, thing, 'SomeProperty', new webthing.Value(0));
+// Change topic here
+var mqtt_config = {host: 'iot.eclipse.org',
+    port: 1883};
+var topic = 'workgroup/com.github.rzr.webthing-iotjs.example/onoff';
+
+
+function MqttProperty(thing) {
+    var self = this;
+    webthing.Property.call(
+        this, thing, 'on',
+        new webthing.Value(false),
+        {'@type': 'BooleanProperty',
+            type: 'boolean',
+            readOnly: true}
+    );
+    thing.client.subscribe(topic);
+    thing.client.on('message', function(data) {
+        var updatedValue = Boolean(JSON.parse(data.message.toString()).onoff);
+        console.log('log: update: ' + updatedValue);
+        self.value.notifyOfExternalUpdate(updatedValue);
+    });
 }
 
 
-var thing = new webthing.Thing('SomeThing');
-thing.addProperty(new SomeProperty(thing));
-var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8888);
-server.start();
+var thing = new webthing.Thing('MqttBinarySensor', ['BinarySensor']);
+thing.client = new mqtt.connect(
+    mqtt_config,
+    function() {
+        thing.property = new MqttProperty(thing);
+        thing.addProperty(thing.property);
+        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8883);
+        server.start();
+        if (process.argv[2] === '-i') {
+            console.log('log: ready type 1 or 0 to update');
+            var istream = fs.createReadStream('/dev/stdin');
+            istream.on('data', function(data) {
+                var payload = JSON.stringify({onoff: Boolean(Number(data.toString()[0]))});
+                thing.client.publish(topic, payload);
+            });
+        }
+    }
+);
