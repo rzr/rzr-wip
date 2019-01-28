@@ -22,7 +22,9 @@ function ColorProperty(thing) {
   webthing.Property.call(this, thing, 'Color',
                          new webthing.Value('#000000'),
                          { '@type': 'ColorProperty', type: 'string', readOnly: true });
-  this.sensor = new ColorSensor();
+  this.sensor = new ColorSensor(
+    { 'controller': 'tcs34725' }
+  );
   this.sensor.onreading = function() {
     self.value.notifyOfExternalUpdate(self.sensor.color);
   }
