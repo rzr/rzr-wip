@@ -16,6 +16,13 @@
  */
 var webthing = require('webthing-iotjs');
 
+
+function SomeProperty(thing) {
+  webthing.Property.call(this, thing, 'SomeProperty', new webthing.Value(0));
+}
+
+
 var thing = new webthing.Thing('SomeThing');
+thing.addProperty(new SomeProperty(thing));
 var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8888);
 server.start();
