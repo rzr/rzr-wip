@@ -81,6 +81,7 @@ rule/iotjs/base:
 	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
 	echo 'CONFIG_NET_ICMPv6=y' >> ${nuttx_config_file}
