@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>WebThingIotJs : Live demo !!!</title>
+  </head>
+
+  <frameset cols="*,640"
+            frameborder="0" frameborder="no" framespacing="0" bordercolor="black" border="0"
+            >
+
+    <frame src="https://sosg.mozilla-iot.org/things"
+           marginheight="0" marginwidth="0" scrolling="no" frameborder="0" margin="0"
+           onload="setTimeout(function(){ document.getElementById('logo').src = 'http://www.rzr.cloudns.org:51281'; }, 10000)"
+           />
+
+    <frameset rows="480,*"
+              frameborder="0" frameborder="no" framespacing="0" bordercolor="black" border="0"
+              >
+
+      <frame src="logo.html" width="640" id='logo'
+             marginheight="0" marginwidth="0" scrolling="yes" frameborder="0" margin="0"
+             />
+
+      <frame src="https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fmastodon.social%2Fusers%2Ftizenhelper.atom&theme=light&size=100&header=false&replies=true&boosts=true" id='feed'
+             marginheight="0" marginwidth="0" scrolling="yes" frameborder="0" margin="0"
+             allowfullscreen sandbox="allow-top-navigation allow-scripts"
+             onLoad="var self=this; setTimeout(function(){ self.src +=''; }, 3000)"
+             />
+    </frameset>
+  </frameset>
+</html>
