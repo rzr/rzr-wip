@@ -63,7 +63,7 @@ function MqttProperty(thing, value, config) {
   self.config.label = self.config.label || '?';
   self.config.topic.type = self.config.topic.type || 'number';
   if (self.config.topic.type === 'number') {
-    self.config.topic.propType = 'NumberProperty';
+    self.config.topic.propType = 'LevelProperty';
   }
   self.config = config;
   Property.call(
@@ -114,7 +114,7 @@ function main () {
   mqtt_options.client.endPoint = process.argv[3] ? String(process.argv[3])
     : "workgroup/com.github.rzr.webthing-iotjs.example.todo";
   
-  var thing = new Thing('MQTT Source', [], 'A set of sensors');
+  var thing = new Thing('MQTT Source', ['MultiLevelSensor'], 'A set of sensors');
   
   thing.client = new mqtt.connect(mqtt_options.client, function () {
     for (var idx = 0; idx < options.length; idx++) {
