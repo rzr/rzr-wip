@@ -48,9 +48,13 @@ function receive(incoming, callback) {
 if (module.parent === null) {
 
   // Workaround bug
-  options.headers = {
-    host: options.hostname
-  };
+  if (options.headers === undefined) {
+    options.headers = {};
+  }
+  console.log(options.headers);
+  if (options.headers.host === undefined) {
+    options.headers.host = options.hostname;
+  }
 
   http.request(options, function (res) {
     receive(res, function (data) {
