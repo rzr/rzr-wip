@@ -1,11 +1,12 @@
 {
   "name": "rzr-wip",
   "version": "0.0.0",
-  "description": "Work In progress",
+  "description": "Work In Progress",
   "main": "index.js",
   "scripts": {
     "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rzr/rzr-wip.git"
@@ -18,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/rzr/rzr-wip/issues"
   },
-  "homepage": "https://github.com/rzr/rzr-wip#readme"
+  "homepage": "https://github.com/rzr/rzr-wip#readme",
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.0.1",
