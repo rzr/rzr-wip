@@ -3,29 +3,98 @@
   <head>
     <meta charset="UTF-8"/>
     <title>WebThingIotJs : Live demo !!!</title>
+<script><!--
+
+
+function update(id, url, secs)
+{
+  setTimeout(function() {
+    document.getElementById(id).src = url;
+    }, secs * 1000);
+}
+
+function callback(frame)
+{
+  // https://social.samsunginter.net/@rzr#"
+  var feed_url = "https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fmastodon.social%2Fusers%2Ftizenhelper.atom&theme=light&size=100&header=false&replies=true&boosts=true";
+  //var preview_url = "https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fsocial.samsunginter.net%2Fusers%2Frzr.atom&theme=light&size=100&header=true&replies=true&boosts=true";
+  var blank_url = "about:blank";
+  var content_url = "https://sosg.mozilla-iot.org/things";
+  var logo_url = 'https://things.samsunginter.net/logo.html';
+  var video_url = 'https://things.samsunginter.net/video.html';
+
+  if (false) {
+    alert("info: " + frame.id + "=" + frame.src);
+  }
+  if (frame.id === "content") {
+    if (frame.src === blank_url) {
+      update('content', logo_url, 0);
+    } else if (frame.src === logo_url) {
+      update('content', feed_url, 1);
+    } else if (frame.src === feed_url) {
+      update('video', logo_url, 1);
+    } else if (frame.src === content_url) {
+      update('video', video_url, 10);
+    }
+  } else if (frame.id === "video") {
+    if (frame.src === logo_url) {
+      update('content', content_url, 0);
+    } else if (frame.src === video_url) {
+      update('feed', logo_url, 0);
+    }
+  } else if (frame.id === "feed") {
+    if (frame.src === logo_url) {
+      update('feed', feed_url, 10);
+    } else if (frame.src === feed_url) {
+      update('feed', feed_url, 3);
+    } 
+  }
+}
+//-->
+</script>
   </head>
 
   <frameset cols="*,640"
-            frameborder="0" frameborder="no" framespacing="0" bordercolor="black" border="0"
+            frameborder="0"
+            frameborder="no"
+            framespacing="0"
+            bordercolor="black"
+            border="0"
             >
 
-    <frame src="https://sosg.mozilla-iot.org/things"
-           marginheight="0" marginwidth="0" scrolling="no" frameborder="0" margin="0"
-           onload="setTimeout(function(){ document.getElementById('logo').src = 'http://www.rzr.cloudns.org:51281'; }, 10000)"
+    <frame id="content"
+           src="about:blank"
+           border="0"
+           frameborder="0"
+           margin="0"
+           marginheight="0"
+           marginwidth="0"
+           scrolling="no"
+           onload="callback(this);"
            />
 
     <frameset rows="480,*"
-              frameborder="0" frameborder="no" framespacing="0" bordercolor="black" border="0"
-              >
-
-      <frame src="logo.html" width="640" id='logo'
-             marginheight="0" marginwidth="0" scrolling="yes" frameborder="0" margin="0"
+              border="0"
+              bordercolor="black"
+              frameborder="no"
+              framespacing="0"
+              frameborder="0"
+      >
+      <frame id="video"
+             border="0"
+             frameborder="0"
+             margin="0"
+             marginheight="0"
+             marginwidth="0"
+             scrolling="no"
+             src="about:blank"
+             width="640"
+             onload="callback(this);"
              />
 
-      <frame src="https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fmastodon.social%2Fusers%2Ftizenhelper.atom&theme=light&size=100&header=false&replies=true&boosts=true" id='feed'
+      <frame id="feed" src="about:blank" 
              marginheight="0" marginwidth="0" scrolling="yes" frameborder="0" margin="0"
-             allowfullscreen sandbox="allow-top-navigation allow-scripts"
-             onLoad="var self=this; setTimeout(function(){ self.src +=''; }, 3000)"
+             onload="callback(this);"
              />
     </frameset>
   </frameset>
