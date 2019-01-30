@@ -17,21 +17,20 @@
 
 
 var console = require('console');
-var http = require('http');
+var http = require('https');
 
 // Replace with your openweathermap.org personal key here
-var api_key = 'fb3924bbb699b17137ab177df77c220c';
-var location = '48,-1';
+// https://api.opensensemap.org/boxes/5c3a9814c4c2f30019f679a1
+var boxId = '5c3a9814c4c2f30019f679a1';
 
-var datetime = 'current';
 
 var options = {
-  hostname: 'api.openweathermap.org',
-  port: 80,
-  path: '/pollution/v1/co/' +
-    location + '/' + datetime + '.json?appid=' + api_key
+  hostname: 'api.opensensemap.org',
+  port: 443,
+  path: '/boxes/' + boxId, 
+  rejectUnauthorized: false
 };
-
+// '/' + sensorId
 
 function receive(incoming, callback) {
   var data = '';
@@ -48,10 +47,10 @@ function receive(incoming, callback) {
 if (module.parent === null) {
 
   // Workaround bug
-  if (options.headers === undefined) {
+  if (!options.headers) {
     options.headers = {};
   }
-  if (options.headers.host === undefined) {
+  if (!options.headers.host) {
     options.headers.host = options.hostname;
   }
 
@@ -60,8 +59,7 @@ if (module.parent === null) {
       console.log(data);
       var object = JSON.parse(data);
       var property = {
-        'timestamp': object.time,
-        'value': object.data[0].value
+        'value': object
       };
       console.log(JSON.stringify(property));
     });
