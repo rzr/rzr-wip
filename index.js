@@ -19,18 +19,25 @@
 var console = require('console');
 var http = require('https');
 
-// Replace with your openweathermap.org personal key here
-// https://api.opensensemap.org/boxes/5c3a9814c4c2f30019f679a1
-var boxId = '5c3a9814c4c2f30019f679a1';
+/* Replace with your openweathermap.org personal key here
+   https://api.opensensemap.org/boxes/5c3a9814c4c2f30019f679a1 */
+var config = {
+  boxId: '5c3a9814c4c2f30019f679a1',
+  // TODO: parse stream
+  sensors: [
+    {id: '5c3a9814c4c2f30019f679a5',
+     type: 'pm10'}
+  ]
+};
 
 
 var options = {
   hostname: 'api.opensensemap.org',
   port: 443,
-  path: '/boxes/' + boxId, 
+  path: '/boxes/' + config.boxId,
   rejectUnauthorized: false
 };
-// '/' + sensorId
+
 
 function receive(incoming, callback) {
   var data = '';
@@ -44,7 +51,7 @@ function receive(incoming, callback) {
   });
 }
 
-if (module.parent === null) {
+function update() {
 
   // Workaround bug
   if (!options.headers) {
@@ -56,12 +63,30 @@ if (module.parent === null) {
 
   http.request(options, function (res) {
     receive(res, function (data) {
-      console.log(data);
+      console.log('log: box: ' + config.boxId);
       var object = JSON.parse(data);
-      var property = {
-        'value': object
-      };
+      console.log(JSON.stringify(object));
+    });
+  }).end();
+
+  var property = {};
+  // TODO: async loop
+  var idx = 0;
+  options.path = '/boxes/' + config.boxId + '/data/' + config.sensors[idx].id;
+  console.log(options.path);
+  http.request(options, function (res) {
+    receive(res, function (data) {
+      var object = JSON.parse(data);
+      property[config.sensors[idx].type] = object[idx].value;
       console.log(JSON.stringify(property));
     });
   }).end();
 }
+
+if (module.parent === null) {
+  setInterval(function() {
+    update();
+  }, 60 * 1000);
+}
+
+
