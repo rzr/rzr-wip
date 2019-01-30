@@ -7,6 +7,10 @@
 base_url?=http://localhost:8888
 webthing_url?=https://github.com/rzr/webthing-iotjs
 
+
+iotjs_modules: iotjs_modules/webthing-iotjs
+	ls $@
+
 iotjs_modules/webthing-iotjs:
 	@mkdir -p $@
 	git clone --depth 1 --recursive ${webthing_url} $@
