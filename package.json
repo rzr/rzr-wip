@@ -1,0 +1,23 @@
+{
+  "name": "rzr-wip",
+  "version": "0.0.0",
+  "description": "Work In progress",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rzr/rzr-wip.git"
+  },
+  "keywords": [
+    "wip"
+  ],
+  "author": "Philippe Coval <p.coval@samsung.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rzr/rzr-wip/issues"
+  },
+  "homepage": "https://github.com/rzr/rzr-wip#readme"
+}
