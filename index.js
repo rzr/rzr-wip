@@ -19,11 +19,11 @@
 var console = require('console');
 var http = require('http');
 
-var location = '48,-1';
-var datetime = 'current';
-
 // Replace with your openweathermap.org personal key here
 var api_key = 'fb3924bbb699b17137ab177df77c220c';
+var location = '48,-1';
+
+var datetime = 'current';
 
 var options = {
   hostname: 'api.openweathermap.org',
@@ -51,7 +51,6 @@ if (module.parent === null) {
   if (options.headers === undefined) {
     options.headers = {};
   }
-  console.log(options.headers);
   if (options.headers.host === undefined) {
     options.headers.host = options.hostname;
   }
@@ -59,6 +58,12 @@ if (module.parent === null) {
   http.request(options, function (res) {
     receive(res, function (data) {
       console.log(data);
+      var object = JSON.parse(data);
+      var property = {
+        'timestamp': object.time,
+        'value': object.data[0].value
+      };
+      console.log(JSON.stringify(property));
     });
   }).end();
 }
