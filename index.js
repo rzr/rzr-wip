@@ -16,6 +16,45 @@
  */
 
 
+var console = require('console');
+var http = require('http');
+
+var location = '48,-1';
+var datetime = 'current';
+
+// Replace with your openweathermap.org personal key here
+var api_key = 'fb3924bbb699b17137ab177df77c220c';
+
+var options = {
+  hostname: 'api.openweathermap.org',
+  port: 80,
+  path: '/pollution/v1/co/' +
+    location + '/' + datetime + '.json?appid=' + api_key
+};
+
+
+function receive(incoming, callback) {
+  var data = '';
+
+  incoming.on('data', function (chunk) {
+    data += chunk;
+  });
+
+  incoming.on('end', function () {
+    callback && callback(data);
+  });
+}
+
 if (module.parent === null) {
-  console.log(process);
+
+  // Workaround bug
+  options.headers = {
+    host: options.hostname
+  };
+
+  http.request(options, function (res) {
+    receive(res, function (data) {
+      console.log(data);
+    });
+  }).end();
 }
