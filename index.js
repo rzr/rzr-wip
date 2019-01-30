@@ -81,7 +81,7 @@ function MqttProperty(thing, value, config) {
     self.client = thing.client;
     self.config.topic.uri =
       self.config.mqtt.client.endPoint + self.config.topic.endPoint;
-
+    console.log('log: subscribing: ' + self.config.topic.uri);
     self.client.subscribe(
       self.config.topic.uri, self.config.mqtt.subscribe,
       function(error) {
@@ -110,8 +110,12 @@ function MqttProperty(thing, value, config) {
 
 
 function main () {
+  var port = process.argv[2] ? Number(process.argv[2]) : 8888;
+  mqtt_options.client.endPoint = process.argv[3] ? String(process.argv[3])
+    : "workgroup/com.github.rzr.webthing-iotjs.example.todo";
+  
   var thing = new Thing('MQTT Source', [], 'A set of sensors');
-  var port = 8885;
+  
   thing.client = new mqtt.connect(mqtt_options.client, function () {
     for (var idx = 0; idx < options.length; idx++) {
       thing.addProperty(new MqttProperty(thing, null, options[idx]));
