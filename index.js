@@ -114,7 +114,7 @@ function main () {
   mqtt_options.client.endPoint = process.argv[3] ? String(process.argv[3])
     : "workgroup/com.github.rzr.webthing-iotjs.example.todo";
   
-  var thing = new Thing('MQTT Source', ['MultiLevelSensor'], 'A set of sensors');
+  var thing = new Thing('HumidityMqttSensor', ['MultiLevelSensor'], 'A set of sensors');
   
   thing.client = new mqtt.connect(mqtt_options.client, function () {
     for (var idx = 0; idx < options.length; idx++) {
