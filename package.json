@@ -5,11 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "node index"
-  },
+    "test": "echo \"Error: no test specified\" && exit 1"
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/rzr/rzr-wip.git"
+    "url": "https://github.com/rzr/rzr-wip.git"
   },
   "keywords": [
     "wip"
@@ -20,4 +19,9 @@
     "url": "https://github.com/rzr/rzr-wip/issues"
   },
   "homepage": "https://github.com/rzr/rzr-wip#readme"
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1"
+  }
 }
