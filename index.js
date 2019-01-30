@@ -16,6 +16,8 @@
  */
 
 
-if (module.parent === null) {
-  console.log(process);
-}
+var console = require('console');
+
+
+console.log(process);
+
