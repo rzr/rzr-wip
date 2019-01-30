@@ -6,6 +6,8 @@
 default: help iotjs/run
 
 example?=index.js
+eslint_file?=node_modules/eslint/bin/eslint.js
+
 
 help:
 	@echo "Usage:"
@@ -41,3 +43,14 @@ run: iotjs/run
 
 cleanall:
 	rm -rf iotjs_modules node_modules
+
+${eslint_file}:
+	npm install eslint --save-dev
+	npm install babel-eslint --save-dev
+
+eslint: ${eslint_file} .eslintrc.js
+	${eslint_file} --no-color --fix .
+	${eslint_file} --no-color .
+
+lint: eslint
+
