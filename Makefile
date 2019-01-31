@@ -3,35 +3,57 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright: 2018-present Samsung Electronics France SAS, and contributors
 
+default: help iotjs/run
 
-base_url?=http://localhost:8888
+example?=index.js
+eslint_file?=node_modules/eslint/bin/eslint.js
+port?=8886
+base_url?=http://localhost:${port}
 webthing_url?=https://github.com/rzr/webthing-iotjs
 
-iotjs_modules/webthing-iotjs:
-	@mkdir -p $@
-	git clone --depth 1 --recursive ${webthing_url} $@
+iotjs_modules+=iotjs_modules/webthing-iotjs
+node_modules+=node_modules/webthing-iotjs
 
-iotjs_modules/webthing-iotjs/%: iotjs_modules/webthing-iotjs
+help:
+	@echo "Usage:"
+	@echo "# make run"
+
+iotjs_modules/webthing-iotjs/%:
+	@mkdir -p iotjs_modules/webthing-iotjs
+	git clone --depth 1 --recursive ${webthing_url} iotjs_modules/webthing-iotjs
+
+iotjs_modules/webthing-iotjs: iotjs_modules/webthing-iotjs/index.js
 	@ls $@
 
-iotjs/run: index.js iotjs_modules/webthing-iotjs/index.js
-	iotjs $<
-#	IOTJS_EXTRA_MODULE_PATH=../.. 
 
-iotjs/debug:
-#	rm -rf node_modules
-	NODE_PATH=iotjs_modules:../.. node index.js
+iotjs_modules: ${iotjs_modules}
+	mkdir -p $@
+	ls $@
+
+iotjs/run: ${example} iotjs_modules
+	iotjs $<
+
+node_modules: ${node_modules}
+	mkdir -p $@
+	ls $@
+
+node/run: ${example} node_modules
+	node $<
+
+iotjs/debug: ${example}
+	echo rm -rf node_modules
+	NODE_PATH=iotjs_modules:../.. node 
 
 test:
 	curl ${base_url}
 	@echo
 	curl ${base_url}/properties
-	@echo
-	curl ${base_url}/properties/level
-	@echo
-	curl -H "Content-Type: application/json" -X PUT --data '{"level": 42}' http://localhost:8888/properties/level
-	curl ${base_url}/properties/level
-	@echo
+
+package.json:
+	npm init
+
+node_modules/%: package.json
+	npm install
 
 node_modules: package.json
 	npm install
@@ -44,3 +66,14 @@ run: iotjs/run
 
 cleanall:
 	rm -rf iotjs_modules node_modules
+
+${eslint_file}:
+	npm install eslint --save-dev
+	npm install babel-eslint --save-dev
+
+eslint: ${eslint_file} .eslintrc.js
+	${eslint_file} --no-color --fix .
+	${eslint_file} --no-color .
+
+lint: eslint
+
