@@ -39,13 +39,13 @@ function MqttProperty(thing) {
             self.thing.client.publish(pub_topic, payload);
         }),
         {'@type': 'OnOffProperty',
-            type: 'boolean',
-            readOnly: true}
+         type: 'boolean'
+	}
     );
 }
 
 
-var thing = new webthing.Thing('MqttBinarySensor', ['OnOffSwitch']);
+var thing = new webthing.Thing('MqttOnOffSwitch', ['OnOffSwitch']);
 thing.client = new mqtt.connect(
     mqtt_config,
     function() {
