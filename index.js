@@ -1,4 +1,4 @@
-/* -*- mode: js; js-indent-level:4;  -*-
+/* -*- mode: js; js-indent-level:2;  -*-
  * SPDX-License-Identifier: Apache-2.0
  * Copyright 2018-present Samsung Electronics Co., Ltd. and other contributors
  *
@@ -24,34 +24,33 @@ var fs = require('fs');
 // Change topic here
 var mqtt_config = {host: 'iot.eclipse.org',
     port: 1883};
-var topic = 'workgroup/com.github.rzr.webthing-iotjs.example/onoff';
-
+var topic = 'io.github.rzr';
+var pub_topic = topic + '/relay/0/set';
 
 function MqttProperty(thing) {
     var self = this;
+    self.thing = thing;
     webthing.Property.call(
         this, thing, 'on',
-        new webthing.Value(false),
-        {'@type': 'BooleanProperty',
+        new webthing.Value(false, function(data) {
+            var payload = data
+                ? '1' : '0';
+            self.thing.client.publish(pub_topic, payload);
+        }),
+        {'@type': 'OnOffProperty',
             type: 'boolean',
             readOnly: true}
     );
-    thing.client.subscribe(topic);
-    thing.client.on('message', function(data) {
-        var updatedValue = Boolean(JSON.parse(data.message.toString()).onoff);
-        console.log('log: update: ' + updatedValue);
-        self.value.notifyOfExternalUpdate(updatedValue);
-    });
 }
 
 
-var thing = new webthing.Thing('MqttBinarySensor', ['BinarySensor']);
+var thing = new webthing.Thing('MqttBinarySensor', ['OnOffSwitch']);
 thing.client = new mqtt.connect(
     mqtt_config,
     function() {
         thing.property = new MqttProperty(thing);
         thing.addProperty(thing.property);
-        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8883);
+        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8886);
         server.start();
         if (process.argv[2] === '-i') {
             console.log('log: ready type 1 or 0 to update');
