@@ -107,7 +107,7 @@ function SomeProperty(thing) {
   var self = this;
   webthing.Property.call(
     this, thing, 'pm10', new webthing.Value(0),
-    {'@type': 'MultiLevelSensor', type: 'number'}
+    {'@type': 'LevelProperty', type: 'number'}
   );
   setInterval(function() {
     update(app.config.server, function(err, object) {
