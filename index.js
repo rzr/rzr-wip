@@ -26,6 +26,7 @@ var mqtt_config = {host: 'iot.eclipse.org',
     port: 1883};
 var topic = 'io.github.rzr';
 var pub_topic = topic + '/relay/0/set';
+var port = Number(process.argv[2] || 8888);
 
 function MqttProperty(thing) {
     var self = this;
@@ -50,7 +51,7 @@ thing.client = new mqtt.connect(
     function() {
         thing.property = new MqttProperty(thing);
         thing.addProperty(thing.property);
-        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), 8886);
+        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
         server.start();
         if (process.argv[2] === '-i') {
             console.log('log: ready type 1 or 0 to update');
