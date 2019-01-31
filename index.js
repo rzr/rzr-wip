@@ -107,7 +107,7 @@ function SomeProperty(thing) {
   var self = this;
   webthing.Property.call(
     this, thing, 'pm10', new webthing.Value(0),
-    {'@type': 'MultiLevelSensor'}
+    {'@type': 'MultiLevelSensor', type: number}
   );
   setInterval(function() {
     update(app.config.server, function(err, object) {
@@ -128,7 +128,7 @@ function SomeProperty(thing) {
 }
 
 if (module.parent === null) {
-  app.thing = new webthing.Thing('', ['MultiLevelSensor']);
+  app.thing = new webthing.Thing('AirQualitySensor', ['MultiLevelSensor']);
   app.thing.addProperty(new SomeProperty(app.thing));
   app.server = new webthing.WebThingServer(
     new webthing.SingleThing(app.thing),
