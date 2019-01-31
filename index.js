@@ -14,79 +14,125 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
+var webthing = require('webthing-iotjs');
 var console = require('console');
 var http = require('https');
 
+
 /* Replace with your openweathermap.org personal key here
    https://api.opensensemap.org/boxes/5c3a9814c4c2f30019f679a1 */
-var config = {
-  boxId: '5c3a9814c4c2f30019f679a1',
+var app = {
+
+  config: {
+    log: false,
+    port: 8888,
+    server: {
+      hostname: 'api.opensensemap.org',
+      port: 443,
+      rejectUnauthorized: false
+    },
+    boxId: '5c3a9814c4c2f30019f679a1',
+    sensors: [
+          {id: '5c3a9814c4c2f30019f679a5',
+           type: 'pm10'}
+    ]
+  },
   // TODO: parse stream
-  sensors: [
-    {id: '5c3a9814c4c2f30019f679a5',
-     type: 'pm10'}
-  ]
+  sensors: {}
 };
 
+// TODO
+app.config.port = 8892;
 
-var options = {
-  hostname: 'api.opensensemap.org',
-  port: 443,
-  path: '/boxes/' + config.boxId,
-  rejectUnauthorized: false
-};
+/* App.config.server.hostname = 'localhost';
+   app.config.server.port = 8880; */
 
 
-function receive(incoming, callback) {
+function receiveObject(incoming, callback) {
   var data = '';
-
   incoming.on('data', function (chunk) {
     data += chunk;
   });
+  incoming.on('end', function(err) {
+    var object = null;
+    try {
+      data = '{ "data": ' + data + '}';
+      object = JSON.parse(data);
+    } catch (exception) {
+      console.log('err:' + exception);
+    }
+    if (callback) {
+      return callback(err, object);
+    }
 
-  incoming.on('end', function () {
-    callback && callback(data);
+    return err;
   });
 }
 
-function update() {
+function update(config, callback) {
 
   // Workaround bug
-  if (!options.headers) {
-    options.headers = {};
+  if (!config.headers) {
+    config.headers = {};
   }
-  if (!options.headers.host) {
-    options.headers.host = options.hostname;
+  if (!config.host) {
+    config.host = config.hostname;
   }
+  console.log('TODO: async loop');
+  if (typeof app.sensors === 'undefined') {
+    config.path = '/boxes/' + app.config.boxId;
+    http.request(config, function(res) {
+      receiveObject(res, function (err, object) {
+        console.log(object);
+        app.sensors = [];
+        app.sensors[0] = object.data.sensors[0];
+        callback && callback(err, null);
+      });
+    }).end();
+  } else {
+    var idx = 0;
+    config.path = '/boxes/' + app.config.boxId +
+      '/data/' + app.config.sensors[idx].id;
+    console.log('log: path: ' + config.path);
+    http.request(config, function(res) {
+      receiveObject(res, function (err, object) {
+        callback && callback(err, object);
+      });
+    }).end();
+  }
+}
 
-  http.request(options, function (res) {
-    receive(res, function (data) {
-      console.log('log: box: ' + config.boxId);
-      var object = JSON.parse(data);
-      console.log(JSON.stringify(object));
-    });
-  }).end();
 
-  var property = {};
-  // TODO: async loop
-  var idx = 0;
-  options.path = '/boxes/' + config.boxId + '/data/' + config.sensors[idx].id;
-  console.log(options.path);
-  http.request(options, function (res) {
-    receive(res, function (data) {
-      var object = JSON.parse(data);
-      property[config.sensors[idx].type] = object[idx].value;
-      console.log(JSON.stringify(property));
+function SomeProperty(thing) {
+  var self = this;
+  webthing.Property.call(
+    this, thing, 'pm10', new webthing.Value(0),
+    {'@type': 'MultiLevelSensor'}
+  );
+  setInterval(function() {
+    update(app.config.server, function(err, object) {
+      console.log('update:' + err + '/' + object);
+      if (err) {
+        throw err;
+      }
+      try {
+        var value = object.data[0].value;
+        self.value.notifyOfExternalUpdate(value);
+        app.sensors[app.config.sensors[0].type] = value;
+        console.log(app.sensors);
+      } catch (exception) {
+        console.log(exception);
+      }
     });
-  }).end();
+  }, 2 * 1000);
 }
 
 if (module.parent === null) {
-  setInterval(function() {
-    update();
-  }, 60 * 1000);
+  app.thing = new webthing.Thing('', ['MultiLevelSensor']);
+  app.thing.addProperty(new SomeProperty(app.thing));
+  app.server = new webthing.WebThingServer(
+    new webthing.SingleThing(app.thing),
+    app.config.port
+  );
+  app.server.start();
 }
-
-
