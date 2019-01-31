@@ -42,7 +42,7 @@ var app = {
 };
 
 // TODO
-app.config.port = 8892;
+//app.config.port = 8892;
 
 /* App.config.server.hostname = 'localhost';
    app.config.server.port = 8880; */
@@ -128,6 +128,7 @@ function SomeProperty(thing) {
 }
 
 if (module.parent === null) {
+  app.config.port = Number(process.argv[2]) | 8888;
   app.thing = new webthing.Thing('AirQualitySensor', ['MultiLevelSensor']);
   app.thing.addProperty(new SomeProperty(app.thing));
   app.server = new webthing.WebThingServer(
