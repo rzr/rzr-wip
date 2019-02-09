@@ -1,0 +1,29 @@
+{
+  "name": "color-sensor-js",
+  "version": "1.0.0",
+  "description": "## WEBTHING EXAMPLE ##",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "i2c": "^0.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rzr/rzr-wip.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rzr/rzr-wip/issues"
+  },
+  "homepage": "https://github.com/rzr/rzr-wip#readme"
+}
