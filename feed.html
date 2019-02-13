@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>WebThingIotJs : Live demo !!!</title>
+<script><!--
+
+function update(id, url, secs)
+{
+  setTimeout(function() {
+    document.getElementById(id).src = url;
+    }, secs * 1000);
+}
+
+function callback(frame)
+{
+  var blank_url = "about:blank";
+  var logo_url = 'https://things.samsunginter.net/logo.html';
+  var feed_url = "https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fmastodon.social%2Fusers%2Ftizenhelper.atom&theme=light&size=100&header=false&replies=true&boosts=true";
+
+  if (false) {
+    alert("info: " + frame.id + "=" + frame.src);
+  }
+  if (frame.id === "feed") {
+    if (frame.src === blank_url) {
+      update('feed', logo_url, 0);
+    } else if (frame.src === logo_url) {
+      update('feed', feed_url, 1);
+    } else if (frame.src === feed_url) {
+      update('feed', feed_url, 3);
+    } 
+  }
+}
+//-->
+</script>
+  </head>
+  <iframe id="feed" src="about:blank"
+          marginheight="0" marginwidth="0" scrolling="no" frameborder="0" margin="0"
+          onload="callback(this);"
+          style="display:block; width:100%; height:100vh;"
+          />
+</html>
