@@ -16,12 +16,11 @@ function update(id, url, secs)
 function callback(frame)
 {
   // https://social.samsunginter.net/@rzr#"
-  var feed_url = "https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fmastodon.social%2Fusers%2Ftizenhelper.atom&theme=light&size=100&header=false&replies=true&boosts=true";
-  //var preview_url = "https://www.mastofeed.com/api/feed?url=https%3A%2F%2Fsocial.samsunginter.net%2Fusers%2Frzr.atom&theme=light&size=100&header=true&replies=true&boosts=true";
   var blank_url = "about:blank";
   var content_url = "https://sosg.mozilla-iot.org/things";
   var logo_url = 'https://things.samsunginter.net/logo.html';
   var video_url = 'https://things.samsunginter.net/video.html';
+  var links_url = 'https://things.samsunginter.net/links.html';
 
   if (false) {
     alert("info: " + frame.id + "=" + frame.src);
@@ -30,8 +29,8 @@ function callback(frame)
     if (frame.src === blank_url) {
       update('content', logo_url, 0);
     } else if (frame.src === logo_url) {
-      update('content', feed_url, 1);
-    } else if (frame.src === feed_url) {
+      update('content', links_url, 1);
+    } else if (frame.src === links_url) {
       update('video', logo_url, 1);
     } else if (frame.src === content_url) {
       update('video', video_url, 10);
@@ -40,14 +39,14 @@ function callback(frame)
     if (frame.src === logo_url) {
       update('content', content_url, 0);
     } else if (frame.src === video_url) {
-      update('feed', logo_url, 0);
+      update('links', logo_url, 0);
     }
-  } else if (frame.id === "feed") {
+  } else if (frame.id === "links") {
     if (frame.src === logo_url) {
-      update('feed', feed_url, 10);
-    } else if (frame.src === feed_url) {
-      update('feed', feed_url, 3);
-    } 
+      // update('links', links_url, 10);
+    } else if (frame.src === links_url) {
+      // will be updated by itself
+    }
   }
 }
 //-->
@@ -92,7 +91,7 @@ function callback(frame)
              onload="callback(this);"
              />
 
-      <frame id="feed" src="about:blank" 
+      <frame id="links" src="about:blank" 
              marginheight="0" marginwidth="0" scrolling="yes" frameborder="0" margin="0"
              onload="callback(this);"
              />
