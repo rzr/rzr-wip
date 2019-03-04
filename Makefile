@@ -7,7 +7,7 @@ default: all
 
 project?=webthings-webapp
 url?=file://${CURDIR}/
-upstream_url?=https://github.com/rzr/rzr-wip
+upstream_url?=$(shell git remote get-url origin)
 branches+=gh-pages
 branches+=sandbox/rzr/iotjs/http/master
 branches+=sandbox/rzr/webthing-iotjs/https/master
