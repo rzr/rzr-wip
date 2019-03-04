@@ -8,6 +8,7 @@ default: all
 project?=webthings-webapp
 url?=file://${CURDIR}/
 upstream_url?=https://github.com/rzr/rzr-wip
+branches+=gh-pages
 branches+=sandbox/rzr/iotjs/http/master
 branches+=sandbox/rzr/webthing-iotjs/https/master
 
