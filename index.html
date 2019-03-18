@@ -15,12 +15,14 @@ function update(id, url, secs)
 
 function callback(frame)
 {
-  // https://social.samsunginter.net/@rzr#"
+  var base_url = String(window.location).substring(0,
+    String(window.location).lastIndexOf("/")
+    ) + "/";
   var blank_url = "about:blank";
   var content_url = "https://sosg.mozilla-iot.org/things";
-  var logo_url = 'https://things.samsunginter.net/logo.html';
-  var video_url = 'https://things.samsunginter.net/video.html';
-  var links_url = 'https://things.samsunginter.net/links.html';
+  var logo_url = base_url + 'logo.html';
+  var video_url = base_url + 'video.html';
+  var links_url = base_url + 'links.html';
 
   if (false) {
     alert("info: " + frame.id + "=" + frame.src);
@@ -55,13 +57,12 @@ function callback(frame)
 
   <frameset cols="*,640"
             frameborder="0"
-            frameborder="no"
             framespacing="0"
             bordercolor="black"
             border="0"
             >
 
-    <frame id="content"
+    <frame id="content" name="content"
            src="about:blank"
            border="0"
            frameborder="0"
@@ -75,9 +76,8 @@ function callback(frame)
     <frameset rows="480,*"
               border="0"
               bordercolor="black"
-              frameborder="no"
-              framespacing="0"
               frameborder="0"
+              framespacing="0"
       >
       <frame id="video"
              border="0"
