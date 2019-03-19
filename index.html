@@ -23,7 +23,7 @@ function callback(frame)
   var logo_url = base_url + 'logo.html';
   var video_url = base_url + 'video.html';
   var links_url = base_url + 'links.html';
-  var view_url = base_url + 'view.html';
+  var webapp_url = base_url + 'webapp.html';
 
   if (false) {
     alert("info: " + frame.id + "=" + frame.src);
@@ -42,7 +42,7 @@ function callback(frame)
     if (frame.src === logo_url) {
       update('content', content_url, 0);
     } else if (frame.src === video_url) {
-      update('links', view_url, 0);
+      update('links', webapp_url, 0);
     }
   } else if (frame.id === "links") {
     if (frame.src === logo_url) {
