@@ -42,7 +42,7 @@ function callback(frame)
     if (frame.src === logo_url) {
       update('content', content_url, 0);
     } else if (frame.src === video_url) {
-      update('links', webapp_url, 0);
+      update('links', logo_url, 0);
     }
   } else if (frame.id === "links") {
     if (frame.src === logo_url) {
