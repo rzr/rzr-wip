@@ -85,7 +85,7 @@ rule/iotjs/base:
 #
 	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
 #	echo 'CONFIG_NET_ICMPv6=y' >> ${nuttx_config_file}
-#	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
+	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
 	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
