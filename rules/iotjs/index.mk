@@ -83,9 +83,9 @@ rule/iotjs/base:
 	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
 	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
 #
-	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
+#	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
 #	echo 'CONFIG_NET_ICMPv6=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
+#	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
 	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
 #
 	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
@@ -118,6 +118,7 @@ rule/iotjs/base:
 	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
+	grep 'IPV6' ${nuttx_config_file}
 
 rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
