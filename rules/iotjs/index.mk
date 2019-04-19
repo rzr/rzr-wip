@@ -1,5 +1,6 @@
 iotjs_machine?=${machine}
 iotjs_machine?=stm32f7nucleo
+iotjs_reference_machine?=stm32f4dis
 iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
@@ -109,7 +110,7 @@ rule/iotjs/base:
 	echo 'CONFIG_SCHED_HAVE_PARENT=y' >> ${nuttx_config_file} # TizenRT
 	echo 'CONFIG_DEV_ZERO=y' >> ${nuttx_config_file} # TizenRT
 	echo 'CONFIG_WATCHDOG=y' >> ${nuttx_config_file} # TizenRT
-
+#
 	echo 'CONFIG_SCHED_WORKQUEUE=y' >> ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_CLOCK_MONOTONIC=y' >> ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_PREALLOC_WDOGS=8' >> ${nuttx_config_file} # iotjs stm32
@@ -122,6 +123,14 @@ rule/iotjs/base:
 	echo 'CONFIG_NET_IOB=y' >> ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_LIB_SENDFILE_BUFSIZE=512' >> ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_NSH_MAX_ROUNDTRIP=20' >> ${nuttx_config_file} # iotjs stm32
+
+	echo 'CONFIG_SERIAL_REMOVABLE=y'  >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_SERIAL_NPOLLWAITERS=2'  >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_ARCH_HAVE_SERIAL_TERMIOS=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_SYSLOG_CHAR=y'  >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NET_ETH_MTU=590' >>  ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NET_LOCAL=y'  >>  ${nuttx_config_file} # iotjs stm32
+	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 
 # DISABLE_OS_API
 # SCHED_TICKLESS
@@ -203,7 +212,8 @@ ${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
-rule/iotjs/stm32/meld: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}/.config
+rule/iotjs/stm32/meld: iotjs/config/nuttx/${iotjs_reference_machine}/config.default ${nuttx_dir}/.config
+	ls iotjs/config/nuttx/
 	${@F} $^
 
 iotjs/clean:
