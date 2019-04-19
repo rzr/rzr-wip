@@ -75,11 +75,14 @@ build: rule/nuttx/build
 # make -C apps Kconfig TOPDIR=$CURDIR/nuttx
 # make -C apps system/Kconfig TOPDIR=$CURDIR/nuttx APPDIR=$CURDIR/apps
 
-monitor: /dev/ttyACM0 # deploy
+monitor: ${monitor_file} # deploy
 	echo "# TODO: use C-a k to quit"
 	sleep 1
 	${sudo} screen $< ${monitor_rate}
 
+${monitor_file}:
+	lsusb
+	ls $@
 
 menuconfig: rule/nuttx/menuconfig
 
