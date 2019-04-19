@@ -101,8 +101,7 @@ rule/iotjs/build: ${iotjs_config_file}
  --target-board=${iotjs_machine} \
  --jerry-heaplimit=78 \
  #eol
-# --buildtype=debug 
-
+# --buildtype=debug
 
 rule/iotjs/lib:
 	rm -rf ${iotjs_dir}/build
