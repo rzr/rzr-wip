@@ -9,8 +9,9 @@ nuttx_config=nucleo-144/f767-netnsh
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
-# nuttx_url=file:///${HOME}/mnt/nuttx
-# nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
+# TODO
+nuttx_url=file:///${HOME}/mnt/nuttx
+nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
 # nuttx_branch?=sandbox/rzr/review/master
 # nuttx_branch=sandbox/rzr/devel/${machine}/master
 # nuttx_branch=sandbox/rzr/devel/stm32f7/master
@@ -25,7 +26,9 @@ image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
 monitor_file?=/dev/ttyACM1
 
-dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
+# TODO: keep private in ~/
+dev_id?=066EFF323535474B43065221
+dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${dev_id}-0:0
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 #LDSCRIPT ?= f767-flash.ld
