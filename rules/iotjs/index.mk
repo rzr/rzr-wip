@@ -13,11 +13,12 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_branch?=master
 
-#TODO
+#TODO:
 iotjs_url=https://github.com/tizenteam/iotjs
 iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
-#iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-#iotjs_url=file:///${HOME}/mnt/iotjs
+#TODO:
+iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
+iotjs_url=file:///${HOME}/mnt/iotjs
 
 
 #nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
