@@ -130,6 +130,7 @@ rule/iotjs/base:
 	echo 'CONFIG_SYSLOG_CHAR=y'  >> ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_NET_ETH_MTU=590' >>  ${nuttx_config_file} # iotjs stm32
 	echo 'CONFIG_NET_LOCAL=y'  >>  ${nuttx_config_file} # iotjs stm32
+	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 
 # DISABLE_OS_API
@@ -213,7 +214,11 @@ ${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
 rule/iotjs/stm32/meld: iotjs/config/nuttx/${iotjs_reference_machine}/config.default ${nuttx_dir}/.config
-	ls iotjs/config/nuttx/
+	ls ${<D}/..
+	${@F} $^
+
+rule/iotjs/tizenrt/meld: ${HOME}/mnt/TizenRT/build/configs/artik053s/iotjs/defconfig ${nuttx_dir}/.config
+	ls ${<D}/../..
 	${@F} $^
 
 iotjs/clean:
