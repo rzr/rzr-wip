@@ -85,9 +85,9 @@ rule/iotjs/base:
 	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	${MAKE} menuconfig
-#	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
-#	grep 'CONFIG_IOB_NOTIFIER=y' ${nuttx_config_file}
-#	grep 'CONFIG_NET_TCP_WRITE_BUFFERS=y' ${nuttx_config_file}
+	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
+	grep 'CONFIG_IOB_NOTIFIER=y' ${nuttx_config_file}
+	grep 'CONFIG_NET_TCP_WRITE_BUFFERS=y' ${nuttx_config_file}
 	-grep 'IPV6' ${nuttx_config_file}
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 	${MAKE} rule/nuttx/build
