@@ -111,25 +111,6 @@ rule/iotjs/base:
 	echo 'CONFIG_DEV_ZERO=y' >> ${nuttx_config_file} # TizenRT
 	echo 'CONFIG_WATCHDOG=y' >> ${nuttx_config_file} # TizenRT
 #
-	echo 'CONFIG_SCHED_WORKQUEUE=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_CLOCK_MONOTONIC=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_PREALLOC_WDOGS=8' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_WDOG_INTRESERVE=1' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_TASK_NAME_SIZE=31'  >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_MUTEX_TYPES=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_SCHED_HPWORKPERIOD=50000' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NET_TCP_WRITE_BUFFERS=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NET_TCP_NWRBCHAINS=8' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NET_IOB=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_LIB_SENDFILE_BUFSIZE=512' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NSH_MAX_ROUNDTRIP=20' >> ${nuttx_config_file} # iotjs stm32
-
-	echo 'CONFIG_SERIAL_REMOVABLE=y'  >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_SERIAL_NPOLLWAITERS=2'  >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_ARCH_HAVE_SERIAL_TERMIOS=y' >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_SYSLOG_CHAR=y'  >> ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NET_ETH_MTU=590' >>  ${nuttx_config_file} # iotjs stm32
-	echo 'CONFIG_NET_LOCAL=y'  >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 
