@@ -22,6 +22,7 @@ nuttx_apps_dir?=apps-dir
 
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
+monitor_file?=/dev/ttyACM1
 
 dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_066EFF323535474B43065221-0:0
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
@@ -99,7 +100,9 @@ rule/nuttx/diff:
 	diff ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 
 deploy:
-	ls -l ${dev_file}sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
+	sudo sync
+	ls -l ${dev_file}
+	sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
 	cp -av ${nuttx_dir}/nuttx.bin  ${deploy_dir}
 	sleep 6
