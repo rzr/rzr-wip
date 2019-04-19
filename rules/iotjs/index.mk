@@ -76,40 +76,6 @@ rule/iotjs/base:
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-	echo 'CONFIG_ARCH_FPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_ARCH_DPFPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_ARM_MPU=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PIPES=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PTHREAD_MUTEX_TYPES=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NET_TCPBACKLOG_CONNS=y' >> ${nuttx_config_file}
-#
-#	echo 'CONFIG_NET_IPv6=y'  >> ${nuttx_config_file}
-#	echo 'CONFIG_NET_ICMPv6=y' >> ${nuttx_config_file}
-#	echo 'CONFIG_NET_ICMPv6_NEIGHBOR=y' >> ${nuttx_config_file}
-	echo 'CONFIG_FS_ROMFS=y' >> ${nuttx_config_file}
-#
-	echo 'CONFIG_NETUTILS_TELNETD=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PTABLE_PARTITION=y' >> ${nuttx_config_file}
-	echo 'CONFIG_NSH_ROMFSDEVNO=y' >> ${nuttx_config_file}
-	echo 'CONFIG_EXAMPLES_MODULE_ROMFS=y' >> ${nuttx_config_file}
-	echo 'CONFIG_STM32F7_RNG=y' >> ${nuttx_config_file}
-	echo 'CONFIG_SYSTEM_NSH_CXXINITIALIZE=y' >> ${nuttx_config_file}
-	echo 'CONFIG_SYSLOG_NONE=y' >> ${nuttx_config_file}
-	echo 'CONFIG_EXPERIMENTAL=y' >> ${nuttx_config_file}
-# checking if really needed ?
-	echo 'CONFIG_NETUTILS_WEBSERVER=y'  >> ${nuttx_config_file}
-	echo 'CONFIG_NET_PKT=y'  >> ${nuttx_config_file}
-	echo 'CONFIG_NET_NETLINK=y'  >> ${nuttx_config_file}
-# NETUTILS_FTPD
-# /RTOS Features
-	echo 'CONFIG_IRQCHAIN=y' >> ${nuttx_config_file}
-	echo 'CONFIG_PTHREAD_MUTEX_UNSAFE=y' >> ${nuttx_config_file} # TizenRT
-# SPINLOCK : no
-# /...
-	echo 'CONFIG_SCHED_HAVE_PARENT=y' >> ${nuttx_config_file} # TizenRT
-	echo 'CONFIG_DEV_ZERO=y' >> ${nuttx_config_file} # TizenRT
-	echo 'CONFIG_WATCHDOG=y' >> ${nuttx_config_file} # TizenRT
 #
 	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
@@ -137,7 +103,10 @@ rule/iotjs/base:
 #CONFIG_NSH_LIBRARY=y
 
 	${MAKE} menuconfig
-	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
+	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
+	grep 'CONFIG_IOB_NOTIFIER=y' ${nuttx_config_file}
+	grep 'CONFIG_NET_TCP_WRITE_BUFFERS=y' ${nuttx_config_file}
+	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
@@ -148,6 +117,7 @@ rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
+--buildtype=debug \
 --target-arch=arm \
 --target-os=nuttx \
 --nuttx-home=../${nuttx_dir} \
