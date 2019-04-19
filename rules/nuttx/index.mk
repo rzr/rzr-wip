@@ -9,8 +9,8 @@ nuttx_config=nucleo-144/f767-netnsh
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
-nuttx_url=file:///${HOME}/mnt/nuttx
-nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
+# nuttx_url=file:///${HOME}/mnt/nuttx
+# nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
 # nuttx_branch?=sandbox/rzr/review/master
 # nuttx_branch=sandbox/rzr/devel/${machine}/master
 # nuttx_branch=sandbox/rzr/devel/stm32f7/master
