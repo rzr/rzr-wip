@@ -72,7 +72,7 @@ rule/iotjs/configure: iotjs
 
 rule/iotjs/base:
 	${MAKE} ${nuttx_dir}
-	${MAKE} distclean
+	-${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
