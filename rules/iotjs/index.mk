@@ -13,7 +13,7 @@ export IOTJS_ABSOLUTE_ROOT_DIR
 iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_url=https://github.com/tizenteam/iotjs
 iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-iotjs_url=file:///home/${USER}/mnt/iotjs
+iotjs_url=file:///${HOME}/mnt/iotjs
 iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 
 #nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
@@ -117,12 +117,13 @@ rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
---buildtype=debug \
 --target-arch=arm \
 --target-os=nuttx \
 --nuttx-home=../${nuttx_dir} \
 --target-board=${iotjs_machine} \
 --jerry-heaplimit=78
+
+# --buildtype=debug
 
 rule/iotjs/lib:
 	rm -rf ${iotjs_dir}/build
