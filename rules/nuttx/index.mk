@@ -9,7 +9,7 @@ nuttx_config=nucleo-144/f767-netnsh
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
-# nuttx_url=file:///${HOME}/mnt/nuttx
+nuttx_url=file:///${HOME}/mnt/nuttx
 # nuttx_branch?=sandbox/rzr/review/master
 # nuttx_branch=sandbox/rzr/devel/${machine}/master
 # nuttx_branch=sandbox/rzr/devel/stm32f7/master
@@ -53,14 +53,22 @@ ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Makefi
 	-grep -i BOARD ${nuttx_config}
 
 ${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
+	ls $@ || ${MAKE} rule/nuttx/configure
 	ls $@
-#	ls $@ || 
+
+#TODO
+${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
+	ls $@
+
+rule/nuttx/config: ${nuttx_dir}/.config
+	ls $<
 
 rule/nuttx/configure: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Make.defs
 	ls $^
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
+	ls ${nuttx_config_file}
 
 ${nuttx_apps_dir}/Kconfig: rule/nuttx/configure
 	ls $@
