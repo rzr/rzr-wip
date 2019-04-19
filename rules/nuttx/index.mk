@@ -88,6 +88,9 @@ rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp | tee ${nuttx_config_file}.diff
 	-diff -u ${nuttx_defconfig_file} ${nuttx_dir}/defconfig | tee ${nuttx_dir}/defconfig.diff
 
+${nuttx_dir}/defconfig: ${nuttx_dir}
+	make -C $< savedefconfig
+
 rule/nuttx/%: ${nuttx_dir}
 	make -C $< ${@F}
 
