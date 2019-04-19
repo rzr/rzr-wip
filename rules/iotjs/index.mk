@@ -100,8 +100,8 @@ rule/iotjs/build: ${iotjs_config_file}
  --nuttx-home=../${nuttx_dir} \
  --target-board=${iotjs_machine} \
  --jerry-heaplimit=78 \
- --buildtype=debug \
-#eol
+ #eol
+# --buildtype=debug 
 
 
 rule/iotjs/lib:
