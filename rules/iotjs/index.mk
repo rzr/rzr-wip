@@ -118,7 +118,7 @@ rule/iotjs/base:
 	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
-	grep 'IPV6' ${nuttx_config_file}
+	-grep 'IPV6' ${nuttx_config_file}
 
 rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
