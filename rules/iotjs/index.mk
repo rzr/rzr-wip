@@ -112,7 +112,8 @@ rule/iotjs/base:
 	echo 'CONFIG_WATCHDOG=y' >> ${nuttx_config_file} # TizenRT
 #
 	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
-	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 
 # DISABLE_OS_API
 # SCHED_TICKLESS
