@@ -76,42 +76,20 @@ rule/iotjs/base:
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-#
 	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
-
-# DISABLE_OS_API
-# SCHED_TICKLESS
-
-#
-# telenetd
-#	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=n' >> ${nuttx_config_file}
-#	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
-# 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
-# 	echo 'CONFIG_STM32_ROMFS_IMAGEFILE=y' >> ${nuttx_config_file}
-#TODO: MTD PARTS TELNET MUTEX
-# CONFIG_CDCACM=y
-#CONFIG_FAT_LFN=y
-#CONFIG_FS_FAT=y
-#CONFIG_LIBM=y
-#CONFIG_MMCSD=y
-#CONFIG_NETDEVICES=y
-#CONFIG_NETDEV_LATEINIT=y
-#CONFIG_NET_LOCAL=y
-#CONFIG_NET_TCP_WRITE_BUFFERS=y
-#CONFIG_NSH_LIBRARY=y
-
 	${MAKE} menuconfig
-	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
-	grep 'CONFIG_IOB_NOTIFIER=y' ${nuttx_config_file}
-	grep 'CONFIG_NET_TCP_WRITE_BUFFERS=y' ${nuttx_config_file}
-	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff
+#	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
+#	grep 'CONFIG_IOB_NOTIFIER=y' ${nuttx_config_file}
+#	grep 'CONFIG_NET_TCP_WRITE_BUFFERS=y' ${nuttx_config_file}
+	-grep 'IPV6' ${nuttx_config_file}
+	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
-	-grep 'IPV6' ${nuttx_config_file}
+
 
 rule/iotjs/build: ${iotjs_config_file}
 #	grep FPU ${iotjs_config_file}
@@ -121,9 +99,8 @@ rule/iotjs/build: ${iotjs_config_file}
 --target-os=nuttx \
 --nuttx-home=../${nuttx_dir} \
 --target-board=${iotjs_machine} \
---jerry-heaplimit=78
-
-# --buildtype=debug
+--jerry-heaplimit=78 \
+--buildtype=debug
 
 rule/iotjs/lib:
 	rm -rf ${iotjs_dir}/build
