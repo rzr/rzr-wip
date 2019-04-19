@@ -43,9 +43,11 @@ patch/%: patches/% tmp/done/patch/%
 patch:
 	ls $^
 
-distclean: rule/nuttx/distclean
-	find . -iname "*.a" -exec rm {} \;
-#	rm -fv nuttx/staging/*.a
+clean:
+	-find . -iname "*.a" -exec rm {} \;
+
+distclean: clean
+	-${MAKE} rule/nuttx/distclean
 	sync
 
 devel: rule/nuttx/devel
