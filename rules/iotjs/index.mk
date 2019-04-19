@@ -15,7 +15,7 @@ iotjs_branch?=master
 
 #TODO
 iotjs_url=https://github.com/rzr/iotjs
-iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
+iotjs_branch?=sandbox/rzr/devel/nucleo-f767zi/good/master
 #iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_url=file:///${HOME}/mnt/iotjs
 
