@@ -80,9 +80,9 @@ rule/iotjs/base:
 	-${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
-	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
-	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+#	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
+#	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+#	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	${MAKE} menuconfig
 	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
