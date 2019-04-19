@@ -14,7 +14,7 @@ iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_branch?=master
 
 #TODO
-iotjs_url=https://github.com/tizenteam/iotjs
+iotjs_url=https://github.com/rzr/iotjs
 iotjs_branch=sandbox/rzr/devel/stm32f7nucleo/good/master
 #iotjs_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_url=file:///${HOME}/mnt/iotjs
