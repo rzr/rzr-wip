@@ -96,6 +96,38 @@ rule/iotjs/base:
 	echo 'CONFIG_SYSTEM_NSH_CXXINITIALIZE=y' >> ${nuttx_config_file}
 	echo 'CONFIG_SYSLOG_NONE=y' >> ${nuttx_config_file}
 	echo 'CONFIG_EXPERIMENTAL=y' >> ${nuttx_config_file}
+# checking if really needed ?
+	echo 'CONFIG_NETUTILS_WEBSERVER=y'  >> ${nuttx_config_file}
+	echo 'CONFIG_NET_PKT=y'  >> ${nuttx_config_file}
+	echo 'CONFIG_NET_NETLINK=y'  >> ${nuttx_config_file}
+# NETUTILS_FTPD
+# /RTOS Features
+	echo 'CONFIG_IRQCHAIN=y' >> ${nuttx_config_file}
+	echo 'CONFIG_PTHREAD_MUTEX_UNSAFE=y' >> ${nuttx_config_file} # TizenRT
+# SPINLOCK : no
+# /...
+	echo 'CONFIG_SCHED_HAVE_PARENT=y' >> ${nuttx_config_file} # TizenRT
+	echo 'CONFIG_DEV_ZERO=y' >> ${nuttx_config_file} # TizenRT
+	echo 'CONFIG_WATCHDOG=y' >> ${nuttx_config_file} # TizenRT
+
+	echo 'CONFIG_SCHED_WORKQUEUE=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_CLOCK_MONOTONIC=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_PREALLOC_WDOGS=8' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_WDOG_INTRESERVE=1' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_TASK_NAME_SIZE=31'  >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_MUTEX_TYPES=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_SCHED_HPWORKPERIOD=50000' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NET_TCP_WRITE_BUFFERS=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NET_TCP_NWRBCHAINS=8' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NET_IOB=y' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_LIB_SENDFILE_BUFSIZE=512' >> ${nuttx_config_file} # iotjs stm32
+	echo 'CONFIG_NSH_MAX_ROUNDTRIP=20' >> ${nuttx_config_file} # iotjs stm32
+
+# DISABLE_OS_API
+# SCHED_TICKLESS
+
+#
+# telenetd
 #	echo 'CONFIG_FS_PROCFS_EXCLUDE_VERSION=n' >> ${nuttx_config_file}
 #	echo 'CONFIG_FS_HOSTFS=y' >> ${nuttx_config_file}
 # 	echo 'CONFIG_STM32_ROMFS=y' >> ${nuttx_config_file}
@@ -171,8 +203,8 @@ ${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
-iotjs/meld: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}/.config
-	$@ $^
+rule/iotjs/stm32/meld: iotjs/config/nuttx/stm32f4dis/config.default ${nuttx_dir}/.config
+	${@F} $^
 
 iotjs/clean:
 	rm -rf iotjs/build
