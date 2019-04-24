@@ -7,12 +7,11 @@ CONFIG_IOTJS=y
 # nedded for iotjs's http module
 # CONFIG_IOB_NOTIFIER=y
 
-# Needed for iotjs on building  pipes
-# CONFIG_NET_LOCAL=y
-
+# Needed for iotjs on building tuv: uv__make_pipe
+CONFIG_NET_LOCAL=y
 
 # For iotjs' http module
-CONFIG_NET_TCPBACKLOG=y
+#CONFIG_NET_TCPBACKLOG=y
 CONFIG_NET_TCP_WRITE_BUFFERS=y
 
 CONFIG_NUCLEO_CONSOLE_VIRTUAL=y
