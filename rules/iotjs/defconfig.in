@@ -8,7 +8,7 @@ CONFIG_IOTJS=y
 # CONFIG_IOB_NOTIFIER=y
 
 # Needed for iotjs on building  pipes
-CONFIG_NET_LOCAL=y
+# CONFIG_NET_LOCAL=y
 
 
 # For iotjs' http module
