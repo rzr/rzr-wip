@@ -3,33 +3,30 @@ CONFIG_NSH_ARCHINIT=y
 
 # needed for iotjs
 CONFIG_IOTJS=y
+
+# nedded for iotjs's http module
 CONFIG_IOB_NOTIFIER=y
 
-# Needed for pipes
+# Needed for iotjs on building  pipes
 CONFIG_NET_LOCAL=y
 
 
-# For iotjs module
+# For iotjs' http module
 CONFIG_NET_TCPBACKLOG=y
 CONFIG_NET_TCP_WRITE_BUFFERS=y
 
-CONFIG_NET_PKT=y
+#CONFIG_NET_PKT=y
 
 CONFIG_NUCLEO_CONSOLE_VIRTUAL=y
 
-# not needed
-#CONFIG_PRIORITY_INHERITANCE=y
-
-# IotJs need this
+# IotJs needs this
 CONFIG_PTABLE_PARTITION=y
 
-# needed for iotjs , no console
+# needed for iotjs , even for console.log
 CONFIG_PTHREAD_MUTEX_TYPES=y
 
 # seems needed for iotjs' http
 CONFIG_RR_INTERVAL=100
-
-#CONFIG_SCHED_HAVE_PARENT=y
 
 # needed for iotjs's console
 CONFIG_SCHED_LPWORKPRIORITY=176
