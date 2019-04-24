@@ -214,7 +214,7 @@ rule/iotjs/stm32f4dis: iotjs/config/nuttx/stm32f4dis/config.alloptions
 # iotjs/devel: menuconfig build run
 
 rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
-	cp ${nuttx_defconfig_file} rules/iotjs
+	cp -a ${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
 rule/iotjs/distclean:
