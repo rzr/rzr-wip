@@ -14,8 +14,6 @@ CONFIG_NET_LOCAL=y
 # curl: (56) Recv failure: Connection reset by peer
 CONFIG_NET_TCPBACKLOG=y
 
-# CONFIG_NUCLEO_CONSOLE_VIRTUAL=y
-
 # IotJs needs this
 CONFIG_PTABLE_PARTITION=y
 
