@@ -18,10 +18,11 @@ CONFIG_NET_TCPBACKLOG=y
 #CONFIG_PTABLE_PARTITION=y
 
 # needed for iotjs , even for console.log
-#CONFIG_PTHREAD_MUTEX_TYPES=y
+# curl: (7) Failed to connect to 192.168.1.38 port 8888: Connection refused
+CONFIG_PTHREAD_MUTEX_TYPES=y
 
 # seems needed for iotjs' http
-CONFIG_RR_INTERVAL=100
+# CONFIG_RR_INTERVAL=100
 
 # needed for iotjs's console
 CONFIG_SCHED_LPWORKPRIORITY=176
