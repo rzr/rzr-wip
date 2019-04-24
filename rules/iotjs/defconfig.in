@@ -15,10 +15,10 @@ CONFIG_NET_LOCAL=y
 CONFIG_NET_TCPBACKLOG=y
 
 # IotJs needs this
-CONFIG_PTABLE_PARTITION=y
+#CONFIG_PTABLE_PARTITION=y
 
 # needed for iotjs , even for console.log
-CONFIG_PTHREAD_MUTEX_TYPES=y
+#CONFIG_PTHREAD_MUTEX_TYPES=y
 
 # seems needed for iotjs' http
 CONFIG_RR_INTERVAL=100
