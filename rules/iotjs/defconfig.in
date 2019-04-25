@@ -6,9 +6,6 @@
 # needed for iotjs
 CONFIG_IOTJS=y
 
-# nedded for iotjs's http module
-# CONFIG_IOB_NOTIFIER=y
-
 # Needed for iotjs on building tuv: uv__make_pipe
 CONFIG_NET_LOCAL=y
 
@@ -16,15 +13,18 @@ CONFIG_NET_LOCAL=y
 # curl: (56) Recv failure: Connection reset by peer
 CONFIG_NET_TCPBACKLOG=y
 
-#CONFIG_PTABLE_PARTITION=y
-
 # needed for iotjs , even for console.log
 # curl: (7) Failed to connect to 192.168.1.38 port 8888: Connection refused
 CONFIG_PTHREAD_MUTEX_TYPES=y
 
+# ./config/tizenrt/artik05x/configs/debug/defconfig:CONFIG_RR_INTERVAL=100
 CONFIG_RR_INTERVAL=100
 
-#CONFIG_SCHED_LPWORKPRIORITY=176
+# Default: 100
+# ./deps/jerry/targets/tizenrt-artik053/configs/jerryscript/defconfig:CONFIG_SCHED_LPWORKPRIORITY=176
+# ./config/tizenrt/artik05x/configs/debug/defconfig:CONFIG_SCHED_LPWORKPRIORITY=176
+# curl: (56) Recv failure: Connection reset by peer
+CONFIG_SCHED_LPWORKPRIORITY=176
 
 # Optional
 # CONFIG_NETUTILS_TELNETD=y
