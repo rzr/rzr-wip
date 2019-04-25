@@ -4,7 +4,7 @@ iotjs_machine?=stm32f7nucleo
 iotjs_reference_machine?=stm32f4dis
 iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
-iotjs_config_file?=${iotjs_config_dir}/config.default
+#iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 iotjs_app_dir?=iotjs/config/nuttx/${iotjs_machine_family}/app/
 IOTJS_ROOT_DIR="${iotjs_dir}"
@@ -30,7 +30,7 @@ iotjs/%:
 	@echo "TODO: --depth 1"
 	ls $@
 
-iotjs: ${iotjs_config_file}
+iotjs: ${iotjs_app_dir}
 	ls $^
 
 #rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
@@ -60,19 +60,19 @@ rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
 rule/iotjs/config: ${iotjs_dir}
 	ls ${nuttx_dir}/.config
 	make -C ${nuttx_dir} savedefconfig
-	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
-	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
+#	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file}
+#	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
 	cp ${nuttx_dir}/.config ${iotjs_dir}/config/nuttx/${iotjs_machine}/config.default
 #	grep -v '#' nuttx/.config
 
 rule/iotjs/configure: iotjs
-	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
+#	cp -av ${nuttx_dir}/defconfig ${iotjs_config_file}
 	-rm ${nuttx_apps_dir}/Kconfig
 #	-rm -rfv ${nuttx_config_file}
 	rm -rfv ${nuttx_dir}/.config
 #	${MAKE} rule/iotjs/cleanall
 #	${MAKE} rule/nuttx/configure
-	cp -av ${iotjs_config_file} ${nuttx_config_file}
+#	cp -av ${iotjs_config_file} ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 
@@ -91,14 +91,14 @@ rule/iotjs/base:
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
-	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
+#	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 	${MAKE} rule/nuttx/build
 	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
 
-rule/iotjs/build: ${iotjs_config_file}
+rule/iotjs/build: ${iotjs_dir}
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
