@@ -6,7 +6,7 @@ iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
-iotjs_app_dir?=iotjs/config/nuttx/${iotjs_machine_family}/app/
+iotjs_app_dir?=iotjs/config/nuttx/${iotjs_reference_machine}/app/
 IOTJS_ROOT_DIR="${iotjs_dir}"
 export IOTJS_ROOT_DIR
 IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
