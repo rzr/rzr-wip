@@ -1,10 +1,12 @@
 iotjs_machine?=${machine}
+iotjs_machine_family?=stm32
 iotjs_machine?=stm32f7nucleo
 iotjs_reference_machine?=stm32f4dis
 iotjs_dir=iotjs
 iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
+iotjs_app_dir?=iotjs/config/nuttx/${iotjs_machine_family}/app/
 IOTJS_ROOT_DIR="${iotjs_dir}"
 export IOTJS_ROOT_DIR
 IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
@@ -146,7 +148,7 @@ rule/iotjs/menuconfig:
 
 ${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	@mkdir -p $@
-	cp -rf iotjs/config/nuttx/${iotjs_machine}/app/* $@/
+	cp -rf ${iotjs_app_dir}/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
 rule/iotjs/stm32/meld: iotjs/config/nuttx/${iotjs_reference_machine}/config.default ${nuttx_dir}/.config
