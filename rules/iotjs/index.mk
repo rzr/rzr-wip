@@ -47,6 +47,8 @@ rule/iotjs/build/base: ${nuttx_dir}/.config
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
+rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
+	ls $<
 
 iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 	ls $@
@@ -81,10 +83,10 @@ rule/iotjs/configured:
 	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 	-grep 'IPV6' ${nuttx_config_file}
 
-rule/iotjs/base:
+rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
 	-${MAKE} distclean
-	-rm -rfv ${iotjs_nuttx_dir}
+#	-rm -rfv ${iotjs_nuttx_dir}
 	${MAKE} rule/nuttx/configure
 #	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 #	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
@@ -153,6 +155,10 @@ ${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
 	cp -rf ${iotjs_app_dir}/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
 
+
+${nuttx_apps_dir}/system/iotjs/%: ${nuttx_apps_dir}/system/iotjs
+	ls $@
+
 rule/iotjs/stm32/meld: iotjs/config/nuttx/${iotjs_reference_machine}/config.default ${nuttx_dir}/.config
 	ls ${<D}/..
 	${@F} $^
@@ -193,6 +199,9 @@ rule/build/iotjs: ${nuttx_apps_dir}/system/iotjs menuconfig build
 rule/iotjs/cleanall:
 	rm -rf iotjs/build
 
+
+apps/system/Kconfig: ${apps_dir}/Kconfig ${apps_dir}/system/iotjs/Kconfig
+	ls $@
 
 # philippe@wsf1127:rzr-wip (sandbox/rzr/nuttx/devel/master %)$ mv apps/system/Kconfig  apps/system/Kconfig.mine
 
