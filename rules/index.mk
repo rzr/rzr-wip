@@ -84,7 +84,7 @@ ${monitor_file}:
 	lsusb
 	ls $@
 
-menuconfig: ${nuttx_config_file} rule/nuttx/menuconfig rule/nuttx/savedefconfig
+menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 	ls ${nuttx_config_file}
 
 -include rules/devel/index.mk
