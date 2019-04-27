@@ -90,7 +90,7 @@ rule/iotjs/base:
 #	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 #	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
-	cat ./rules/iotjs/defconfig-*.in >>  ${nuttx_config_file} 
+	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file} 
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
