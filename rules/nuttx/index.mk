@@ -37,21 +37,29 @@ deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #machine?=stm32f4dis
 #nuttx_config?=nucleo-f303re/hello
 
-${nuttx_apps_dir}/%:
-	git clone --depth 1 --recursive ${nuttx_apps_url} ${nuttx_apps_dir}
+${nuttx_apps_dir}:
+	mkdir -p ${@D}
+	git clone --depth 1 --recursive ${nuttx_apps_url} $@
 	ls $@
 
-${nuttx_dir}/%: ${nuttx_apps_dir}/Makefile
+${nuttx_apps_dir}/%: ${nuttx_apps_dir}
+	ls $@
+
+${nuttx_dir}:
+	mkdir -p ${@D}
 	git clone \
   --recursive \
   --depth 1 \
   --branch ${nuttx_branch} \
-  ${nuttx_url} ${nuttx_dir}
+  ${nuttx_url} ${@}
 	ls $@
 #	# 
 
-${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
-	ls $<
+${nuttx_dir}/Makefile: ${nuttx_dir}
+	ls $@
+
+#${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
+#	ls $<
 
 ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Makefile ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
@@ -94,8 +102,6 @@ ${image_file}: build
 apps_dir?=apps
 
 ${apps_dir}/Kconfig: ${apps_dir}
-
-apps/system/Kconfig: ${apps_dir}/Kconfig ${apps_dir}/iotjs/CMakeList.txt
 	ls $@
 
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs apps/system/Kconfig
