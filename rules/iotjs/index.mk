@@ -17,7 +17,8 @@ iotjs_branch?=master
 
 #TODO:
 iotjs_url=https://github.com/tizenteam/iotjs
-iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
+iotjs_branch=sandbox/rzr/review/master
+#iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
 #TODO:
 #iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
@@ -89,6 +90,7 @@ rule/iotjs/base:
 #	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 #	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
+	cat ./rules/iotjs/defconfig-*.in >>  ${nuttx_config_file} 
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
