@@ -91,7 +91,14 @@ ${image_file}: build
 #${nuttx_dir}/include/arch: rule/nuttx/menuconfig
 #	ls $@
 
-rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs
+apps_dir?=apps
+
+${apps_dir}/Kconfig: ${apps_dir}
+
+apps/system/Kconfig: ${apps_dir}/Kconfig ${apps_dir}/iotjs/CMakeList.txt
+	ls $@
+
+rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs apps/system/Kconfig
 #	ls ${nuttx_dir}/.config || make configure
 #	ls ${nuttx_dir}/.config
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
