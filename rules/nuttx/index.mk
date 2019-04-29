@@ -83,7 +83,6 @@ ${nuttx_include_file}: rule/nuttx/build
 ${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
 	ls $@
 
-
 #TODO
 ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 	ls $@
@@ -91,8 +90,8 @@ ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 ${nuttx_config_file}: ${nuttx_dir}/Make.defs
 	ls $@
 
-rule/nuttx/configure: ${nuttx_config_file}
-	ls $<
+rule/nuttx/configure:
+	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file}
 
 nuttx/config: ${nuttx_config_file}
 	ls $<
