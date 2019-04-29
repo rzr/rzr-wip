@@ -108,7 +108,7 @@ rule/iotjs/base: rule/iotjs/prep
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file} #TODO rm
 
-rule/iotjs/lib: ${iotjs_dir}/tools/build.py ${nuttx_config_file}._iotjs.config ${nuttx_include_file} 
+rule/iotjs/lib: ${nuttx_include_file} ${nuttx_config_file}._iotjs.config 
 	cd ${iotjs_dir} && ./tools/build.py \
  --target-arch=arm \
  --target-os=nuttx \
