@@ -4,7 +4,7 @@
 # CONFIG_NSH_ARCHINIT=y
 
 # needed for iotjs
-CONFIG_IOTJS=y
+# CONFIG_IOTJS=y
 
 # Needed for iotjs on building tuv: uv__make_pipe
 #  -> Networking Support
