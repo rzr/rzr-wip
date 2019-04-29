@@ -27,6 +27,8 @@ iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 
 
+iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
+
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
@@ -81,7 +83,7 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
-rule/iotjs/nuttx/configure: ${nuttx_config_file}
+rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
@@ -90,6 +92,10 @@ rule/iotjs/nuttx/configure: ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
+
+${iotjs_nuttx_config_file}: rule/iotjs/nuttx/configure
+	ls $@
+	cp -va ${nuttx_config_file} ${iotjs_nuttx_config_file}
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
