@@ -38,12 +38,11 @@ iotjs: ${iotjs_app_dir}
 	ls $^
 
 rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
-	cp -av $@ ${nuttx_config_file}
+	cp -av $< ${nuttx_config_file}
 	${MAKE} rule/nuttx/build
 
-rule/iotjs/nuttx/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file}
+rule/iotjs/nuttx/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs
 	cp -av $< ${nuttx_config_file}
-	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
