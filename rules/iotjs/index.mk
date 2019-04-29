@@ -115,9 +115,6 @@ rule/iotjs/lib: ${iotjs_dir}/tools/build.py ${nuttx_config_file}._iotjs.config $
  #eol
 # --buildtype=debug
 
-rule/nuttx/build: rule/iotjs/nuttx/build
-	@echo "TODO: $@: $^"
-
 
 #rule/iotjs/lib:
 #	rm -rf ${iotjs_dir}/build
