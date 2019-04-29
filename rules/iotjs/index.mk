@@ -78,7 +78,7 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
-rule/iotjs/nuttx/configure: ${nuttx_config_file}
+rule/iotjs/nuttx/configure: ${nuttx_defconfig_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
