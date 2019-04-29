@@ -68,7 +68,7 @@ ${nuttx_dir}/Makefile: ${nuttx_dir}
 ${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
-	-grep -i BOARD ${nuttx_config}
+	-grep -i BOARD ${nuttx_config_file}
 
 #${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
 #	ls $@ || ${MAKE} rule/nuttx/configure
