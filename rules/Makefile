@@ -1,2 +1,7 @@
-%: ..
-	make -C $< $@
+default:
+
+..:
+	sync
+
+%:
+	make -C .. $@
