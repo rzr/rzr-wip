@@ -79,6 +79,7 @@ rule/nuttx/config: ${nuttx_dir}/.config
 
 rule/nuttx/configure: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Make.defs
 	ls $^
+	rm -fv ${nuttx_config_file} # TODO
 	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
