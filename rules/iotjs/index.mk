@@ -70,7 +70,7 @@ rule/iotjs/configure: iotjs
 #	${MAKE} rule/iotjs/cleanall
 #	${MAKE} rule/nuttx/configure
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
-	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+#	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 
 rule/iotjs/configured: ${nuttx_config_file}
