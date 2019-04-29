@@ -26,7 +26,7 @@ iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 
-
+iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
 iotjs/%:
@@ -37,7 +37,9 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${nuttx_config_file}
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
+	cp -av $< ${nuttx_config_file}
+	touch $<
 	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -51,13 +53,6 @@ rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
 iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 	ls $@
 
-rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
-	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
-	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
-	${MAKE} \
- IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
- IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
- -C ${nuttx_dir}
 
 rule/iotjs/config: ${iotjs_dir}
 	ls ${nuttx_dir}/.config
@@ -94,8 +89,9 @@ rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 
 ${iotjs_nuttx_config_file}: rule/iotjs/nuttx/configure
+	cp -va ${nuttx_config_file} $@
+	grep 'CONFIG_NET_LOCAL=y' $@
 	ls $@
-	cp -va ${nuttx_config_file} ${iotjs_nuttx_config_file}
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
@@ -121,17 +117,18 @@ rule/iotjs/build: ${iotjs_dir}/tools/build.py ${nuttx_include_file}
 rule/nuttx/build: rule/iotjs/nuttx/build
 	@echo "TODO: $@: $^"
 
-iotjs/build/arm-nuttx/debug/lib/libiotjs.a: rules/iotjs/build
-	ls $@
 
-rule/iotjs/lib:
-	rm -rf ${iotjs_dir}/build
-	${MAKE} rule/iotjs/build
+#rule/iotjs/lib:
+#	rm -rf ${iotjs_dir}/build
+#	${MAKE} rule/iotjs/build
+
+${iotjs_lib_file}: rule/iotjs/lib
+	ls $@
 
 #rule/iotjs/build/base: ${nuttx_dir}/.config
 
 
-rule/iotjs/link: rule/iotjs/build
+rule/iotjs/link: ${iotjs_lib_file}
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
 
