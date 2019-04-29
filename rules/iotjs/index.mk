@@ -104,7 +104,7 @@ rule/iotjs/base: rule/iotjs/prep
 #	ls ${nuttx_include_file}
 
 
-rule/iotjs/build: ${iotjs_dir}
+rule/iotjs/build: ${iotjs_dir} ${nuttx_dir}/config.h
 #	grep FPU ${iotjs_config_file}
 	ls ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
