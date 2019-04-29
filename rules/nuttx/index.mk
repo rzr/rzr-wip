@@ -91,12 +91,14 @@ ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 rule/nuttx/config: ${nuttx_dir}/.config
 	ls $<
 
-rule/nuttx/configure: ${nuttx_configure}
+rule/nuttx/configure: ${nuttx_config_file}
 	ls $<
 
 ${nuttx_config_file}: ${nuttx_dir}/Make.defs
 	ls $@
 
+nuttx/config: ${nuttx_config_file}
+	ls $<
 
 #${apps_dir}/Kconfig: ${apps_dir}
 #	ls $@
@@ -117,7 +119,7 @@ apps_dir?=apps
 
 
 
-rule/nuttx/menuconfig: #${nuttx_dir}/Make.defs apps/system/Kconfig
+rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
 #	ls ${nuttx_dir}/.config || make configure
 #	ls ${nuttx_dir}/.config
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
