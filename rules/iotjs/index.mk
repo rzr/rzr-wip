@@ -97,7 +97,7 @@ rule/iotjs/base: rule/iotjs/prep
 	${MAKE} ${nuttx_dir}
 	-${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
-#	${MAKE} rule/nuttx/configure
+	${MAKE} rule/nuttx/configure
 	${MAKE} rule/iotjs/nuttx/build
 #	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
