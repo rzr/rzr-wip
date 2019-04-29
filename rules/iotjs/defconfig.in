@@ -1,7 +1,7 @@
 # https://github.com/pando-project/iotjs/wiki/Build-for-STM32F4-NuttX
 
 # Optionnal: For /sysfs for ifconfig
-# CONFIG_NSH_ARCHINIT=y
+CONFIG_NSH_ARCHINIT=y
 
 # needed for iotjs
 # CONFIG_IOTJS=y
