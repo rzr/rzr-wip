@@ -7,6 +7,9 @@
 CONFIG_IOTJS=y
 
 # Needed for iotjs on building tuv: uv__make_pipe
+#  -> Networking Support
+#  │       -> Networking support (NET [=y])
+#  │ (1)     -> Unix Domain Socket Support
 CONFIG_NET_LOCAL=y
 
 # For iotjs' http module
