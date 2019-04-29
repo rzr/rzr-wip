@@ -96,11 +96,11 @@ rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	ls $<
 
 rule/iotjs/base: rule/iotjs/prep 
-	${MAKE} ${nuttx_dir}
-	-${MAKE} distclean
+#	${MAKE} ${nuttx_dir}
+#	-${MAKE} distclean
 	-rm -rfv ${iotjs_nuttx_dir}
-	${MAKE} rule/nuttx/configure
-#	${MAKE} rule/iotjs/nuttx/build
+#	${MAKE} rule/nuttx/configure
+	${MAKE} rule/iotjs/nuttx/build
 #	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file} #TODO rm
