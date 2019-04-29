@@ -79,7 +79,7 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
 
-${iotjs_nuttx_config_file}: ${nuttx_defconfig_file}
+${iotjs_nuttx_config_file}: ${nuttx_config_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
@@ -98,7 +98,7 @@ rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 rule/iotjs/base: rule/iotjs/prep 
 #	${MAKE} ${nuttx_dir}
 #	-${MAKE} distclean
-	-rm -rfv ${iotjs_nuttx_dir}
+#	-rm -rfv ${iotjs_nuttx_dir}
 #	${MAKE} rule/nuttx/configure
 	${MAKE} rule/iotjs/nuttx/build
 #	${MAKE} deploy monitor # TODO
