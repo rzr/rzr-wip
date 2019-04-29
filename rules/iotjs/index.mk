@@ -41,7 +41,7 @@ rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
 	cp -av $< ${nuttx_config_file}
 	${MAKE} rule/nuttx/build
 
-rule/iotjs/nuttx/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs
+rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs
 	cp -av $< ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -81,7 +81,8 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
 
-${iotjs_nuttx_config_file}: ${nuttx_config_file}
+${iotjs_nuttx_config_file}:
+	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file} 
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
