@@ -92,7 +92,8 @@ rule/nuttx/configure: ${nuttx_configure}
 	-grep -i BOARD ${nuttx_config_file}
 	ls ${nuttx_config_file}
 
-${nuttx_dir}/config.h: rule/nuttx/configure
+
+${nuttx_include_file}: rule/nuttx/build
 	ls $@
 
 ${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
