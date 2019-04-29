@@ -70,11 +70,17 @@ ${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
 	ls $<
 	-grep -i BOARD ${nuttx_config}
 
-${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
-	ls $@ || ${MAKE} rule/nuttx/configure
-	ls $@
+#${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
+#	ls $@ || ${MAKE} rule/nuttx/configure
+#	ls $@
 
 ${nuttx_configure}:  ${nuttx_apps_dir}/Makefile
+	ls $@
+
+${nuttx_include_file}: rule/nuttx/build
+	ls $@
+
+${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
 	ls $@
 
 
@@ -86,18 +92,11 @@ rule/nuttx/config: ${nuttx_dir}/.config
 	ls $<
 
 rule/nuttx/configure: ${nuttx_configure}
-	ls $^
-#	rm -fv ${nuttx_config_file} # TODO
-	cd ${nuttx_dir} && ${CURDIR}/$< ${nuttx_config}
-#	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-	-grep -i BOARD ${nuttx_config_file}
-	ls ${nuttx_config_file}
 
-${nuttx_include_file}: rule/nuttx/build
+
+${nuttx_config_file}: ${nuttx_dir}/Make.defs
 	ls $@
 
-${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
-	ls $@
 
 #${apps_dir}/Kconfig: ${apps_dir}
 #	ls $@
