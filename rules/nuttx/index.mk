@@ -74,7 +74,7 @@ ${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
 #	ls $@ || ${MAKE} rule/nuttx/configure
 #	ls $@
 
-${nuttx_configure}:  ${nuttx_apps_dir}/Makefile
+${nuttx_configure}: ${nuttx_apps_dir}/Makefile
 	ls $@
 
 ${nuttx_include_file}: rule/nuttx/build
@@ -92,7 +92,7 @@ rule/nuttx/config: ${nuttx_dir}/.config
 	ls $<
 
 rule/nuttx/configure: ${nuttx_configure}
-
+	ls $<
 
 ${nuttx_config_file}: ${nuttx_dir}/Make.defs
 	ls $@
