@@ -21,7 +21,8 @@ nuttx_branch=sandbox/rzr/devel/master
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
 nuttx_apps_dir?=apps
 nuttx_apps_dir?=apps-dir
-
+nuttx_configure?=${nuttx_dir}/tools/configure.sh
+configure?=${nuttx_configure}
 #nuttx_config?=stm32f7nucleo/nsh
 
 image_file?=${nuttx_dir}/nuttx.bin
@@ -37,13 +38,15 @@ deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #machine?=stm32f4dis
 #nuttx_config?=nucleo-f303re/hello
 
-${nuttx_apps_dir}:
+
+${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
 	git clone --depth 1 --recursive ${nuttx_apps_url} $@
 	ls $@
 
 ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
 	ls $@
+
 
 ${nuttx_dir}:
 	mkdir -p ${@D}
@@ -61,7 +64,7 @@ ${nuttx_dir}/Makefile: ${nuttx_dir}
 #${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
 #	ls $<
 
-${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Makefile ${nuttx_defconfig_file}
+${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	-grep -i BOARD ${nuttx_config}
@@ -69,6 +72,10 @@ ${nuttx_dir}/Make.defs: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Makefi
 ${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
 	ls $@ || ${MAKE} rule/nuttx/configure
 	ls $@
+
+${nuttx_configure}:  ${nuttx_apps_dir}/Makefile
+	ls $@
+
 
 #TODO
 ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
