@@ -42,6 +42,8 @@ rule/iotjs/build/base: ${nuttx_dir}/.config
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
+rule/iotjs/nuttx/build: rule/iotjs/build/base
+
 rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
 	ls $<
 
@@ -81,27 +83,24 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
 rule/iotjs/nuttx/configure: ${nuttx_config_file}
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
 #	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} rule/iotjs/configured
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
+	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
-#	-${MAKE} distclean
-#	-rm -rfv ${iotjs_nuttx_dir}
-#	${MAKE} rule/nuttx/configure
-#	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-#	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
-#	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
-#	${MAKE} rule/iotjs/configured
-#	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
-	${MAKE} rule/nuttx/build
+	-${MAKE} distclean
+	-rm -rfv ${iotjs_nuttx_dir}
+	${MAKE} rule/nuttx/configure
+	${MAKE} rule/iotjs/nuttx/build
 #	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
-#	ls ${nuttx_include_file}
+#	ls ${nuttx_include_file} #TODO rm
 
 
 rule/iotjs/build: ${iotjs_dir}/tools/build.py ${nuttx_include_file}
@@ -114,11 +113,17 @@ rule/iotjs/build: ${iotjs_dir}/tools/build.py ${nuttx_include_file}
  #eol
 # --buildtype=debug
 
+rule/nuttx/build: rule/iotjs/nuttx/build
+	@echo "TODO: $@: $^"
+
+iotjs/build/arm-nuttx/debug/lib/libiotjs.a: rules/iotjs/build
+	ls $@
+
 rule/iotjs/lib:
 	rm -rf ${iotjs_dir}/build
 	${MAKE} rule/iotjs/build
 
-rule/iotjs/link:
+rule/iotjs/link: rule/iotjs/build
 	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	${MAKE} rule/iotjs/configure
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
@@ -229,7 +234,7 @@ rule/iotjs/stm32f4dis: iotjs/config/nuttx/stm32f4dis/config.alloptions
 # iotjs/devel: menuconfig build run
 
 rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
-	cp -a ${nuttx_dir}/defconfig rules/iotjs
+	cp -a${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
 rule/iotjs/distclean:
