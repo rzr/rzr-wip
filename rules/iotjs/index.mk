@@ -16,12 +16,13 @@ iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_branch?=master
 
 #TODO:
-iotjs_url=https://github.com/tizenteam/iotjs
+#iotjs_url=https://github.com/tizenteam/iotjs
 #iotjs_branch=sandbox/rzr/review/master
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
-iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
+#iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
+iotjs_branch=sandbox/rzr/devel/master
 #TODO:
-#iotjs_url=file:///${HOME}/mnt/iotjs
+iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 
 
