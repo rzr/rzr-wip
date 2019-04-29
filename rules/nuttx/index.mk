@@ -134,6 +134,8 @@ rule/nuttx/%: ${nuttx_dir}
 rule/nuttx/%:
 	make -C ${nuttx_dir} ${@F}
 
+rule/nuttx/defconfig/diff: ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
+	meld $^
 
 rule/nuttx/diff:
 	ls ${nuttx_dir}/.config.old ${nuttx_dir}/.config
@@ -147,8 +149,6 @@ deploy:
 	cp -av ${nuttx_dir}/nuttx.bin  ${deploy_dir}
 	sleep 6
 
-rule/nuttx/diff: ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
-	meld $^
 
 rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
