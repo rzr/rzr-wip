@@ -17,8 +17,9 @@ iotjs_branch?=master
 
 #TODO:
 iotjs_url=https://github.com/tizenteam/iotjs
-iotjs_branch=sandbox/rzr/review/master
-#iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
+#iotjs_branch=sandbox/rzr/review/master
+#iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
+iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
 #TODO:
 #iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
@@ -98,7 +99,7 @@ rule/iotjs/base: rule/iotjs/prep
 #	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} rule/iotjs/configured
 	${MAKE} menuconfig
-	${MAKE} rule/iotjs/configured
+#	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 #	${MAKE} rule/nuttx/build
 #	${MAKE} deploy monitor # TODO
