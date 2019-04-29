@@ -78,7 +78,8 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
-rule/iotjs/nuttx/configure: ${nuttx_defconfig_file}
+
+${iotjs_nuttx_config_file}: ${nuttx_defconfig_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
@@ -87,11 +88,12 @@ rule/iotjs/nuttx/configure: ${nuttx_defconfig_file}
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
-
-${iotjs_nuttx_config_file}: rule/iotjs/nuttx/configure
 	cp -va ${nuttx_config_file} $@
 	grep 'CONFIG_NET_LOCAL=y' $@
 	ls $@
+
+rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
+	ls $<
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
