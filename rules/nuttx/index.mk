@@ -68,7 +68,7 @@ ${nuttx_dir}/Makefile: ${nuttx_dir}
 ${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
 	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
-	-grep -i BOARD ${nuttx_config_file}
+	-grep -i "BOARD" ${nuttx_config_file}
 
 #${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
 #	ls $@ || ${MAKE} rule/nuttx/configure
@@ -88,14 +88,11 @@ ${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
 ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 	ls $@
 
-rule/nuttx/config: ${nuttx_dir}/.config
-	ls $<
+${nuttx_config_file}: ${nuttx_dir}/Make.defs
+	ls $@
 
 rule/nuttx/configure: ${nuttx_config_file}
 	ls $<
-
-${nuttx_config_file}: ${nuttx_dir}/Make.defs
-	ls $@
 
 nuttx/config: ${nuttx_config_file}
 	ls $<
