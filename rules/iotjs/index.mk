@@ -90,7 +90,7 @@ rule/iotjs/nuttx/configure: ${nuttx_config_file}
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
-	-${MAKE} distclean
+#	-${MAKE} distclean
 #	-rm -rfv ${iotjs_nuttx_dir}
 #	${MAKE} rule/nuttx/configure
 #	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
@@ -98,15 +98,13 @@ rule/iotjs/base: rule/iotjs/prep
 #	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 #	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
-#	${MAKE} rule/nuttx/build
+	${MAKE} rule/nuttx/build
 #	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 
 
-rule/iotjs/build: ${iotjs_dir} ${nuttx_dir}/config.h
-#	grep FPU ${iotjs_config_file}
-	ls ${nuttx_include_file}
+rule/iotjs/build: ${iotjs_dir}/tools/build.py ${nuttx_include_file}
 	cd ${iotjs_dir} && ./tools/build.py \
  --target-arch=arm \
  --target-os=nuttx \
