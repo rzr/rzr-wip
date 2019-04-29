@@ -87,7 +87,7 @@ rule/nuttx/config: ${nuttx_dir}/.config
 
 rule/nuttx/configure: ${nuttx_configure}
 	ls $^
-	rm -fv ${nuttx_config_file} # TODO
+#	rm -fv ${nuttx_config_file} # TODO
 	cd ${nuttx_dir} && ${CURDIR}/$< ${nuttx_config}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
