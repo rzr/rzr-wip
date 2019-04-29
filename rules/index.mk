@@ -40,7 +40,8 @@ export V
 -include rules/nuttx/index.mk
 
 help:
-	@echo " make devel"
+	@echo "# make devel"
+	@echo "# nuttx_defconfig_file=${nuttx_defconfig_file}"
 
 setup/debian:
 	sudo apt-get update -y 
@@ -91,5 +92,3 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 -include rules/iotjs/index.mk
 
 
-help:
-	@echo "nuttx_defconfig_file=${nuttx_defconfig_file}"
