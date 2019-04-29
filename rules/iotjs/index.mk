@@ -35,14 +35,13 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/build/base: ${nuttx_dir}/.config
-	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
+rule/iotjs/nuttx/build: ${nuttx_config_file}
+	${MAKE} ${nuttx_apps_dir}/system/iotjs
+	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
-
-rule/iotjs/nuttx/build: rule/iotjs/build/base
 
 rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
 	ls $<
@@ -123,10 +122,10 @@ rule/iotjs/lib:
 	rm -rf ${iotjs_dir}/build
 	${MAKE} rule/iotjs/build
 
+#rule/iotjs/build/base: ${nuttx_dir}/.config
+
+
 rule/iotjs/link: rule/iotjs/build
-	${MAKE} ${nuttx_apps_dir}/system/iotjs
-	${MAKE} rule/iotjs/configure
-	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
 
