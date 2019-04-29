@@ -24,6 +24,7 @@ nuttx_apps_dir?=apps-dir
 nuttx_configure?=${nuttx_dir}/tools/configure.sh
 configure?=${nuttx_configure}
 #nuttx_config?=stm32f7nucleo/nsh
+nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
@@ -91,7 +92,6 @@ rule/nuttx/configure: ${nuttx_configure}
 #	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
 	-grep -i BOARD ${nuttx_config_file}
 	ls ${nuttx_config_file}
-
 
 ${nuttx_include_file}: rule/nuttx/build
 	ls $@
