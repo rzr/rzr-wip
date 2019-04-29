@@ -35,12 +35,6 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-#rule/nuttx/configure: nuttx/tools/configure.sh ${iotjs_config_file}
-#	ls apps
-#	cd ${nuttx_dir} && bash -x ${CURDIR}/$< ${nuttx_config}
-#	cp -av ${iotjs_config_file} ${nuttx_config_file} # TODO
-#	-grep -i BOARD ${nuttx_config_file}
-
 rule/iotjs/build/base: ${nuttx_dir}/.config
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} \
@@ -86,19 +80,22 @@ rule/iotjs/configured: ${nuttx_config_file}
 #	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 #	-grep 'IPV6' ${nuttx_config_file}
 
-rule/iotjs/base: rule/iotjs/prep 
-	${MAKE} ${nuttx_dir}
-	-${MAKE} distclean
-#	-rm -rfv ${iotjs_nuttx_dir}
-	${MAKE} rule/nuttx/configure
-#	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-#	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
-#	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+rule/iotjs/nuttx/configure: ${nuttx_config_file}
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
 #	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} rule/iotjs/configured
 	${MAKE} menuconfig
+	${MAKE} rule/iotjs/configured
+
+rule/iotjs/base: rule/iotjs/prep 
+	${MAKE} ${nuttx_dir}
+	-${MAKE} distclean
+#	-rm -rfv ${iotjs_nuttx_dir}
+#	${MAKE} rule/nuttx/configure
+#	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
+#	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
+#	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 #	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 #	${MAKE} rule/nuttx/build
