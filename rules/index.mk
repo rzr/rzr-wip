@@ -89,3 +89,7 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
+
+
+help:
+	@echo "nuttx_defconfig_file=${nuttx_defconfig_file}"
