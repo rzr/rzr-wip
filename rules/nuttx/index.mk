@@ -95,6 +95,9 @@ rule/nuttx/configure: ${nuttx_dir}/tools/configure.sh ${nuttx_apps_dir}/Make.def
 ${nuttx_apps_dir}/Kconfig: rule/nuttx/configure
 	ls $@
 
+#${apps_dir}/Kconfig: ${apps_dir}
+#	ls $@
+
 rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
@@ -109,8 +112,7 @@ ${image_file}: build
 
 apps_dir?=apps
 
-${apps_dir}/Kconfig: ${apps_dir}
-	ls $@
+
 
 rule/nuttx/menuconfig: ${nuttx_dir}/Make.defs apps/system/Kconfig
 #	ls ${nuttx_dir}/.config || make configure
