@@ -80,9 +80,10 @@ rule/iotjs/configure: iotjs
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 
-rule/iotjs/configured:
+rule/iotjs/configured: ${nuttx_config_file}
+	grep 'CONFIG_NET_LOCAL=y' ${nuttx_config_file}
 #	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
-	-grep 'IPV6' ${nuttx_config_file}
+#	-grep 'IPV6' ${nuttx_config_file}
 
 rule/iotjs/base: rule/iotjs/prep 
 	${MAKE} ${nuttx_dir}
@@ -95,11 +96,12 @@ rule/iotjs/base: rule/iotjs/prep
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
 	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
 #	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
+	${MAKE} rule/iotjs/configured
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
-	${MAKE} rule/nuttx/build
-	${MAKE} deploy monitor # TODO
+#	${MAKE} rule/nuttx/build
+#	${MAKE} deploy monitor # TODO
 #	${MAKE} rule/iotjs/config # TODO
 #	ls ${nuttx_include_file}
 

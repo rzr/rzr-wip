@@ -26,7 +26,7 @@ nuttx_apps_dir?=apps-dir
 
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
-monitor_file?=/dev/ttyACM1
+monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 
 # TODO: keep private in ~/
 dev_id?=066EFF323535474B43065221
