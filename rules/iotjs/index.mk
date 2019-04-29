@@ -55,6 +55,7 @@ iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 
 rule/iotjs/nuttx/build: #nuttx/.config #build/base iotjs/build
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
+	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
  IOTJS_ABSOLUTE_ROOT_DIR=${IOTJS_ABSOLUTE_ROOT_DIR} \
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
@@ -80,7 +81,7 @@ rule/iotjs/configure: iotjs
 	${MAKE} menuconfig
 
 rule/iotjs/configured:
-	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
+#	grep 'CONFIG_NET_TCPBACKLOG=y' ${nuttx_config_file}
 	-grep 'IPV6' ${nuttx_config_file}
 
 rule/iotjs/base: rule/iotjs/prep 
@@ -92,7 +93,8 @@ rule/iotjs/base: rule/iotjs/prep
 #	cat ./rules/iotjs/iotjs.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 #	cat ./rules/iotjs/tizenrt.defconfig.in >>  ${nuttx_config_file} # iotjs stm32
 	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
-	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file} 
+	cat ./rules/iotjs/defconfig-pwm.in >>  ${nuttx_config_file}
+#	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
 #	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
