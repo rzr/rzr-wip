@@ -38,8 +38,11 @@ iotjs: ${iotjs_app_dir}
 	ls $^
 
 rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
+	cp -av $@ ${nuttx_config_file}
+	${MAKE} rule/nuttx/build
+
+rule/iotjs/nuttx/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file}
 	cp -av $< ${nuttx_config_file}
-	touch $<
 	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -125,10 +128,6 @@ ${iotjs_lib_file}: rule/iotjs/lib
 
 #rule/iotjs/build/base: ${nuttx_dir}/.config
 
-
-rule/iotjs/link: ${iotjs_lib_file}
-	${MAKE} rule/iotjs/nuttx/build
-	${MAKE} deploy monitor
 
 rule/iotjs/menuconfig:
 	ls ${nuttx_config_file}
