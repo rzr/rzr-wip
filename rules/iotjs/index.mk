@@ -24,8 +24,6 @@ iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
 #iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 
-nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
-
 
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
@@ -121,6 +119,7 @@ rule/iotjs/lib:
 rule/iotjs/link:
 	${MAKE} ${nuttx_apps_dir}/system/iotjs
 	${MAKE} rule/iotjs/configure
+	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} rule/iotjs/nuttx/build
 	${MAKE} deploy monitor
 
