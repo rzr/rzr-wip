@@ -18,8 +18,8 @@ iotjs_branch?=master
 #TODO:
 #iotjs_url=https://github.com/tizenteam/iotjs
 #iotjs_branch=sandbox/rzr/review/master
-#iotjs_branch=sandbox/rzr/devel/master
-iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
+iotjs_branch=sandbox/rzr/devel/master
+#iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/good/master
 
 #TODO:
