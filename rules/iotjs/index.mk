@@ -172,7 +172,7 @@ rule/iotjs/tizenrt/meld: ${HOME}/mnt/TizenRT/build/configs/artik053s/iotjs/defco
 	ls ${<D}/../..
 	${@F} $^
 
-iotjs/clean:
+rule/iotjs/clean:
 	rm -rf iotjs/build
 
 
