@@ -92,6 +92,9 @@ ${iotjs_nuttx_config_file}: ${nuttx_config_file}
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 	grep -v 'CONFIG_IOTJS=y' ${nuttx_config_file} > $@
 	grep 'CONFIG_NET_LOCAL=y' $@
+	grep '^CONFIG_' rules/iotjs/defconfig* \
+ grep -v 'CONFIG_IOTJS=y'\
+ | while read line ; do grep $${line} $@ ; done
 	ls $@
 
 rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
