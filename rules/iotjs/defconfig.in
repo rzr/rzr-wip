@@ -6,6 +6,9 @@ CONFIG_NSH_ARCHINIT=y
 # needed for iotjs
 # CONFIG_IOTJS=y
 
+# 
+CONFIG_CLOCK_MONOTONIC=y
+
 # Needed for iotjs on building tuv: uv__make_pipe
 #  -> Networking Support
 #  │       -> Networking support (NET [=y])
