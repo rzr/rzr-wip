@@ -39,7 +39,7 @@ var port = pwm.open(config, function(err) {
   port.r_cycle = 2 + port.c_cycle;
   port.m_cycle = (port.l_cycle + port.r_cycle) / 2.; // 1.5
   port.cycle = port.m_cycle;
-  port.o_cycle = .01;
+  port.o_cycle = .001;
   port.s_cycle = 1;
   console.log('cycle=' + port.cycle);
 
@@ -57,6 +57,6 @@ var port = pwm.open(config, function(err) {
     if (port.cycle >= port.r_cycle) {
       port.s_cycle = -1;
     }
-  }, 100);
+  }, 10);
   //});
 });
