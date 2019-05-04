@@ -65,12 +65,18 @@ ${nuttx_dir}/Makefile: ${nuttx_dir}
 #${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
 #	ls $<
 
-${nuttx_dir}/Make.defs: ${configure} ${nuttx_defconfig_file}
+.PHONY: rule/nuttx/configure
+
+rule/nuttx/configure: ${configure} ${nuttx_defconfig_file}
 	ls -l $<
-	-ls $@
-	cd ${@D} && ${CURDIR}/$< ${nuttx_config}
+	cd ${nuttx_dir} && ${CURDIR}/$< ${nuttx_config}
 	ls $<
 	-grep -i "BOARD" ${nuttx_config_file}
+
+${nuttx_dir}/Make.defs: rule/nuttx/configure
+	-ls $@
+
+${nuttx_config_file}: rule/nuttx/configure
 	-ls $@
 
 #${nuttx_dir}/.config: ${nuttx_dir}/Make.defs
@@ -90,11 +96,13 @@ ${nuttx_apps_dir}/Kconfig: #rule/nuttx/configure
 ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 	ls $@
 
-${nuttx_config_file}: ${nuttx_dir}/Make.defs
-	ls $@
+${nuttx_config_file}:
 
-rule/nuttx/configure:
-	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file}
+#${nuttx_dir}/Make.defs
+#	ls $@ || make rule/nuttx/configure
+
+#rule/nuttx/configure:
+#	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file}
 
 nuttx/config: ${nuttx_config_file}
 	ls $<
