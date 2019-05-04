@@ -137,6 +137,9 @@ rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp | tee ${nuttx_config_file}.diff
 	-diff -u ${nuttx_defconfig_file} ${nuttx_dir}/defconfig | tee ${nuttx_dir}/defconfig.diff
 
+rule/nuttx/reconfigure: distclean rule/nuttx/menuconfig
+	ls -l ${nuttx_config_file}
+
 ${nuttx_dir}/defconfig: ${nuttx_dir}
 	make -C $< savedefconfig
 
