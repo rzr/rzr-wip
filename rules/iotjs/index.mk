@@ -1,3 +1,5 @@
+#
+
 iotjs_machine?=${machine}
 iotjs_machine_family?=stm32
 iotjs_machine?=stm32f7nucleo
@@ -28,6 +30,14 @@ iotjs_url=file:///${HOME}/mnt/iotjs
 
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
+
+
+rule/iotjs/%: %
+	sync
+
+rule/iotjs/nuttx/%: nuttx/%
+	sync
+
 
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
