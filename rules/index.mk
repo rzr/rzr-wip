@@ -35,6 +35,9 @@ default: help
 V?=1
 export V
 
+make?=make -C rules
+export make
+
 
 -include rules/st.mk
 -include rules/nuttx/index.mk
