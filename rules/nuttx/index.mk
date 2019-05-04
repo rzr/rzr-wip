@@ -73,7 +73,8 @@ rule/nuttx/configure: ${configure} ${nuttx_defconfig_file}
 	ls $<
 	-grep -i "BOARD" ${nuttx_config_file}
 
-${nuttx_dir}/Make.defs: rule/nuttx/configure
+${nuttx_dir}/Make.defs:
+	ls ${@} || ${make} rule/nuttx/configure
 	-ls $@
 
 ${nuttx_config_file}:
