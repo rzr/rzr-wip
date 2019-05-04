@@ -32,11 +32,18 @@ iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
 
-rule/iotjs/%: %
+rule/iotjs/%:
+	${make} %
 	sync
 
 rule/iotjs/nuttx/%: nuttx/%
 	sync
+
+
+rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
+	cp -a ${nuttx_dir}/defconfig rules/iotjs
+	-git diff
+
 
 
 iotjs/%:
