@@ -44,8 +44,6 @@ rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
 	cp -a ${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
-
-
 iotjs/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
