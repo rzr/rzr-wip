@@ -31,6 +31,9 @@ iotjs_url=file:///${HOME}/mnt/iotjs
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
+rc_file?=rules/iotjs/rcS.template
+#TODO
+rc_file=rules/webthing-iotjs/rcS.template
 
 rule/iotjs/%:
 	${make} %
@@ -52,9 +55,9 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} rules/iotjs/rcS.template 
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${rc_file}
 	cp -av $< ${nuttx_config_file}
-	cp -av rules/iotjs/rcS.template  ${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
+	cp -av ${rc_file}  ${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 	cd ${nuttx_dir}/configs/${nuttx_platform}/include/ && ../../../tools/mkromfsimg.sh -nofat  ../../../
 	${MAKE} rule/nuttx/build
 
