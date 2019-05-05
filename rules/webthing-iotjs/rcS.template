@@ -13,10 +13,7 @@ cd /tmp/
 echo "TODO: IOTJS_PATH"#     "IOTJS_PATH": "/mnt/sdcard",
 
 mkdir /mnt
-mkdir /mnt/sdcard
-mount /mnt/sdcard ; mount -t tmpfs /mnt/sdcard ; cd /mnt/sdcard
-
-
+mount -t tmpfs /mnt/ ; cd /mnt
 mkdir /mnt/sdcard
 
 
