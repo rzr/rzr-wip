@@ -40,5 +40,6 @@ cd /tmp
 ifconfig
 # iotjs iotjs_modules/webthing-iotjs/example/simplest-thing.js
 
+cd /tmp/iotjs_modules/webthing-iotjs/example
 wget "http://192.168.1.12/~philippe/tmp/servo-thing.js"
 iotjs servo-thing.js
