@@ -52,12 +52,15 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file}
 	cp -av $< ${nuttx_config_file}
+	cp -av rules/iotjs/rcS.template  ${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
+	cd ${nuttx_dir}/configs/${nuttx_platform}/include/ && ../../../tools/mkromfsimg.sh -nofat  ../../../
 	${MAKE} rule/nuttx/build
 
+#arch/board/nsh_romfsimg.h
+
 rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs
-	cp -av rules/iotjs/rcS.template  ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
 	cp -av $< ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
