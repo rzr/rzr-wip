@@ -34,6 +34,7 @@ iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 rc_file?=rules/iotjs/rcS.template
 #TODO
 rc_file=rules/webthing-iotjs/rcS.template
+nuttx_romfs_file?=${nuttx_dir}/configs/nucleo-144/include/nsh_romfsimg.h
 
 rule/iotjs/%:
 	${make} %
@@ -55,10 +56,13 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${rc_file}
-	cp -av $< ${nuttx_config_file}
+
+${nuttx_romfs_file}: ${rc_file}
 	cp -av ${rc_file}  ${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 	cd ${nuttx_dir}/configs/${nuttx_platform}/include/ && ../../../tools/mkromfsimg.sh -nofat  ../../../
+
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${nuttx_romfs_file}
+	cp -av $< ${nuttx_config_file}
 	${MAKE} rule/nuttx/build
 
 #arch/board/nsh_romfsimg.h
