@@ -57,6 +57,7 @@ rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file}
 	${MAKE} rule/nuttx/build
 
 rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs
+	cp -av rules/iotjs/rcS.template  ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
 	cp -av $< ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -65,7 +66,6 @@ rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/
  -C ${nuttx_dir}
 
 rule/iotjs/prep: rules/iotjs/rcS.template ${apps_dir}/system/iotjs/Kconfig
-	cp -av $< ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
 	ls $<
 
 rules/iotjs/rcS.template:
