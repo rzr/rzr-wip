@@ -5,7 +5,8 @@ nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch?=master
 nuttx_dir?=nuttx
 #nuttx_dir=nuttx-dir
-nuttx_config=nucleo-144/f767-netnsh
+nuttx_platform=nucleo-144
+nuttx_config=${nuttx_platform}/f767-netnsh
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
