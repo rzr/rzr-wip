@@ -52,7 +52,7 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file}
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} rules/iotjs/rcS.template 
 	cp -av $< ${nuttx_config_file}
 	cp -av rules/iotjs/rcS.template  ${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 	cd ${nuttx_dir}/configs/${nuttx_platform}/include/ && ../../../tools/mkromfsimg.sh -nofat  ../../../
