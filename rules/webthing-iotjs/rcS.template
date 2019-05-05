@@ -17,12 +17,24 @@ mount -t tmpfs /mnt/ ; cd /mnt
 mkdir /mnt/sdcard
 
 
+## Express
+
+mkdir "/mnt/sdcard/iotjs-express"
+cd "/mnt/sdcard/iotjs-express"
+wget "http://192.168.1.12/~philippe/t/iotjs-express/index.js
+wget "http://192.168.1.12/~philippe/t/iotjs-express/lib/express.js
+echo 'require('iotjs-express')
+
+
+## WEBTHING
+
 mkdir /mnt/sdcard/webthing-iotjs
 cd /mnt/sdcard/webthing-iotjs
 pwd
 
 echo "TODO: download module"
 wget "http://192.168.1.12/~philippe/tmp/wt/webthing.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/index.js"
 cat webthing.js
 
 echo "TODO: download module internals"
@@ -36,17 +48,27 @@ wget "http://192.168.1.12/~philippe/tmp/wt/thing.js"
 wget "http://192.168.1.12/~philippe/tmp/wt/utils.js"
 wget "http://192.168.1.12/~philippe/tmp/wt/value.js"
 
+mkdir "/mnt/sdcard/iotjs-express"
+cd "/mnt/sdcard/iotjs-express"
+wget "http://192.168.1.12/~philippe/tmp/wt/iotjs-express.js"
+mkdir "/mnt/sdcard/iotjs-express/lib"
+cd "/mnt/sdcard/iotjs-express/lib"
+wget "http://192.168.1.12/~philippe/tmp/wt/express.js"
+
+
 
 # example
-
 mkdir /mnt/sdcard/webthing-iotjs/example
 cd /mnt/sdcard/webthing-iotjs/example
 wget "http://192.168.1.12/~philippe/tmp/wt/simplest-thing.js"
 
-cd /tmp
-ifconfig
-# iotjs iotjs_modules/webthing-iotjs/example/simplest-thing.js
+cd /mnt/sdcard/
+iotjs webthing-iotjs/example/simplest-thing.js
 
 cd /mnt/sdcard/webthing-iotjs/example
+#cd /mnt/sdcard/webthing-iotjs
+#cd /mnt/sdcard
 wget "http://192.168.1.12/~philippe/tmp/servo-thing.js"
 iotjs servo-thing.js
+
+
