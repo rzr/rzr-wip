@@ -22,26 +22,26 @@ cd /mnt/sdcard/webthing-iotjs
 pwd
 
 echo "TODO: download module"
-wget "http://192.168.1.12/~philippe/tmp/wti/webthing.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/webthing.js"
 cat webthing.js
 
 echo "TODO: download module internals"
 echo "TODO: webpack"
 mkdir "/mnt/sdcard/webthing-iotjs/lib"
 cd "/mnt/sdcard/webthing-iotjs/lib"
-wget "http://192.168.1.12/~philippe/tmp/wti/express.js"
-wget "http://192.168.1.12/~philippe/tmp/wti/property.js"
-wget "http://192.168.1.12/~philippe/tmp/wti/server.js"
-wget "http://192.168.1.12/~philippe/tmp/wti/thing.js"
-wget "http://192.168.1.12/~philippe/tmp/wti/utils.js"
-wget "http://192.168.1.12/~philippe/tmp/wti/value.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/express.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/property.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/server.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/thing.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/utils.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/value.js"
 
 
 # example
 
 mkdir /mnt/sdcard/webthing-iotjs/example
 cd /mnt/sdcard/webthing-iotjs/example
-wget "http://192.168.1.12/~philippe/tmp/wti/simplest-thing.js"
+wget "http://192.168.1.12/~philippe/tmp/wt/simplest-thing.js"
 
 cd /tmp
 ifconfig
