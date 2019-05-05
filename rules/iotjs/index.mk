@@ -64,10 +64,12 @@ rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
-	cp -av rules/iotjs/rcS.templat ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
-
+rule/iotjs/prep: rules/iotjs/rcS.template ${apps_dir}/system/iotjs/Kconfig
+	cp -av $< ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
 	ls $<
+
+rules/iotjs/rcS.template:
+	echo "echo \"~~~ $(shell date -u)\"" > $@
 
 iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 	ls $@
