@@ -65,6 +65,8 @@ rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/
  -C ${nuttx_dir}
 
 rule/iotjs/prep: ${apps_dir}/system/iotjs/Kconfig
+	cp -av rules/iotjs/rcS.templat ${nuttx_dir}/nuttx/configs/${nuttx_platform}/include/rcS.template 
+
 	ls $<
 
 iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
@@ -116,7 +118,7 @@ ${iotjs_nuttx_config_file}: ${nuttx_config_file}
 rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	ls $<
 
-rule/iotjs/base: rule/iotjs/prep 
+rule/iotjs/base: rule/iotjs/prep
 #	${MAKE} ${nuttx_dir}
 #	-${MAKE} distclean
 #	-rm -rfv ${iotjs_nuttx_dir}
