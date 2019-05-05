@@ -36,12 +36,8 @@ mkdir /tmp/iotjs_modules/webthing-iotjs/example
 cd /tmp/iotjs_modules/webthing-iotjs/example
 wget "http://192.168.1.12/~philippe/tmp/wti/simplest-thing.js"
 
-
-
 cd /tmp
 iotjs iotjs_modules/webthing-iotjs/example/simplest-thing.js
 
-
-
-wget "http://192.168.1.12/~philippe/tmp/wti/simplest-thing.js"
+wget "http://192.168.1.12/~philippe/tmp/robot-thing.js"
 iotjs example/simplest-thing.js
