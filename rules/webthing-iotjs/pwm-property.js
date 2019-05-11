@@ -45,7 +45,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
         this.config.pwm.dutyCycle = 0.5;
       }
     }
-    verbose('log: open pin: ' + this.config.pin + ' ' + metadata.description);
+    verbose('log: opening: ' + metadata.description);
     verbose(this.config.pwm);
     this.port = pwm.open(this.config.pwm, function (err, port) {
       verbose("log: PWM: "  +  self.getName() + ": open: " + err);
@@ -54,8 +54,8 @@ function PwmOutProperty(thing, name, value, metadata, config) {
         throw err;
       }
       self.port.freq = 1 / self.config.pwm.period;
-      //self.port.setFrequencySync(self.port.freq);
-      //self.port.setEnableSync(true);
+      self.port.setFrequencySync(self.port.freq);
+      self.port.setEnableSync(true);
 
       self.value.valueForwarder = function (value) {
         if (typeof self.config.pwm.convert != 'undefined') {
