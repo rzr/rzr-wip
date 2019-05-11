@@ -24,63 +24,6 @@ var pwm = require('pwm');
 var PwmProperty = require('pwm-property');
 var pins = require('stm32f7nucleo').pin;
 
-// minimum: 0, //(1 - offset) / period, //0.3 ~mid=0.75
-// maximum: (2 + offset) / period // 0.11
-function PwmOutProperty(thing, name, value, metadata, config) {
-  var self = this;
-  Property.call(this, thing, name || "PwmOut", new Value(Number(value)), {
-    '@type': 'LevelProperty',
-    title: metadata && metadata.title || "Level: ".concat(name),
-    type: 'number',
-    minimum: config.minimum || (1 - .4) / 20,
-    maximum: config.maximum || (2 + .4) / 20,
-    description: metadata && metadata.description || "PWM Actuator on pin=".concat(config.pin)
-  });
-  {
-    this.config = config;
-    if (! this.config.pwm) {
-      this.config.pwm = {};
-    }
-    //if (typeof this.config.pwm.pin === 'undefined')
-    //this.config.pwm.pin = config.pin;
-
-    this.config.pwm = {
-      pin: config.pin,
-      dutyCycle: 1./20,
-      period: .02, //50hz
-    }
-    this.port = pwm.open(this.config.pwm, function (err, port) {
-      log("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
-
-      if (err) {
-        console.error("error: PWM: ".concat(self.getName(), ": Fail to open: ").concat(err));
-        return err;
-      }
-      self.port.freq = 1 / self.config.pwm.period;
-      //self.port = port;
-      self.value.valueForwarder = function (value) {
-        verbose('forward: ' + value);
-        self.port.setFrequencySync(self.port.freq);
-        self.port.setEnableSync(true);
-        self.port.setDutyCycleSync(Number(value));
-      };
-    });
-  }
-
-  this.close = function () {
-    try {
-      self.port && self.port.closeSync();
-    } catch (err) {
-      console.error("error: PWM: ".concat(self.getName(), ": Fail to close: ").concat(err));
-      return err;
-    }
-
-    log("log: PWM: ".concat(self.getName(), ": close:"));
-  };
-
-  return this;
-}
-
 function angleToDuttyCycle(angle)
 {
   console.log('convert: angle: ' + angle);
@@ -95,9 +38,8 @@ function angleToDuttyCycle(angle)
 
 function RobotThing(name, type, description) {
   var self = this;
-  Thing.call(this, name || 'PWM', type || [], description || 'A web connected PWM');
+  webthing.Thing.call(this, name || 'PWM', type || [], description || 'A web connected PWM');
   {
-
     var offset = .4;
     var period = 20;
     this.pinProperties = [
@@ -142,7 +84,7 @@ function RobotThing(name, type, description) {
         convert: angleToDuttyCycle
       })
     ];
-    
+
     this.pinProperties.forEach(function (property) {
       self.addProperty(property);
     });
@@ -161,7 +103,7 @@ function runServer() {
   var port = process.argv[3] ? Number(process.argv[3]) : 8888;
   var url = "http://localhost:".concat(port);
   var thing = new RobotThing();
-  var server = new WebThingServer(new SingleThing(thing), port);
+  var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
   process.on('SIGINT', function () {
     server.stop();
 
