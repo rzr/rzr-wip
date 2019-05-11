@@ -43,7 +43,7 @@ function RobotThing(name, type, description) {
     var offset = .4;
     var period = 20;
     this.pinProperties = [
-      new AngleOutProperty(this, 'Torso', 0, {
+      new PwmProperty(this, 'Torso', 0, {
         description: 'PWM on /dev/pwm1'
       }, {
         pin: pins.PWM1.CH1_1,
@@ -53,7 +53,7 @@ function RobotThing(name, type, description) {
         offset: .4,
         convert: angleToDuttyCycle
       }),
-      new AngleOutProperty(this, 'Shoulder', 0, {
+      new PwmProperty(this, 'Shoulder', 0, {
         description: 'PWM on /dev/pwm2'
       }, {
         pin: pins.PWM2.CH1_1,
@@ -63,7 +63,7 @@ function RobotThing(name, type, description) {
         offset: .4,
         convert: angleToDuttyCycle
       }),
-      new AngleOutProperty(this, 'Arm', 0, {
+      new PwmProperty(this, 'Arm', 0, {
         description: 'PWM on /dev/pwm3'
       }, {
         pin: pins.PWM3.CH1_1,
@@ -73,7 +73,7 @@ function RobotThing(name, type, description) {
         offset: .4,
         convert: angleToDuttyCycle
       }),
-      new AngleOutProperty(this, 'Hand', 0, {
+      new PwmProperty(this, 'Hand', 0, {
         description: 'PWM on /dev/pwm4'
       }, {
         pin: pins.PWM4.CH1_1,
