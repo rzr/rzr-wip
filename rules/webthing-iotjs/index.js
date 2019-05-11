@@ -46,43 +46,55 @@ function RobotThing(name, type, description) {
       new PwmProperty(this, 'Torso', 0, {
         description: 'PWM on /dev/pwm0'
       }, {
-        pin: pins.PWM1.CH1_1,
         minimum: -90,
         maximum: +90,
-        period: 20,
-        offset: .4,
-        convert: angleToDuttyCycle
+        pwm: {
+          pin: pins.PWM1.CH1_1,
+          period: 20,
+          dutyCycle: 1.5/20,
+          offset: .4,
+          convert: angleToDuttyCycle
+        }
       }),
       new PwmProperty(this, 'Shoulder', 0, {
         description: 'PWM on /dev/pwm1'
       }, {
-        pin: pins.PWM2.CH1_1,
         minimum: -90,
         maximum: +90,
-        period: 20,
-        offset: .4,
-        convert: angleToDuttyCycle
-      }),
-      new PwmProperty(this, 'Arm', 0, {
-        description: 'PWM on /dev/pwm2'
-      }, {
-        pin: pins.PWM3.CH1_1,
-        minimum: -90,
-        maximum: +90,
-        period: 20,
-        offset: .4,
-        convert: angleToDuttyCycle
-      }),
-      new PwmProperty(this, 'Hand', 0, {
-        description: 'PWM on /dev/pwm3'
-      }, {
-        pin: pins.PWM4.CH1_1,
-        minimum: -90,
-        maximum: +90,
-        period: 20,
-        offset: .4,
-        convert: angleToDuttyCycle
+        pwm: {
+          pin: pins.PWM2.CH1_1,
+          period: 20,
+          dutyCycle: 1.5/20,
+          offset: .4,
+          convert: angleToDuttyCycle
+        }
       })
+      // ,
+      // new PwmProperty(this, 'Arm', 0, {
+      //   description: 'PWM on /dev/pwm2'
+      // }, {
+      //   minimum: -90,
+      //   maximum: +90,
+      //   pwm: {
+      //     pin: pins.PWM3.CH1_1,
+      //     period: 20,
+      //     dutyCycle: 1.5/20,
+      //     offset: .4,
+      //     convert: angleToDuttyCycle
+      //   }
+
+      // })
+      // ,
+      // new PwmProperty(this, 'Hand', 0, {
+      //   description: 'PWM on /dev/pwm3'
+      // }, {
+      //   pin: pins.PWM4.CH1_1,
+      //   minimum: -90,
+      //   maximum: +90,
+      //   period: 20,
+      //   offset: .4,
+      //   convert: angleToDuttyCycle
+      // })
     ];
 
     this.pinProperties.forEach(function (property) {
