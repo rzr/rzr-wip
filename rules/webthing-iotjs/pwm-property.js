@@ -188,12 +188,11 @@ function RobotThing(name, type, description) {
   }
 }
 
-var BoardThing = PwmThing;
 
 function runServer() {
   var port = process.argv[3] ? Number(process.argv[3]) : 8888;
   var url = "http://localhost:".concat(port);
-  var thing = new BoardThing();
+  var thing = new RobotThing();
   var server = new WebThingServer(new SingleThing(thing), port);
   process.on('SIGINT', function () {
     server.stop();
