@@ -19,7 +19,7 @@ var Value = webthing.Value;
 
 var pwm = require('pwm');
 
-function AngleOutProperty(thing, name, value, metadata, config) {
+function PwmProperty(thing, name, value, metadata, config) {
   var self = this;
   webthing.Property.call(this, thing, name || "PwmOut", new webthing.Value(Number(value)), {
     '@type': 'LevelProperty',
@@ -76,4 +76,12 @@ function AngleOutProperty(thing, name, value, metadata, config) {
   };
 
   return this;
+}
+
+//TODO In/Out
+
+module.exports = PwmProperty;
+
+if (module.parent === null) {
+  var app = new PwmProperty;
 }
