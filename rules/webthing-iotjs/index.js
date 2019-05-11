@@ -30,21 +30,21 @@ function angleToDuttyCycle(angle)
   var offset = .4;
   var period = 20;
   var dutyCycle = ( ( (angle + 90) / 180 ) * (1+offset*2) +(1-offset) ) / period;
-  console.log('convert: dutyCycle: period: '  + dutyCycle * period);
   console.log('convert: dutyCycle: '  + dutyCycle);
+  console.log('convert: dutyCycle: period: '  + dutyCycle * period);
   return dutyCycle;
 }
 
 
 function RobotThing(name, type, description) {
   var self = this;
-  webthing.Thing.call(this, name || 'PWM', type || [], description || 'A web connected PWM');
+  webthing.Thing.call(this, name || 'Robot', type || [], description || 'A web connected Robot');
   {
     var offset = .4;
     var period = 20;
     this.pinProperties = [
       new PwmProperty(this, 'Torso', 0, {
-        description: 'PWM on /dev/pwm1'
+        description: 'PWM on /dev/pwm0'
       }, {
         pin: pins.PWM1.CH1_1,
         minimum: -90,
@@ -54,7 +54,7 @@ function RobotThing(name, type, description) {
         convert: angleToDuttyCycle
       }),
       new PwmProperty(this, 'Shoulder', 0, {
-        description: 'PWM on /dev/pwm2'
+        description: 'PWM on /dev/pwm1'
       }, {
         pin: pins.PWM2.CH1_1,
         minimum: -90,
@@ -64,7 +64,7 @@ function RobotThing(name, type, description) {
         convert: angleToDuttyCycle
       }),
       new PwmProperty(this, 'Arm', 0, {
-        description: 'PWM on /dev/pwm3'
+        description: 'PWM on /dev/pwm2'
       }, {
         pin: pins.PWM3.CH1_1,
         minimum: -90,
@@ -74,7 +74,7 @@ function RobotThing(name, type, description) {
         convert: angleToDuttyCycle
       }),
       new PwmProperty(this, 'Hand', 0, {
-        description: 'PWM on /dev/pwm4'
+        description: 'PWM on /dev/pwm3'
       }, {
         pin: pins.PWM4.CH1_1,
         minimum: -90,
