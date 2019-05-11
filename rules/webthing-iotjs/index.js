@@ -94,7 +94,8 @@ function angleToDuttyCycle(angle)
   console.log('convert: angle: ' + angle);
   var offset = .0;
   var period = 20;
-  var dutyCycle = ( (angle + 90) / 180 ) * (1+offset)/period + (1-offset)/period;
+  var dutyCycle = ( ( (angle + 90) / 180 ) * 1 +1 ) / period;
+  console.log('convert: dutyCycle: period: '  + dutyCycle * period);
   console.log('convert: dutyCycle: '  + dutyCycle);
   return dutyCycle;
 }
