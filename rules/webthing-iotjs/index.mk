@@ -6,7 +6,7 @@ rule/webthing-iotjs/deploy: ${webthing_iotjs_deploy_dir}
 ${webthing_iotjs_deploy_dir}:
 	rm -rf $@
 	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
-	cp -av robot-thing.js $@
+	cp -av *.js $@
 
 rule/webthing-iotjs/deploy/wget:
 	mkdir -p ${HOME}/public_html/tmp/wt
