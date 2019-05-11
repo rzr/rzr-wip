@@ -44,43 +44,43 @@ function RobotThing(name, type, description) {
     var period = .02; // in secs 50Hz
     
     this.pinProperties = [
-      new PwmProperty(this, 'Torso', 0, {
-        description: 'PWM on /dev/pwm1'
-      }, {
-        minimum: -90,
-        maximum: +90,
-        pwm: {
-          pin: pins.PWM1.CH1_1,
-          period: period,
-          offset: offset,
-          convert: angleToDuttyCycle
-        }
-      }),
-      new PwmProperty(this, 'Shoulder', 0, {
-        description: 'PWM on /dev/pwm2'
-      }, {
-        minimum: -90,
-        maximum: +90,
-        pwm: {
-          pin: pins.PWM2.CH1_1,
-          period: period,
-          offset: offset,
-          convert: angleToDuttyCycle
-        }
-      }),
-      // new PwmProperty(this, 'Arm', 0, {
-      //   description: 'PWM on /dev/pwm3'
+      // new PwmProperty(this, 'Torso', 0, {
+      //   description: 'PWM on /dev/pwm1'
       // }, {
       //   minimum: -90,
       //   maximum: +90,
       //   pwm: {
-      //     pin: pins.PWM3.CH1_1,
+      //     pin: pins.PWM1.CH1_1,
       //     period: period,
       //     offset: offset,
       //     convert: angleToDuttyCycle
       //   }
-      // })
-      // ,
+      // }),
+      // new PwmProperty(this, 'Shoulder', 0, {
+      //   description: 'PWM on /dev/pwm2'
+      // }, {
+      //   minimum: -90,
+      //   maximum: +90,
+      //   pwm: {
+      //     pin: pins.PWM2.CH1_1,
+      //     period: period,
+      //     offset: offset,
+      //     convert: angleToDuttyCycle
+      //   }
+      // }),
+      new PwmProperty(this, 'Arm', 0, {
+        description: 'PWM on /dev/pwm3'
+      }, {
+        minimum: -90,
+        maximum: +90,
+        pwm: {
+          pin: pins.PWM3.CH1_1,
+          period: period,
+          offset: offset,
+          convert: angleToDuttyCycle
+        }
+      })
+      ,
       new PwmProperty(this, 'Hand', 0, {
         description: 'PWM on /dev/pwm4'
       }, {
