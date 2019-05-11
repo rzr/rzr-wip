@@ -18,6 +18,7 @@ ${webthing_iotjs_www_dir}: rules/webthing-iotjs
 	rm -rf $@
 	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
 	cp -av $</*.js $@
+	cp -av $</*.json $@
 
 rule/webthing-iotjs/www/wget:
 	mkdir -p ${HOME}/public_html/tmp/wt
@@ -37,5 +38,7 @@ sync
 rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/webthing-iotjs/www rule/iotjs/devel
 	sync
 
-rule/webthing-iotjs/webpack:
-	cd ${webthing_iotjs_www_dir} && npm init -y && npm install --only=dev webpack-cli
+rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
+	cd ${webthing_iotjs_www_dir} && ls package.json || npm init -y \
+&& npm install --only=dev webpack-cli && npm install
+	cd ${webthing_iotjs_www_dir} && npm run build
