@@ -68,31 +68,31 @@ function RobotThing(name, type, description) {
           convert: angleToDuttyCycle
         }
       }),
-      new PwmProperty(this, 'Arm', 0, {
-        description: 'PWM on /dev/pwm3'
-      }, {
-        minimum: -90,
-        maximum: +90,
-        pwm: {
-          pin: pins.PWM3.CH1_1,
-          period: period,
-          offset: offset,
-          convert: angleToDuttyCycle
-        }
-      })
-      // ,
-      // new PwmProperty(this, 'Hand', 0, {
-      //   description: 'PWM on /dev/pwm4'
+      // new PwmProperty(this, 'Arm', 0, {
+      //   description: 'PWM on /dev/pwm3'
       // }, {
       //   minimum: -90,
       //   maximum: +90,
       //   pwm: {
-      //     pin: pins.PWM4.CH1_1,
+      //     pin: pins.PWM3.CH1_1,
       //     period: period,
       //     offset: offset,
       //     convert: angleToDuttyCycle
       //   }
       // })
+      // ,
+      new PwmProperty(this, 'Hand', 0, {
+        description: 'PWM on /dev/pwm4'
+      }, {
+        minimum: -90,
+        maximum: +90,
+        pwm: {
+          pin: pins.PWM4.CH1_1,
+          period: period,
+          offset: offset,
+          convert: angleToDuttyCycle
+        }
+      })
     ];
 
     this.pinProperties.forEach(function (property) {
