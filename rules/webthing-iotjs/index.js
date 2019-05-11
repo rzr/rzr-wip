@@ -13,23 +13,15 @@ var console = require('console'); // Disable logs here by editing to '!console.l
 var log = console.log || function () {};
 var verbose = console.log || function () {};
 
-var webthing;
-
-try {
-  webthing = require('../../../webthing');
-} catch (err) {
-  webthing = require('webthing-iotjs');
-}
-
+var webthing = require('webthing-iotjs');
 var Property = webthing.Property;
 var Value = webthing.Value;
-
 var Thing = webthing.Thing;
 var WebThingServer = webthing.WebThingServer;
 var SingleThing = webthing.SingleThing; // Update with different board here if needed
 
 var pwm = require('pwm');
-
+var PwmProperty = require('pwm-property');
 var pins = require('stm32f7nucleo').pin;
 
 // minimum: 0, //(1 - offset) / period, //0.3 ~mid=0.75
@@ -92,71 +84,12 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 function angleToDuttyCycle(angle)
 {
   console.log('convert: angle: ' + angle);
-  var offset = .3;
+  var offset = .4;
   var period = 20;
   var dutyCycle = ( ( (angle + 90) / 180 ) * (1+offset*2) +(1-offset) ) / period;
   console.log('convert: dutyCycle: period: '  + dutyCycle * period);
   console.log('convert: dutyCycle: '  + dutyCycle);
   return dutyCycle;
-}
-
-function AngleOutProperty(thing, name, value, metadata, config) {
-  var self = this;
-  Property.call(this, thing, name || "PwmOut", new Value(Number(value)), {
-    '@type': 'LevelProperty',
-    title: metadata && metadata.title || "Level: ".concat(name),
-    type: 'number',
-    minimum: config.minimum,
-    maximum: config.maximum,
-    description: metadata && metadata.description || "PWM Actuator on pin=".concat(config.pin)
-  });
-  {
-    this.config = config;
-    if (! this.config.pwm) {
-      this.config.pwm = {};
-    }
-    //if (typeof this.config.pwm.pin === 'undefined')
-    //this.config.pwm.pin = config.pin;
-    var dutyCycle = .5;
-    if (typeof config.convert != 'undefined') {
-      dutyCycle = config.convert(config.maximum + config.minimum / 2);
-    }
-    this.config.pwm = {
-      pin: config.pin,
-      dutyCycle: dutyCycle, //  1./20,
-      period: .02, //50hz
-    }
-    this.port = pwm.open(this.config.pwm, function (err, port) {
-      log("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
-
-      if (err) {
-        console.error("error: PWM: ".concat(self.getName(), ": Fail to open: ").concat(err));
-        return err;
-      }
-      self.port.freq = 1 / self.config.pwm.period;
-      self.value.valueForwarder = function (value) {
-        if (typeof self.config.convert != undefined) {
-          value = self.config.convert(value);
-        }
-        self.port.setFrequencySync(self.port.freq);
-        self.port.setEnableSync(true);
-        self.port.setDutyCycleSync(Number(value));
-      };
-    });
-  }
-
-  this.close = function () {
-    try {
-      self.port && self.port.closeSync();
-    } catch (err) {
-      console.error("error: PWM: ".concat(self.getName(), ": Fail to close: ").concat(err));
-      return err;
-    }
-
-    log("log: PWM: ".concat(self.getName(), ": close:"));
-  };
-
-  return this;
 }
 
 
@@ -172,6 +105,36 @@ function RobotThing(name, type, description) {
         description: 'PWM on /dev/pwm1'
       }, {
         pin: pins.PWM1.CH1_1,
+        minimum: -90,
+        maximum: +90,
+        period: 20,
+        offset: .4,
+        convert: angleToDuttyCycle
+      }),
+      new AngleOutProperty(this, 'Shoulder', 0, {
+        description: 'PWM on /dev/pwm2'
+      }, {
+        pin: pins.PWM2.CH1_1,
+        minimum: -90,
+        maximum: +90,
+        period: 20,
+        offset: .4,
+        convert: angleToDuttyCycle
+      }),
+      new AngleOutProperty(this, 'Arm', 0, {
+        description: 'PWM on /dev/pwm3'
+      }, {
+        pin: pins.PWM3.CH1_1,
+        minimum: -90,
+        maximum: +90,
+        period: 20,
+        offset: .4,
+        convert: angleToDuttyCycle
+      }),
+      new AngleOutProperty(this, 'Hand', 0, {
+        description: 'PWM on /dev/pwm4'
+      }, {
+        pin: pins.PWM4.CH1_1,
         minimum: -90,
         maximum: +90,
         period: 20,
