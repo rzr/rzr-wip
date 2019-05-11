@@ -19,7 +19,7 @@ var Value = webthing.Value;
 
 var pwm = require('pwm');
 
-function PwmProperty(thing, name, value, metadata, config) {
+function PwmOutProperty(thing, name, value, metadata, config) {
   var self = this;
   webthing.Property.call(this, thing, name || "PwmOut", new webthing.Value(Number(value)), {
     '@type': 'LevelProperty',
@@ -27,7 +27,7 @@ function PwmProperty(thing, name, value, metadata, config) {
     type: 'number',
     minimum: config.minimum,
     maximum: config.maximum,
-    description: metadata && metadata.description || "PWM Actuator on pin=".concat(config.pin)
+    description: metadata && metadata.description || "PWM Actuator"
   });
   {
     this.config = config;
@@ -38,8 +38,8 @@ function PwmProperty(thing, name, value, metadata, config) {
         period: .02 // 50Hz
       };
     }
-    if (typeof this.config.pwm.dutyCycle === 'undefined') {    
-      if (typeof config.convert != 'undefined') {
+    if (typeof this.config.pwm.dutyCycle == 'undefined') {    
+      if (typeof this.config.convert != 'undefined') {
         this.config.pwm.dutyCycle = config.convert(config.maximum + config.minimum / 2);
       } else {
         this.config.pwm.dutyCycle = 0.5;
@@ -48,8 +48,7 @@ function PwmProperty(thing, name, value, metadata, config) {
     verbose('log: open pin: ' + this.config.pin + ' ' + metadata.description);
     verbose(this.config.pwm);
     this.port = pwm.open(this.config.pwm, function (err, port) {
-      verbose("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
-
+      verbose("log: PWM: "  +  self.getName() + ": open: " + err);
       if (err) {
         console.error("error: PWM: ".concat(self.getName(), ": Fail to open: ").concat(err));
         return err;
@@ -59,6 +58,7 @@ function PwmProperty(thing, name, value, metadata, config) {
         if (typeof self.config.convert != undefined) {
           value = self.config.convert(value);
         }
+        verbose(self.port.freq);
         self.port.setFrequencySync(self.port.freq);
         self.port.setEnableSync(true);
         self.port.setDutyCycleSync(Number(value));
@@ -79,9 +79,9 @@ function PwmProperty(thing, name, value, metadata, config) {
   return this;
 }
 
-//TODO In/Out
+// TODO In/Out
 
-module.exports = PwmProperty;
+module.exports = PwmOutProperty;
 
 if (module.parent === null) {
   var app = new PwmProperty;
