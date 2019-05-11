@@ -1,3 +1,4 @@
+# TODO: sed base_url
 echo "# Network"
 ifconfig
 ifup eth0
@@ -41,30 +42,30 @@ pwd
 
 echo "# download module"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/webthing.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//webthing.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/index.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//index.js"
 #cat webthing.js
 
 echo "# download module internals - TODO: webpack"
 mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
 cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
-#wget "http://192.168.1.12/~philippe/tmp/wt/express.js"
+#wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//express.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/property.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//property.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/server.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//server.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/thing.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//thing.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/utils.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//utils.js"
 sleep 1
-wget "http://192.168.1.12/~philippe/tmp/wt/value.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//value.js"
 
 echo '# example: simplest thing'
 mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs/example
 cd /mnt/sdcard/iotjs_modules/webthing-iotjs/example
-wget "http://192.168.1.12/~philippe/tmp/wt/simplest-thing.js"
+wget "http://192.168.250.1/~philippe//media/philippe/NODE_F767ZI1//simplest-thing.js"
 
 cd /mnt/sdcard/iotjs_modules/
 #iotjs webthing-iotjs/example/simplest-thing.js
