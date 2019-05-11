@@ -1,4 +1,4 @@
-webthing_iotjs_deploy_dir?=${HOME}/public_html/tmp/deploy
+webthing_iotjs_deploy_dir?=${HOME}/public_html/tmp/d
 
 rule/webthing-iotjs/deploy: ${webthing_iotjs_deploy_dir}
 	ls $^
@@ -23,3 +23,5 @@ wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/example/simples
 wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/iotjs-express.js \
 sync
 
+rule/webthing-iotjs/devel: rule/webthing-iotjs/deploy rule/iotjs/devel
+	sync
