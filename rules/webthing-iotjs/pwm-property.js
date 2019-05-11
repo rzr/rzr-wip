@@ -40,7 +40,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
     }
     if (typeof this.config.pwm.dutyCycle == 'undefined') {    
       if (typeof this.config.convert != 'undefined') {
-        this.config.pwm.dutyCycle = config.convert(config.maximum + config.minimum / 2);
+        this.config.pwm.dutyCycle = this.config.convert(config.minimum + config.maximum / 2);
       } else {
         this.config.pwm.dutyCycle = 0.5;
       }
