@@ -54,13 +54,14 @@ function PwmOutProperty(thing, name, value, metadata, config) {
         return err;
       }
       self.port.freq = 1 / self.config.pwm.period;
+      self.port.setFrequencySync(self.port.freq);
+      self.port.setEnableSync(true);
+
       self.value.valueForwarder = function (value) {
         if (typeof self.config.convert != undefined) {
           value = self.config.convert(value);
         }
         verbose(self.port.freq);
-        self.port.setFrequencySync(self.port.freq);
-        self.port.setEnableSync(true);
         self.port.setDutyCycleSync(Number(value));
       };
     });
@@ -84,5 +85,5 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 module.exports = PwmOutProperty;
 
 if (module.parent === null) {
-  var app = new PwmProperty;
+  var app = new PwmOutProperty;
 }
