@@ -40,7 +40,7 @@ function RobotThing(name, type, description) {
   var self = this;
   webthing.Thing.call(this, name || 'Robot', type || [], description || 'A web connected Robot');
   {
-    var offset = .;
+    var offset = 0;
     var period = .02; // 50Hz
     this.pinProperties = [
       new PwmProperty(this, 'Torso', 0, {
