@@ -89,14 +89,21 @@ function PwmOutProperty(thing, name, value, metadata, config) {
   return this;
 }
 
+function angleToDuttyCycle(angle)
+{
+  var dutyCycle = ( (angle + 90) / 2 + 1) / 20;
+  console.log(dutyCycle);
+  return dutyCycle;
+}
+
 function AngleOutProperty(thing, name, value, metadata, config) {
   var self = this;
   Property.call(this, thing, name || "PwmOut", new Value(Number(value)), {
     '@type': 'LevelProperty',
     title: metadata && metadata.title || "Level: ".concat(name),
     type: 'number',
-    minimum: config.minimum || (1 - .4) / 20,
-    maximum: config.maximum || (2 + .4) / 20,
+    minimum: config.minimum,
+    maximum: config.maximum,
     description: metadata && metadata.description || "PWM Actuator on pin=".concat(config.pin)
   });
   {
@@ -120,9 +127,10 @@ function AngleOutProperty(thing, name, value, metadata, config) {
         return err;
       }
       self.port.freq = 1 / self.config.pwm.period;
-      //self.port = port;
       self.value.valueForwarder = function (value) {
         verbose('forward: ' + value);
+        value = angleToDuttyCycle(value);
+        verbose('forward: angle: ' + value);
         self.port.setFrequencySync(self.port.freq);
         self.port.setEnableSync(true);
         self.port.setDutyCycleSync(Number(value));
@@ -145,7 +153,7 @@ function AngleOutProperty(thing, name, value, metadata, config) {
 }
 
 
-function PwmThing(name, type, description) {
+function RobotThing(name, type, description) {
   var self = this;
   Thing.call(this, name || 'PWM', type || [], description || 'A web connected PWM');
   {
@@ -157,16 +165,9 @@ function PwmThing(name, type, description) {
         description: 'PWM on /dev/pwm1'
       }, {
         pin: pins.PWM1.CH1_1,
-        minimum: 0, //(1 - offset) / period, //0.3 ~mid=0.75
-        maximum: (2 + offset) / period // 0.11
+        minimum: -90,
+        maximum: +90,
       }),
-      // new PwmOutProperty(this, 'Pwm', 0, {
-      //   description: 'PWM on /dev/pwm1'
-      // }, {
-      //   pin: pins.PWM2.CH1_1,
-      //   minimum: (1 - offset) / period,
-      //   maximum: (2 + offset) / period
-      // }),
     ];
     
     this.pinProperties.forEach(function (property) {
