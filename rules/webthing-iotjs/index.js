@@ -140,7 +140,7 @@ function RobotThing(name, type, description) {
         period: 20,
         offset: .4,
         convert: angleToDuttyCycle
-      }),
+      })
     ];
     
     this.pinProperties.forEach(function (property) {
