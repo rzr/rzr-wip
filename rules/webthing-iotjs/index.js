@@ -117,7 +117,7 @@ function AngleOutProperty(thing, name, value, metadata, config) {
     //if (typeof this.config.pwm.pin === 'undefined')
     //this.config.pwm.pin = config.pin;
     var dutyCycle = .5;
-    if (typeof config.convert != unsigned) {
+    if (typeof config.convert != 'undefined') {
       dutyCycle = config.convert(config.maximum + config.minimum / 2);
     }
     this.config.pwm = {
