@@ -3,10 +3,10 @@ webthing_iotjs_deploy_dir?=${HOME}/public_html/tmp/d
 rule/webthing-iotjs/deploy: ${webthing_iotjs_deploy_dir}
 	ls $^
 
-${webthing_iotjs_deploy_dir}:
+${webthing_iotjs_deploy_dir}: rules/webthing-iotjs
 	rm -rf $@
 	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
-	cp -av *.js $@
+	cp -av $</*.js $@
 
 rule/webthing-iotjs/deploy/wget:
 	mkdir -p ${HOME}/public_html/tmp/wt
