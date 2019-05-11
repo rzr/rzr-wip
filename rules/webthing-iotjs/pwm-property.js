@@ -12,24 +12,16 @@
 var console = require('console'); // Disable logs here by editing to '!console.log'
 var log = console.log || function () {};
 var verbose = console.log || function () {};
-
-var webthing;
-
-try {
-  webthing = require('../../../webthing');
-} catch (err) {
-  webthing = require('webthing-iotjs');
-}
+var webthing = require('webthing-iotjs');
 
 var Property = webthing.Property;
 var Value = webthing.Value;
 
 var pwm = require('pwm');
 
-
 function AngleOutProperty(thing, name, value, metadata, config) {
   var self = this;
-  Property.call(this, thing, name || "PwmOut", new Value(Number(value)), {
+  webthing.Property.call(this, thing, name || "PwmOut", new webthing.Value(Number(value)), {
     '@type': 'LevelProperty',
     title: metadata && metadata.title || "Level: ".concat(name),
     type: 'number',
