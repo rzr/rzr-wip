@@ -41,59 +41,59 @@ function RobotThing(name, type, description) {
   webthing.Thing.call(this, name || 'Robot', type || [], description || 'A web connected Robot');
   {
     var offset = 0;
-    var period = .02; // 50Hz
+    var period = .02; // in secs 50Hz
+    
     this.pinProperties = [
       new PwmProperty(this, 'Torso', 0, {
-        description: 'PWM on /dev/pwm0'
+        description: 'PWM on /dev/pwm1'
       }, {
         minimum: -90,
         maximum: +90,
         pwm: {
           pin: pins.PWM1.CH1_1,
           period: period,
-          dutyCycle: 1.5/20,
           offset: offset,
           convert: angleToDuttyCycle
         }
       }),
       new PwmProperty(this, 'Shoulder', 0, {
-        description: 'PWM on /dev/pwm1'
+        description: 'PWM on /dev/pwm2'
       }, {
         minimum: -90,
         maximum: +90,
         pwm: {
           pin: pins.PWM2.CH1_1,
           period: period,
-          dutyCycle: 1.5/20,
           offset: offset,
           convert: angleToDuttyCycle
         }
       })
-      ,
-      new PwmProperty(this, 'Arm', 0, {
-        description: 'PWM on /dev/pwm2'
-      }, {
-        minimum: -90,
-        maximum: +90,
-        pwm: {
-          pin: pins.PWM3.CH1_1,
-          period: 20,
-          dutyCycle: 1.5/20,
-          offset: .4,
-          convert: angleToDuttyCycle
-        }
-      })
-      ,
-      new PwmProperty(this, 'Hand', 0, {
-        description: 'PWM on /dev/pwm3'
-      }, {
-        pin: pins.PWM4.CH1_1,
-        minimum: -90,
-        maximum: +90,
-        period: 20,
-        offset: .4,
-        convert: angleToDuttyCycle
-      })
+      // ,
+      // new PwmProperty(this, 'Arm', 0, {
+      //   description: 'PWM on /dev/pwm3'
+      // }, {
+      //   minimum: -90,
+      //   maximum: +90,
+      //   pwm: {
+      //     pin: pins.PWM3.CH1_1,
+      //     period: period,
+      //     offset: offset,
+      //     convert: angleToDuttyCycle
+      //   }
+      // })
+      // ,
+      // new PwmProperty(this, 'Hand', 0, {
+      //   description: 'PWM on /dev/pwm4'
+      // }, {
+      //   minimum: -90,
+      //   maximum: +90,
+      //   pwm: {
+      //     pin: pins.PWM4.CH1_1,
+      //     period: period,
+      //     offset: offset,
+      //     convert: angleToDuttyCycle
+      //   }
+      // })
     ];
 
     this.pinProperties.forEach(function (property) {
@@ -125,7 +125,9 @@ function runServer() {
 
     cleanup();
   });
-  server.start();
+  setTimeout(function(){
+    server.start();
+  }, 1000);
 }
 
 runServer();
