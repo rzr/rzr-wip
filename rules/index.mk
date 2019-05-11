@@ -93,5 +93,4 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
-
-
+-include rules/webthing-iotjs/index.mk
