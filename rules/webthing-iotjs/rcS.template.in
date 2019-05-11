@@ -42,9 +42,9 @@ pwd
 
 echo "# download module"
 sleep 1
-wget "${base_url}/webthing.js"
+wget "${base_url}/webthing-iotjs/webthing.js"
 sleep 1
-wget "${base_url}/index.js"
+wget "${base_url}/webthing-iotjs/index.js"
 #cat webthing.js
 
 echo "# download module internals - TODO: webpack"
@@ -52,20 +52,20 @@ mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
 cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
 #wget "${base_url}/express.js"
 sleep 1
-wget "${base_url}/property.js"
+wget "${base_url}/webthing-iotjs/lib/property.js"
 sleep 1
-wget "${base_url}/server.js"
+wget "${base_url}/webthing-iotjs/lib/server.js"
 sleep 1
-wget "${base_url}/thing.js"
+wget "${base_url}/webthing-iotjs/lib/thing.js"
 sleep 1
-wget "${base_url}/utils.js"
+wget "${base_url}/webthing-iotjs/lib/utils.js"
 sleep 1
-wget "${base_url}/value.js"
+wget "${base_url}/webthing-iotjs/lib/value.js"
 
 echo '# example: simplest thing'
 mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs/example
 cd /mnt/sdcard/iotjs_modules/webthing-iotjs/example
-wget "${base_url}/simplest-thing.js"
+wget "${base_url}/webthing-iotjs/example/simplest-thing.js"
 
 cd /mnt/sdcard/iotjs_modules/
 #iotjs webthing-iotjs/example/simplest-thing.js
