@@ -91,11 +91,11 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 
 function angleToDuttyCycle(angle)
 {
+  console.log('convert: angle: ' + angle);
   var offset = .0;
   var period = 20;
   var dutyCycle = ( (angle + 90) / 180 ) * (1+offset)/period + (1-offset)/period;
-  console.log('angle: ' + angle);
-  console.log('dutyCycle: '  + dutyCycle);
+  console.log('convert: dutyCycle: '  + dutyCycle);
   return dutyCycle;
 }
 
@@ -135,9 +135,7 @@ function AngleOutProperty(thing, name, value, metadata, config) {
       self.port.freq = 1 / self.config.pwm.period;
       self.value.valueForwarder = function (value) {
         if (typeof self.config.convert != undefined) {
-          console.log('TODO: pre: ' + value);
           value = self.config.convert(value);
-          console.log('TODO: post: ' + value);
         }
         self.port.setFrequencySync(self.port.freq);
         self.port.setEnableSync(true);
