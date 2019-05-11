@@ -43,19 +43,19 @@ function RobotThing(name, type, description) {
     var offset = 0;
     var period = .02; // 50Hz
     this.pinProperties = [
-      // new PwmProperty(this, 'Torso', 0, {
-      //   description: 'PWM on /dev/pwm0'
-      // }, {
-      //   minimum: -90,
-      //   maximum: +90,
-      //   pwm: {
-      //     pin: pins.PWM1.CH1_1,
-      //     period: period,
-      //     dutyCycle: 1.5/20,
-      //     offset: offset,
-      //     convert: angleToDuttyCycle
-      //   }
-      // }),
+      new PwmProperty(this, 'Torso', 0, {
+        description: 'PWM on /dev/pwm0'
+      }, {
+        minimum: -90,
+        maximum: +90,
+        pwm: {
+          pin: pins.PWM1.CH1_1,
+          period: period,
+          dutyCycle: 1.5/20,
+          offset: offset,
+          convert: angleToDuttyCycle
+        }
+      }),
       new PwmProperty(this, 'Shoulder', 0, {
         description: 'PWM on /dev/pwm1'
       }, {
