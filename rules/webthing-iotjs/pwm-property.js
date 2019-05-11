@@ -51,7 +51,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
       verbose("log: PWM: "  +  self.getName() + ": open: " + err);
       if (err) {
         console.error("error: PWM: ".concat(self.getName(), ": Fail to open: ").concat(err));
-        return err;
+        throw err;
       }
       self.port.freq = 1 / self.config.pwm.period;
       self.port.setFrequencySync(self.port.freq);
