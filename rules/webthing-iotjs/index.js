@@ -91,7 +91,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 
 function angleToDuttyCycle(angle)
 {
-  var dutyCycle = ( (angle + 90) / 2 + 1) / 20;
+  var dutyCycle = ( (angle + 90) / 180 ) * 2/20 + 1/20;
   console.log('angle: ' + angle);
   console.log('dutyCycle: '  + dutyCycle);
   return dutyCycle;
@@ -114,10 +114,13 @@ function AngleOutProperty(thing, name, value, metadata, config) {
     }
     //if (typeof this.config.pwm.pin === 'undefined')
     //this.config.pwm.pin = config.pin;
-
+    var dutyCycle = .5;
+    if (typeof config.convert != unsigned) {
+      dutyCycle = config.convert(config.maximum + config.minimum / 2);
+    }
     this.config.pwm = {
       pin: config.pin,
-      dutyCycle: 1./20,
+      dutyCycle: dutyCycle, //  1./20,
       period: .02, //50hz
     }
     this.port = pwm.open(this.config.pwm, function (err, port) {
@@ -130,8 +133,9 @@ function AngleOutProperty(thing, name, value, metadata, config) {
       self.port.freq = 1 / self.config.pwm.period;
       self.value.valueForwarder = function (value) {
         if (typeof self.config.convert != undefined) {
-          console.log('TOCO');
+          console.log('TODO: pre: ' + value);
           value = self.convert(value);
+          console.log('TODO: post: ' + value);
         }
         self.port.setFrequencySync(self.port.freq);
         self.port.setEnableSync(true);
