@@ -1,14 +1,25 @@
-webthing_iotjs_deploy_dir?=${HOME}/public_html/d
+www_url?=http://192.168.250.1/~${USER}/${www_dir}
+www_dir?=d
 
-rule/webthing-iotjs/deploy: ${webthing_iotjs_deploy_dir}
+webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
+
+
+rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template
+	ls $<
+
+rules/webthing-iotjs/rcS.template: rules/webthing-iotjs/rcS.template.in
+	sed -e "s|\$${base_url}|${www_url}|g" < $< > $@
+	cat $@
+
+rule/webthing-iotjs/www: ${webthing_iotjs_www_dir}
 	ls $^
 
-${webthing_iotjs_deploy_dir}: rules/webthing-iotjs
+${webthing_iotjs_www_dir}: rules/webthing-iotjs
 	rm -rf $@
-	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
+	cd ~/mnt/webthing-iotjs && make www www_modules_dir=${@}
 	cp -av $</*.js $@
 
-rule/webthing-iotjs/deploy/wget:
+rule/webthing-iotjs/www/wget:
 	mkdir -p ${HOME}/public_html/tmp/wt
 	cd ${HOME}/public_html/tmp/wt && \
 wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/webthing.js && \
@@ -23,5 +34,5 @@ wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/example/simples
 wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/iotjs-express.js \
 sync
 
-rule/webthing-iotjs/devel: rule/webthing-iotjs/deploy rule/iotjs/devel
+rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/webthing-iotjs/www rule/iotjs/devel
 	sync
