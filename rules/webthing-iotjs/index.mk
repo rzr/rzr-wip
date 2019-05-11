@@ -1,5 +1,5 @@
-
 webthing_iotjs_deploy_dir?=${HOME}/public_html/tmp/deploy
+
 
 rule/webthing-iotjs/deploy: ${webthing_iotjs_deploy_dir}
 	ls $^
