@@ -32,21 +32,20 @@ function PwmProperty(thing, name, value, metadata, config) {
   {
     this.config = config;
     if (! this.config.pwm) {
-      this.config.pwm = {};
+      this.config.pwm = {
+        pin: 0
+        dutyCycle: .5, // TODO convert
+        period: .02 // 50Hz
+      };
     }
     //if (typeof this.config.pwm.pin === 'undefined')
     //this.config.pwm.pin = config.pin;
+    
     var dutyCycle = .5;
     if (typeof config.convert != 'undefined') {
       dutyCycle = config.convert(config.maximum + config.minimum / 2);
     }
-    this.config.pwm = {
-      pin: config.pin,
-      dutyCycle: dutyCycle, //  1./20,
-      period: .02, //50hz
-    }
     log('log: open pin: ' + this.config.pin + ' ' + metadata.description);
-    
     this.port = pwm.open(this.config.pwm, function (err, port) {
       log("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
 
