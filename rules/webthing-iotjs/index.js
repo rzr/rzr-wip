@@ -92,9 +92,9 @@ function PwmOutProperty(thing, name, value, metadata, config) {
 function angleToDuttyCycle(angle)
 {
   console.log('convert: angle: ' + angle);
-  var offset = .0;
+  var offset = .3;
   var period = 20;
-  var dutyCycle = ( ( (angle + 90) / 180 ) * 1 +1 ) / period;
+  var dutyCycle = ( ( (angle + 90) / 180 ) * (1+offset*2) +(1-offset) ) / period;
   console.log('convert: dutyCycle: period: '  + dutyCycle * period);
   console.log('convert: dutyCycle: '  + dutyCycle);
   return dutyCycle;
