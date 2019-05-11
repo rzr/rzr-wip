@@ -1,0 +1,159 @@
+# TODO: sed base_url
+echo "# Network"
+ifconfig
+ifup eth0
+renew eth0
+ifconfig
+sleep 1
+
+#mkdir /tmp; mount -t tmpfs /tmp ; cd /tmp 
+#sleep 1
+#cd /tmp/
+echo "# TODO: IOTJS_PATH=/mnt/sdcard"
+
+mkdir /mnt
+mount -t tmpfs /mnt/ ; cd /mnt
+mkdir /mnt/sdcard
+mkdir "/mnt/sdcard/iotjs_modules"
+echo "# Example"
+#wget http://192.168.1.12/~philippe/tmp/run.sh
+#sh /tmp/run.sh
+
+# CONFIG_NSH_LINELEN=80
+echo "# Express Lib"
+mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
+cd "/mnt/sdcard/iotjs_modules/iotjs-express"
+wget "http://192.168.1.12/~philippe/t/iotjs-express/index.js"
+echo "# Express Lib internals"
+mkdir "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
+cd "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
+wget "http://192.168.1.12/~philippe/t/iotjs-express/lib/express.js"
+sleep 1
+echo "# Express /example"
+#echo "console.log(require('iotjs-express'))" > example.js
+#cat example.js
+#iotjs example.js
+
+
+echo "# WEBTHING"
+mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs
+cd /mnt/sdcard/iotjs_modules/webthing-iotjs
+pwd
+
+echo "# download module"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/webthing.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/index.js"
+#cat webthing.js
+
+echo "# download module internals - TODO: webpack"
+mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
+cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
+#wget "http://192.168.250.1/~philippe/d/express.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/property.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/server.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/thing.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/utils.js"
+sleep 1
+wget "http://192.168.250.1/~philippe/d/value.js"
+
+echo '# example: simplest thing'
+mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs/example
+cd /mnt/sdcard/iotjs_modules/webthing-iotjs/example
+wget "http://192.168.250.1/~philippe/d/simplest-thing.js"
+
+cd /mnt/sdcard/iotjs_modules/
+#iotjs webthing-iotjs/example/simplest-thing.js
+
+cd /mnt/sdcard/
+#cd /mnt/sdcard/iotjs_modules/webthing-iotjs
+#cd /mnt/sdcard
+# wget "http://192.168.1.12/~philippe/tmp/servo-thing.js"
+#iotjs servo-thing.js
+
+echo "TODO: PWM"
+
+cd /mnt/sdcard/
+sleep 1
+wget "http://192.168.1.12/~philippe/t/pwm-property.js"
+
+echo "TODO: PWM"
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+iotjs pwm-property.js
+
+
