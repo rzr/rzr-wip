@@ -136,7 +136,7 @@ function AngleOutProperty(thing, name, value, metadata, config) {
       self.value.valueForwarder = function (value) {
         if (typeof self.config.convert != undefined) {
           console.log('TODO: pre: ' + value);
-          value = self.convert(value);
+          value = self.config.convert(value);
           console.log('TODO: post: ' + value);
         }
         self.port.setFrequencySync(self.port.freq);
