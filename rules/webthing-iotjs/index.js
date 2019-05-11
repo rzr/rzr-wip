@@ -40,8 +40,8 @@ function RobotThing(name, type, description) {
   var self = this;
   webthing.Thing.call(this, name || 'Robot', type || [], description || 'A web connected Robot');
   {
-    var offset = .4;
-    var period = 20;
+    var offset = .;
+    var period = .02; // 50Hz
     this.pinProperties = [
       new PwmProperty(this, 'Torso', 0, {
         description: 'PWM on /dev/pwm0'
@@ -50,9 +50,9 @@ function RobotThing(name, type, description) {
         maximum: +90,
         pwm: {
           pin: pins.PWM1.CH1_1,
-          period: 20,
+          period: period,
           dutyCycle: 1.5/20,
-          offset: .4,
+          offset: offset,
           convert: angleToDuttyCycle
         }
       }),
@@ -63,9 +63,9 @@ function RobotThing(name, type, description) {
         maximum: +90,
         pwm: {
           pin: pins.PWM2.CH1_1,
-          period: 20,
+          period: period,
           dutyCycle: 1.5/20,
-          offset: .4,
+          offset: offset,
           convert: angleToDuttyCycle
         }
       })
