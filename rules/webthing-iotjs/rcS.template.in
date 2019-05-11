@@ -16,18 +16,18 @@ mount -t tmpfs /mnt/ ; cd /mnt
 mkdir /mnt/sdcard
 mkdir "/mnt/sdcard/iotjs_modules"
 echo "# Example"
-#wget http://192.168.1.12/~philippe/tmp/run.sh
+#wget ${base_url}/run.sh
 #sh /tmp/run.sh
 
 # CONFIG_NSH_LINELEN=80
 echo "# Express Lib"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express"
-wget "http://192.168.1.12/~philippe/t/iotjs-express/index.js"
+wget "${base_url}/iotjs-express/index.js"
 echo "# Express Lib internals"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
-wget "http://192.168.1.12/~philippe/t/iotjs-express/lib/express.js"
+wget "${base_url}/iotjs-express/lib/express.js"
 sleep 1
 echo "# Express /example"
 #echo "console.log(require('iotjs-express'))" > example.js
@@ -73,14 +73,14 @@ cd /mnt/sdcard/iotjs_modules/
 cd /mnt/sdcard/
 #cd /mnt/sdcard/iotjs_modules/webthing-iotjs
 #cd /mnt/sdcard
-# wget "http://192.168.1.12/~philippe/tmp/servo-thing.js"
+# wget "${base_url}/servo-thing.js"
 #iotjs servo-thing.js
 
 echo "TODO: PWM"
 
 cd /mnt/sdcard/
 sleep 1
-wget "http://192.168.1.12/~philippe/t/pwm-property.js"
+wget "${base_url}/pwm-property.js"
 
 echo "TODO: PWM"
 iotjs pwm-property.js
