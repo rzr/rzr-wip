@@ -38,15 +38,15 @@ function PwmProperty(thing, name, value, metadata, config) {
         period: .02 // 50Hz
       };
     }
-    //if (typeof this.config.pwm.pin === 'undefined')
-    //this.config.pwm.pin = config.pin;
-    
-    var dutyCycle = .5;
-    if (typeof config.convert != 'undefined') {
-      dutyCycle = config.convert(config.maximum + config.minimum / 2);
+    if (typeof this.config.pwm.dutyCycle === 'undefined') {    
+      if (typeof config.convert != 'undefined') {
+        this.config.pwm.dutyCycle = config.convert(config.maximum + config.minimum / 2);
+      } else {
+        this.config.pwm.dutyCycle = 0.5;
+      }
     }
     verbose('log: open pin: ' + this.config.pin + ' ' + metadata.description);
-    verbose(this.config.pin);
+    verbose(this.config.pwm);
     this.port = pwm.open(this.config.pwm, function (err, port) {
       verbose("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
 
