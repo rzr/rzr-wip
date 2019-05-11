@@ -33,7 +33,7 @@ function PwmProperty(thing, name, value, metadata, config) {
     this.config = config;
     if (! this.config.pwm) {
       this.config.pwm = {
-        pin: 0
+        pin: 0, //TODO
         dutyCycle: .5, // TODO convert
         period: .02 // 50Hz
       };
@@ -45,9 +45,10 @@ function PwmProperty(thing, name, value, metadata, config) {
     if (typeof config.convert != 'undefined') {
       dutyCycle = config.convert(config.maximum + config.minimum / 2);
     }
-    log('log: open pin: ' + this.config.pin + ' ' + metadata.description);
+    verbose('log: open pin: ' + this.config.pin + ' ' + metadata.description);
+    verbose(this.config.pin);
     this.port = pwm.open(this.config.pwm, function (err, port) {
-      log("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
+      verbose("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
 
       if (err) {
         console.error("error: PWM: ".concat(self.getName(), ": Fail to open: ").concat(err));
@@ -66,14 +67,13 @@ function PwmProperty(thing, name, value, metadata, config) {
   }
 
   this.close = function () {
+    verbose("log: PWM: ".concat(self.getName(), ": close:"));
     try {
       self.port && self.port.closeSync();
     } catch (err) {
       console.error("error: PWM: ".concat(self.getName(), ": Fail to close: ").concat(err));
       return err;
     }
-
-    log("log: PWM: ".concat(self.getName(), ": close:"));
   };
 
   return this;
