@@ -128,6 +128,10 @@ function AngleOutProperty(thing, name, value, metadata, config) {
       }
       self.port.freq = 1 / self.config.pwm.period;
       self.value.valueForwarder = function (value) {
+        if (typeof self.config.convert != undefined) {
+          console.log('TOCO');
+          value = self.convert(value);
+        }
         verbose('forward: ' + value);
         value = angleToDuttyCycle(value);
         verbose('forward: angle: ' + value);
@@ -167,6 +171,7 @@ function RobotThing(name, type, description) {
         pin: pins.PWM1.CH1_1,
         minimum: -90,
         maximum: +90,
+        convert: angleToDuttyCycle
       }),
     ];
     
