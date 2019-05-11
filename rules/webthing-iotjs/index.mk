@@ -16,7 +16,7 @@ rule/webthing-iotjs/www: ${webthing_iotjs_www_dir}
 
 ${webthing_iotjs_www_dir}: rules/webthing-iotjs
 	rm -rf $@
-	cd ~/mnt/webthing-iotjs && make www www_modules_dir=${@}
+	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
 	cp -av $</*.js $@
 
 rule/webthing-iotjs/www/wget:
@@ -36,3 +36,6 @@ sync
 
 rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/webthing-iotjs/www rule/iotjs/devel
 	sync
+
+rule/webthing-iotjs/webpack:
+	cd ${webthing_iotjs_www_dir} && npm init -y && npm install --only=dev webpack-cli
