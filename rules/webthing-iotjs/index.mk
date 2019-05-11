@@ -1,4 +1,5 @@
-www_url?=http://192.168.250.1/~${USER}/${www_dir}
+www_host?=192.168.1.12
+www_url?=http://${www_host}/~${USER}/${www_dir}
 www_dir?=d
 
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
