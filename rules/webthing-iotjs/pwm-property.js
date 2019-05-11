@@ -7,7 +7,7 @@
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/
  */
 var console = require('console'); // Disable logs here by editing to '!console.log'
 var log = console.log || function () {};
@@ -45,6 +45,8 @@ function PwmProperty(thing, name, value, metadata, config) {
       dutyCycle: dutyCycle, //  1./20,
       period: .02, //50hz
     }
+    log('log: open pin: ' + this.config.pin + ' ' + metadata.description);
+    
     this.port = pwm.open(this.config.pwm, function (err, port) {
       log("log: PWM: ".concat(self.getName(), ": open: ").concat(err));
 
