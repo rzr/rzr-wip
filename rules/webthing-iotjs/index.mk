@@ -1,6 +1,8 @@
 www_host?=192.168.1.12
 www_url?=http://${www_host}/~${USER}/${www_dir}
 www_dir?=d
+target_host?=192.168.1.13
+target_url?=http://${target_host}:8888
 
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
@@ -43,3 +45,17 @@ rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
 	cd ${webthing_iotjs_www_dir} && ls package.json || npm init -y \
 && npm install --only=dev webpack-cli && npm install
 	cd ${webthing_iotjs_www_dir} && npm run build
+
+
+rule/webthing-iotjs/test/%:
+	curl -X PUT -d '{ "${@F}": -90 }' ${target_url}/properties/${@F}
+	sleep 1
+	curl -X PUT -d '{ "${@F}": 90 }' ${target_url}/properties/${@F}
+	sleep 1
+
+rule/webthing-iotjs/test: \
+ rule/webthing-iotjs/test/Torso \
+ rule/webthing-iotjs/test/Shoulder \
+ rule/webthing-iotjs/test/Arm \
+ rule/webthing-iotjs/test/Hand \
+ #eol
