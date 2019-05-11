@@ -58,7 +58,7 @@ function PwmOutProperty(thing, name, value, metadata, config) {
       self.port.setEnableSync(true);
 
       self.value.valueForwarder = function (value) {
-        if (typeof self.config.pwm.convert != undefined) {
+        if (typeof self.config.pwm.convert != 'undefined') {
           value = self.config.pwm.convert(value);
         }
         verbose(self.port.freq);
