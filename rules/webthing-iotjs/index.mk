@@ -47,6 +47,13 @@ rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
 	cd ${webthing_iotjs_www_dir} && npm run build
 
 
+
+rule/webthing-iotjs/property/%:
+	curl ${target_url}/properties/${@F}
+	curl -X PUT -d '{ "${@F}": ${value} }' ${target_url}/properties/${@F}
+	sleep 1
+
+
 rule/webthing-iotjs/test/%:
 	curl -X PUT -d '{ "${@F}": -90 }' ${target_url}/properties/${@F}
 	sleep 1
@@ -59,3 +66,8 @@ rule/webthing-iotjs/test: \
  rule/webthing-iotjs/test/Arm \
  rule/webthing-iotjs/test/Hand \
  #eol
+
+make?=make -f rules/webthing-iotjs/index.mk
+rule/webthing-iotjs/robot:
+	curl ${target_url}/properties
+	${make} ${@D}/property/Hand value=0
