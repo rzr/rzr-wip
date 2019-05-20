@@ -51,7 +51,7 @@ rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
 rule/webthing-iotjs/property/%:
 	curl ${target_url}/properties/${@F}
 	curl -X PUT -d '{ "${@F}": ${value} }' ${target_url}/properties/${@F}
-	sleep 1
+	sleep 2
 
 
 rule/webthing-iotjs/test/%:
@@ -70,4 +70,51 @@ rule/webthing-iotjs/test: \
 make?=make -f rules/webthing-iotjs/index.mk
 rule/webthing-iotjs/robot:
 	curl ${target_url}/properties
+	${make} ${@D}/property/Torso value=0
+	${make} ${@D}/property/Shoulder value=0
+	${make} ${@D}/property/Arm value=0
 	${make} ${@D}/property/Hand value=0
+	${make} ${@D}/Torso
+	${make} ${@D}/Shoulder
+	${make} ${@D}/Arm
+	${make} ${@D}/Hand
+
+rule/webthing-iotjs/%:
+	${make} rule/webthing-iotjs/property/${@F} value=0
+	${make} rule/webthing-iotjs/property/${@F} value=-90
+	${make} rule/webthing-iotjs/property/${@F} value=0
+	${make} rule/webthing-iotjs/property/${@F} value=90
+	${make} rule/webthing-iotjs/property/${@F} value=0
+
+rule/webthing-iotjs/Shoulder: #[ -90, 45]
+	${make} rule/webthing-iotjs/property/Shoulder value=-90
+	${make} rule/webthing-iotjs/property/Shoulder value=10
+	${make} rule/webthing-iotjs/property/Shoulder value=30
+	${make} rule/webthing-iotjs/property/Shoulder value=45
+	${make} rule/webthing-iotjs/property/Shoulder value=0
+
+rule/webthing-iotjs/Arm: # [-45 +45]
+	${make} rule/webthing-iotjs/property/${@F} value=0
+	${make} rule/webthing-iotjs/property/${@F} value=45
+	${make} rule/webthing-iotjs/property/${@F} value=-45
+	${make} rule/webthing-iotjs/property/${@F} value=0
+
+rule/webthing-iotjs/Hand: # [0 45]
+	${make} rule/webthing-iotjs/property/${@F} value=0
+	${make} rule/webthing-iotjs/property/${@F} value=40
+#	${make} rule/webthing-iotjs/property/${@F} value=10
+	${make} rule/webthing-iotjs/property/${@F} value=-5
+	${make} rule/webthing-iotjs/property/${@F} value=0
+
+
+rule/webthing-iotjs/demo:
+	${make} rule/webthing-iotjs/property/Hand value=0
+	${make} rule/webthing-iotjs/property/Hand value=20
+	${make} rule/webthing-iotjs/property/Arm value=15
+	${make} rule/webthing-iotjs/property/Shoulder value=-20
+	${make} rule/webthing-iotjs/property/Shoulder value=-40
+	${make} rule/webthing-iotjs/property/Shoulder value=-60
+	${make} rule/webthing-iotjs/property/Hand value=-5
+	${make} rule/webthing-iotjs/property/Shoulder value=45
+	${make} rule/webthing-iotjs/property/Arm value=10
+	${make} rule/webthing-iotjs/property/Arm value=-15
