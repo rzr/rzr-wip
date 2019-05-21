@@ -3,6 +3,7 @@ www_url?=http://${www_host}/~${USER}/${www_dir}
 www_dir?=d
 target_host?=192.168.1.13
 target_url?=http://${target_host}:8888
+target_url?=https://rzr.github.io/twins/
 
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
@@ -114,7 +115,13 @@ rule/webthing-iotjs/demo:
 	${make} rule/webthing-iotjs/property/Shoulder value=-20
 	${make} rule/webthing-iotjs/property/Shoulder value=-40
 	${make} rule/webthing-iotjs/property/Shoulder value=-60
-	${make} rule/webthing-iotjs/property/Hand value=-5
-	${make} rule/webthing-iotjs/property/Shoulder value=45
-	${make} rule/webthing-iotjs/property/Arm value=10
-	${make} rule/webthing-iotjs/property/Arm value=-15
+	${make} rule/webthing-iotjs/property/Hand value=-7
+
+
+
+
+	${make} rule/webthing-iotjs/property/Shoulder value=0
+#	${make} rule/webthing-iotjs/property/Shoulder value=45
+#	${make} rule/webthing-iotjs/property/Arm value=10
+	${make} rule/webthing-iotjs/property/Arm value=0
+#	${make} rule/webthing-iotjs/property/Arm value=-16
