@@ -47,6 +47,7 @@ rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
 	cd ${webthing_iotjs_www_dir} && npm run build
 
 
+
 rule/webthing-iotjs/property/%:
 	curl ${target_url}/properties/${@F}
 	curl -X PUT -d '{ "${@F}": ${value} }' ${target_url}/properties/${@F}
