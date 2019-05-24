@@ -13,9 +13,9 @@ nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 # TODO
 nuttx_url=https://github.com/TizenTeam/nuttx
 nuttx_url=file:///${HOME}/mnt/nuttx
-nuttx_branch=sandbox/rzr/devel/master
+#nuttx_branch=sandbox/rzr/devel/master
 #nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
-# nuttx_branch?=sandbox/rzr/review/master
+nuttx_branch?=sandbox/rzr/review/master
 # nuttx_branch=sandbox/rzr/devel/${machine}/master
 # nuttx_branch=sandbox/rzr/devel/stm32f7/master
 

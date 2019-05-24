@@ -12,6 +12,7 @@
 var console = require('console'); // Disable logs here by editing to '!console.log'
 var log = console.log || function () {};
 var verbose = console.log || function () {};
+console.log(process);
 
 var webthing = require('webthing-iotjs');
 var Property = webthing.Property;
