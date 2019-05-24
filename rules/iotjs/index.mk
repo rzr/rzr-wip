@@ -147,6 +147,7 @@ rule/iotjs/lib: ${nuttx_include_file} ${nuttx_config_file}._iotjs.config
  --nuttx-home=../${nuttx_dir} \
  --target-board=${iotjs_machine} \
  --jerry-heaplimit=78 \
+ --profile=config/nuttx/${iotjs_machine}/nuttx.profile \
  #eol
 # --buildtype=debug
 
