@@ -7,6 +7,8 @@ var app = {
   wsUrl: 'ws://localhost:8888',
 };
 
+app.url = 'http://192.168.1.13:8888';
+
 let interval = null;
 let ws = null;
 
@@ -26,7 +28,6 @@ function update(properties)
     robot.setAttribute('robot', property, properties[property]);
   }
 }
-
 
 function query()
 {
