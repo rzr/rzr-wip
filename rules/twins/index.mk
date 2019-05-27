@@ -12,6 +12,7 @@ deploy_dir?=${twins_www_dir}
 #deploy_dir=${CURDIR}/tmp/deploy
 deploy_modules_dir=${deploy_dir}/iotjs_modules
 example_file=${deploy_dir}/index.js
+nuttx_rc_file=rules/twins/rcS.template
 
 
 rule/twins/help:
@@ -132,6 +133,8 @@ ${twins_dir}:
 	mkdir -p ${@D}
 	git clone ${twins_url} --depth 1 $@
 
+${nuttx_config_rc_file}: ${nuttx_rc_file}
+	cp -av ${nuttx_rc_file}
 
 twins/pack: ${twins_dir}
 	npm install webpack-cli
