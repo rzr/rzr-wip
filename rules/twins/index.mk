@@ -15,6 +15,7 @@ example_file=${deploy_dir}/index.js
 
 
 rule/twins/help:
+	@echo "# rule/twins/devel"
 	@echo "# rule/twins/deploy/clean"
 	@echo "# rule/twins/prep"
 
