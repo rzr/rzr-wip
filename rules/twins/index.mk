@@ -134,7 +134,11 @@ ${twins_dir}:
 	git clone ${twins_url} --depth 1 $@
 
 ${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file}
+	cp -av ${nuttx_rc_file} $@
+
+${nuttx_romfs_file}: ${nuttx_config_rc_file}
+	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
+
 
 twins/pack: ${twins_dir}
 	npm install webpack-cli
@@ -180,3 +184,4 @@ echo mkdir -p $${dir} ; \
 echo cd ${sdcard_dir}/$${dir} ; \
 echo "TODO: fetch files" ; \
 done
+
