@@ -26,11 +26,11 @@ echo "# Download from base_url=${base_url}"
 echo "# Express Lib"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express"
-wget "${base_url}/iotjs-modules/iotjs-express/index.js"
+wget "${base_url}/iotjs_modules/iotjs-express/index.js"
 echo "# Express Lib internals"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
-wget "${base_url}/iotjs-modules/iotjs-express/lib/express.js"
+wget "${base_url}/iotjs_modules/iotjs-express/lib/express.js"
 sleep 1
 echo "# Express /example"
 #echo "console.log(require('iotjs-express'))" > example.js
@@ -45,35 +45,35 @@ pwd
 
 echo "# download module"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/webthing.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/webthing.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/index.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/index.js"
 #cat webthing.js
 
 echo "# download module internals - TODO: webpack"
 mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
 cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
-#wget "${base_url}/iotjs-modules/express.js"
+#wget "${base_url}/iotjs_modules/express.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/lib/property.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/lib/property.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/lib/server.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/lib/server.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/lib/thing.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/lib/thing.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/lib/utils.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/lib/utils.js"
 sleep 1
-wget "${base_url}/iotjs-modules/webthing-iotjs/lib/value.js"
+wget "${base_url}/iotjs_modules/webthing-iotjs/lib/value.js"
 
 echo "# Twins"
 mkdir /mnt/sdcard/iotjs_modules/twins
 cd /mnt/sdcard/iotjs_modules/twins
-wget "${base_url}/iotjs-modules/twins/index.js"
+wget "${base_url}/iotjs_modules/twins/index.js"
 
 mkdir /mnt/sdcard/iotjs_modules/twins/lib
 cd /mnt/sdcard/iotjs_modules/twins/lib
-wget "${base_url}/iotjs-modules/twins/lib/index.js"
-wget "${base_url}/iotjs-modules/twins/lib/pwm-property.js"
+wget "${base_url}/iotjs_modules/twins/lib/index.js"
+wget "${base_url}/iotjs_modules/twins/lib/pwm-property.js"
 
 echo "# Main"
 pwd
