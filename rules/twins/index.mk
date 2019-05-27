@@ -2,7 +2,7 @@
 
 www_host?=192.168.1.12
 www_url?=http://${www_host}/~${USER}/${www_dir}
-www_dir?=t-d
+www_dir?=tmp/dt
 
 target_host?=192.168.1.13
 target_url?=http://${target_host}:8888
@@ -28,12 +28,12 @@ rules/twins/rcS.template: rules/twins/rcS.template.in
 	sed -e "s|\$${base_url}|${www_url}|g" < $< > $@
 	cat $@
 
-
-
 rule/twins/www: ${twins_www_dir}
 	ls $^
 
 ${twins_www_dir}:
+	${make} rule/twins/deploy/clean deploy_dir=${twins_www_dir}
+	ls $<
 
 
 rule/twins/devel: rule/twins/prep rule/twins/www rule/iotjs/devel
