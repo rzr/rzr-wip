@@ -25,6 +25,7 @@ nuttx_configure?=${nuttx_dir}/tools/configure.sh
 configure?=${nuttx_configure}
 #nuttx_config?=stm32f7nucleo/nsh
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
+nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
@@ -120,6 +121,10 @@ rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig
 
 ${image_file}: build
 	ls -l $@
+
+
+${nuttx_romfs_file}: ${nuttx_config_rc_file}
+	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
 
 #${nuttx_dir}/include/arch: rule/nuttx/menuconfig
 #	ls $@
