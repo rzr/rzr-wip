@@ -1,5 +1,6 @@
+#!/bin/nsh
 # TODO: sed base_url
-echo "base_url=${base_url}"
+echo "# 
 echo "# Network"
 ifconfig
 ifup eth0
@@ -20,6 +21,7 @@ echo "# Example"
 #wget ${base_url}/run.sh
 #sh /tmp/run.sh
 
+echo "# Download from base_url=${base_url}"
 # CONFIG_NSH_LINELEN=80
 echo "# Express Lib"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
