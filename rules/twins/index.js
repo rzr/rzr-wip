@@ -15,8 +15,8 @@ var log = console.log || function () {};
 var verbose = console.log || function () {};
 
 console.log(process.iotjs);
-process.iotjs.board = "TODO";
-console.log(process.iotjs);
+//process.iotjs.board = "TODO";
+console.log(process.iotjs.board);
 
 var app = require('twins');
 app.start();
