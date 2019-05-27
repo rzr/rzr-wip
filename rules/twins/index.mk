@@ -138,6 +138,7 @@ ${nuttx_config_rc_file}: ${nuttx_rc_file}
 
 ${nuttx_romfs_file}: ${nuttx_config_rc_file}
 	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
+	ls -l $@
 
 
 twins/pack: ${twins_dir}
