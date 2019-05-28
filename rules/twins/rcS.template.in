@@ -2,6 +2,7 @@
 
 echo "# NuttX:"
 help
+
 echo "# Network"
 ifconfig
 ifup eth0
@@ -9,33 +10,23 @@ renew eth0
 ifconfig
 sleep 1
 
+echo "# Filesystem"
 mkdir /mnt
 mount -t tmpfs /mnt/ ; cd /mnt
 mkdir /mnt/sdcard
-
 sleep 1
 
 echo "# IoT.js: IOTJS_PATH: ${IOTJS_PATH} ? /mnt/sdcard"
 mkdir "/mnt/sdcard/iotjs_modules"
-echo "# Example"
-#wget ${base_url}/run.sh
-#sh /tmp/run.sh
 
 echo "# Download from base_url=${base_url}"
-# CONFIG_NSH_LINELEN=80
-echo "# Express Lib"
+echo "# iotjs-express"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express"
 wget "${base_url}/iotjs_modules/iotjs-express/index.js"
-echo "# Express Lib internals"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
 wget "${base_url}/iotjs_modules/iotjs-express/lib/express.js"
-sleep 1
-echo "# Express /example"
-#echo "console.log(require('iotjs-express'))" > example.js
-#cat example.js
-#iotjs example.js
 
 echo "# webthing-iotjs"
 mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs
@@ -50,91 +41,18 @@ wget "${base_url}/iotjs_modules/webthing-iotjs/lib/thing.js"
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/utils.js"
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/value.js"
 
-echo "# Twins"
+echo "# twins"
 mkdir /mnt/sdcard/iotjs_modules/twins
 cd /mnt/sdcard/iotjs_modules/twins
 wget "${base_url}/iotjs_modules/twins/index.js"
-
 mkdir /mnt/sdcard/iotjs_modules/twins/lib
 cd /mnt/sdcard/iotjs_modules/twins/lib
 wget "${base_url}/iotjs_modules/twins/lib/index.js"
 wget "${base_url}/iotjs_modules/twins/lib/pwm-property.js"
 
-echo "# Main"
+echo "# main"
 pwd
 cd /mnt/sdcard/
 wget "${base_url}/index.js"
 
-iotjs index
-echo "failed"
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
-iotjs index
 iotjs index
