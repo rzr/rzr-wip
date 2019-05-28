@@ -7,9 +7,9 @@ www_dir?=tmp/${project}
 www_url?=http://${www_host}/${www_dir}
 
 #TODO
-#www_host?=192.168.1.12
-#www_url?=http://${www_host}/~${USER}/${www_dir}
-#www_dir?=tmp/${project}
+www_host=192.168.1.12
+www_url=http://${www_host}/~${USER}/${www_dir}
+www_dir=tmp/${project}
 
 target_host?=192.168.1.13
 target_url?=http://${target_host}:8888
