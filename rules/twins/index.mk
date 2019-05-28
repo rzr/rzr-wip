@@ -21,6 +21,8 @@ deploy_modules_dir=${deploy_dir}/iotjs_modules
 example_file=${deploy_dir}/index.js
 nuttx_rc_file=rules/twins/rcS.template
 ftp_url?=ftp://ftp@localhost
+gateway_host=gateway.local
+
 
 rule/twins/help:
 	@echo "# rule/twins/devel"
@@ -43,10 +45,14 @@ rule/twins/www/ftp: ${twins_www_dir}
 	command wput || sudo apt-get install wpu
 	cd $^ && wput "${ftp_url}/${www_dir}/" .
 
+rule/twins/www/scp: ${twins_www_dir}
+	scp -R $< ${gateway_host}/home/pi/mozilla-iot/gateway/build/static/
+	curl --insecure https://${gateway_host}:4443/${project}/index.js
+	curl https://${gateway_host}:4443/${project}/index.js
+
 ${twins_www_dir}:
 	${make} rule/twins/deploy/clean deploy_dir=${twins_www_dir}
 	ls $<
-
 
 rule/twins/devel: rule/twins/prep rule/twins/www rule/iotjs/devel
 	sync
