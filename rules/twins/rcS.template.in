@@ -20,6 +20,9 @@ echo "# IoT.js: IOTJS_PATH: ${IOTJS_PATH} ? /mnt/sdcard"
 mkdir "/mnt/sdcard/iotjs_modules"
 
 echo "# Download from base_url=${base_url}"
+cd /mnt/sdcard
+wget http://rzr.online.fr/tmp/twins/index.js
+
 echo "# iotjs-express"
 mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
 cd "/mnt/sdcard/iotjs_modules/iotjs-express"
