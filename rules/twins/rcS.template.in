@@ -37,32 +37,17 @@ echo "# Express /example"
 #cat example.js
 #iotjs example.js
 
-
-echo "# WEBTHING"
+echo "# webthing-iotjs"
 mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs
 cd /mnt/sdcard/iotjs_modules/webthing-iotjs
-pwd
-
-echo "# download module"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/webthing.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/index.js"
-#cat webthing.js
-
-echo "# download module internals - TODO: webpack"
 mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
 cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
-#wget "${base_url}/iotjs_modules/express.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/property.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/server.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/thing.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/utils.js"
-sleep 1
 wget "${base_url}/iotjs_modules/webthing-iotjs/lib/value.js"
 
 echo "# Twins"
