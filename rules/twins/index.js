@@ -19,4 +19,5 @@ console.log(process.iotjs);
 console.log(process.iotjs.board);
 
 var app = require('twins');
+console.log(app);
 app.start();
