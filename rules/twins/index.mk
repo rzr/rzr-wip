@@ -1,8 +1,15 @@
 # SPDX-License-Identifier: MPL-2.0
+project?=twins
 
-www_host?=192.168.1.12
-www_url?=http://${www_host}/~${USER}/${www_dir}
-www_dir?=tmp/dt
+#TODO
+www_host?=rzr.online.fr
+www_dir?=tmp/${project}
+www_url?=http://${www_host}/${www_dir}
+
+#TODO
+#www_host?=192.168.1.12
+#www_url?=http://${www_host}/~${USER}/${www_dir}
+#www_dir?=tmp/${project}
 
 target_host?=192.168.1.13
 target_url?=http://${target_host}:8888
@@ -13,13 +20,14 @@ deploy_dir?=${twins_www_dir}
 deploy_modules_dir=${deploy_dir}/iotjs_modules
 example_file=${deploy_dir}/index.js
 nuttx_rc_file=rules/twins/rcS.template
-
+ftp_url?=ftp://ftp@localhost
 
 rule/twins/help:
 	@echo "# rule/twins/devel"
+	@echo "# rule/twins/www"
+	@echo "# rule/twins/www/ftp"
 	@echo "# rule/twins/deploy/clean"
 	@echo "# rule/twins/prep"
-
 
 rule/twins/prep: rules/twins/rcS.template
 	ls $<
@@ -30,6 +38,10 @@ rules/twins/rcS.template: rules/twins/rcS.template.in
 
 rule/twins/www: ${twins_www_dir}
 	ls $^
+
+rule/twins/www/ftp: ${twins_www_dir}
+	command wput || sudo apt-get install wpu
+	cd $^ && wput "${ftp_url}/${www_dir}/" .
 
 ${twins_www_dir}:
 	${make} rule/twins/deploy/clean deploy_dir=${twins_www_dir}
