@@ -25,7 +25,7 @@ gateway_host=gateway.local
 
 
 rule/twins/help:
-	@echo "# rule/twins/devel"
+	@echo "# make rule/twins/devel"
 	@echo "# rule/twins/www"
 	@echo "# rule/twins/www/ftp"
 	@echo "# rule/twins/deploy/clean"
