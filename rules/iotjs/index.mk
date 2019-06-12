@@ -23,9 +23,7 @@ iotjs_branch?=master
 #iotjs_branch=sandbox/rzr/devel/master
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 #iotjs_branch=sandbox/rzr/${iotjs_machine}/master
-
-#TODO:
-iotjs_url=file:///${HOME}/mnt/iotjs
+#iotjs_url=file:///${HOME}/mnt/iotjs
 #iotjs_branch=sandbox/rzr/devel/${iotjs_machine}/master
 
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
