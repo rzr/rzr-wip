@@ -38,7 +38,7 @@ export V
 make?=make -C rules
 export make
 
-
+-include rules/devel/index.mk
 -include rules/st.mk
 -include rules/nuttx/index.mk
 
