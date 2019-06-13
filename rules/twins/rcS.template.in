@@ -11,6 +11,9 @@ ifconfig
 sleep 1
 
 echo "# Filesystem"
+mount
+ls /etc
+ls /etc/init.d
 mkdir /mnt
 mount -t tmpfs /mnt/ ; cd /mnt
 mkdir /mnt/sdcard
@@ -58,4 +61,4 @@ pwd
 cd /mnt/sdcard/
 wget "${base_url}/index.js"
 
-iotjs index
+#iotjs index
