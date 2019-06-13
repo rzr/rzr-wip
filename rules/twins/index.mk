@@ -26,10 +26,10 @@ gateway_host=gateway.local
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
-	@echo "# rule/twins/www"
-	@echo "# rule/twins/www/ftp"
-	@echo "# rule/twins/deploy/clean"
-	@echo "# rule/twins/prep"
+	@echo "# make rule/twins/www"
+	@echo "# make rule/twins/www/ftp"
+	@echo "# make rule/twins/deploy/clean"
+	@echo "# make rule/twins/prep"
 
 rule/twins/prep: rules/twins/rcS.template
 	ls $<
