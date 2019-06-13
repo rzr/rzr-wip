@@ -31,7 +31,7 @@ rule/twins/help:
 	@echo "# make rule/twins/deploy/clean"
 	@echo "# make rule/twins/prep"
 
-rule/twins/prep: rules/twins/rcS.template
+rule/twins/prep: rules/twins/rcS.template rule/twins/romfs
 	ls $<
 
 rules/twins/rcS.template: rules/twins/rcS.template.in
@@ -175,6 +175,9 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 	du -ksc $<
 	rm -rfv $</webthing-iotjs/example
 	du -ksc $<
+
+rule/twins/romfs:
+	pwd
 
 #twins/webpack: src
 #	${webpack_exe} # --context 
