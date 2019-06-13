@@ -51,10 +51,10 @@ setup/debian:
 	sudo apt-get install -y \
 gcc-arm-none-eabi \
 git \
-make \
-sudo \
 libusb-dev \
+make \
 screen \
+sudo \
 #EOL
 
 
