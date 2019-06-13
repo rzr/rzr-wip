@@ -1,3 +1,5 @@
+nuttx_url=file:///${HOME}/mnt/nuttx
+nuttx_branch=sandbox/rzr/devel/master
 
 
 ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
