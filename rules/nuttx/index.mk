@@ -131,6 +131,18 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file}
 rule/nuttx/romfs: ${nuttx_romfs_file}
 	ls -l $<
 
+nuttx_romfs_img_file?=/local/home/philippe/var/cache/url/git/ssh/github.com/rzr/rzr-wip/src/rzr-wip/nuttx/configs/nucleo-144/src/../../../rom.img
+
+${nuttx_romfs_img_file}.dir:
+	mkdir -p $@
+	touch ${@}/README.md
+
+${nuttx_romfs_img_file}: ${nuttx_romfs_img_file}.dir
+	genromfs -d "${@}.dir" -f $@
+
+rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
+	ls $<
+
 #${nuttx_dir}/include/arch: rule/nuttx/menuconfig
 #	ls $@
 
