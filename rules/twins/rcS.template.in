@@ -22,5 +22,6 @@ sleep 1
 echo "# IoT.js: IOTJS_PATH: ${IOTJS_PATH} ? /mnt/sdcard"
 
 echo "# main"
+cd /rom
 pwd
 iotjs /rom/index
