@@ -20,45 +20,7 @@ mkdir /mnt/sdcard
 sleep 1
 
 echo "# IoT.js: IOTJS_PATH: ${IOTJS_PATH} ? /mnt/sdcard"
-mkdir "/mnt/sdcard/iotjs_modules"
-
-echo "# Download from base_url=${base_url}"
-cd /mnt/sdcard
-wget ${base_url}/tmp/twins/index.js
-
-echo "# iotjs-express"
-mkdir "/mnt/sdcard/iotjs_modules/iotjs-express"
-cd "/mnt/sdcard/iotjs_modules/iotjs-express"
-wget "${base_url}/iotjs_modules/iotjs-express/index.js"
-mkdir "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
-cd "/mnt/sdcard/iotjs_modules/iotjs-express/lib"
-wget "${base_url}/iotjs_modules/iotjs-express/lib/express.js"
-
-echo "# webthing-iotjs"
-mkdir /mnt/sdcard/iotjs_modules/webthing-iotjs
-cd /mnt/sdcard/iotjs_modules/webthing-iotjs
-wget "${base_url}/iotjs_modules/webthing-iotjs/webthing.js"
-wget "${base_url}/iotjs_modules/webthing-iotjs/index.js"
-mkdir "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
-cd "/mnt/sdcard/iotjs_modules/webthing-iotjs/lib"
-wget "${base_url}/iotjs_modules/webthing-iotjs/lib/property.js"
-wget "${base_url}/iotjs_modules/webthing-iotjs/lib/server.js"
-wget "${base_url}/iotjs_modules/webthing-iotjs/lib/thing.js"
-wget "${base_url}/iotjs_modules/webthing-iotjs/lib/utils.js"
-wget "${base_url}/iotjs_modules/webthing-iotjs/lib/value.js"
-
-echo "# twins"
-mkdir /mnt/sdcard/iotjs_modules/twins
-cd /mnt/sdcard/iotjs_modules/twins
-wget "${base_url}/iotjs_modules/twins/index.js"
-mkdir /mnt/sdcard/iotjs_modules/twins/lib
-cd /mnt/sdcard/iotjs_modules/twins/lib
-wget "${base_url}/iotjs_modules/twins/lib/index.js"
-wget "${base_url}/iotjs_modules/twins/lib/pwm-property.js"
 
 echo "# main"
 pwd
-cd /mnt/sdcard/
-wget "${base_url}/index.js"
-
-#iotjs index
+iotjs /rom/index
