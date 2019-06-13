@@ -23,6 +23,11 @@ nuttx_rc_file=rules/twins/rcS.template
 ftp_url?=ftp://ftp@localhost
 gateway_host=gateway.local
 
+twins_url?=https://github.com/rzr/twins
+twins_dir?=twins
+twins_url=file:///home/${USER}/mnt/twins
+webpack_exe?=./node_modules/webpack-cli/bin/cli.js
+
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
@@ -140,12 +145,6 @@ ${twins_dir}: rules/webthing-iotjs
 	cp -av $</*.js $@
 	cp -av $</*.json $@
 
-twins_url?=https://github.com/rzr/twins
-twins_dir?=twins
-
-twins_url=file:///home/${USER}/mnt/twins
-
-webpack_exe?=./node_modules/webpack-cli/bin/cli.js
 
 ${twins_dir}:
 	mkdir -p ${@D}
@@ -179,7 +178,8 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 rule/twins/romfs: ${nuttx_romfs_dir}
 	${make} rule/twins/deploy/clean deploy_dir="$<"
 	install rules/twins/index.js $</
-
+	rm -rfv ${nuttx_romfs_img_file}
+	${make} rule/nuttx/romfs.img
 
 #twins/webpack: src
 #	${webpack_exe} # --context 
