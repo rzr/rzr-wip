@@ -176,8 +176,10 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 	rm -rfv $</webthing-iotjs/example
 	du -ksc $<
 
-rule/twins/romfs:
-	pwd
+rule/twins/romfs: ${nuttx_romfs_dir}
+	${make} rule/twins/deploy/clean deploy_dir="$<"
+	install rules/twins/index.js $</
+
 
 #twins/webpack: src
 #	${webpack_exe} # --context 
