@@ -27,6 +27,9 @@ configure?=${nuttx_configure}
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
+nuttx_romfs_img_file?=${nuttx_dir}/rom.img
+nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
+
 
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
@@ -131,14 +134,11 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file}
 rule/nuttx/romfs: ${nuttx_romfs_file}
 	ls -l $<
 
-nuttx_romfs_img_file?=/local/home/philippe/var/cache/url/git/ssh/github.com/rzr/rzr-wip/src/rzr-wip/nuttx/configs/nucleo-144/src/../../../rom.img
-
-${nuttx_romfs_img_file}.dir:
+${nuttx_romfs_dir}:
 	mkdir -p $@
-	touch ${@}/README.md
 
-${nuttx_romfs_img_file}: ${nuttx_romfs_img_file}.dir
-	genromfs -d "${@}.dir" -f $@
+${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
+	genromfs -d "$<" -f $@
 
 rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
 	ls $<
