@@ -1,9 +1,18 @@
-nuttx_url=file:///${HOME}/mnt/nuttx
+nuttx_dev_id?=066EFF323535474B43065221
+#nuttx_url=file:///${HOME}/mnt/nuttx
 #nuttx_branch=sandbox/rzr/devel/master
-nuttx_branch?=sandbox/rzr/review/master
+#nuttx_branch?=sandbox/rzr/review/master
+# TODO
+#nuttx_url=https://github.com/TizenTeam/nuttx
+#nuttx_url=file:///${HOME}/mnt/nuttx
+#nuttx_branch=sandbox/rzr/devel/master
+#nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
+# nuttx_branch?=sandbox/rzr/review/master
+# nuttx_branch=sandbox/rzr/devel/${machine}/master
+# nuttx_branch=sandbox/rzr/devel/stm32f7/master
 
-ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
-ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
+#ref_file?=./nuttx/configs/stm32f746g-disco/nsh-ethernet/defconfig
+#ref_file?=./nuttx/configs/stm32f769i-disco/nsh-ethernet/defconfig 
 
 #rule/nuttx/diff: ${nuttx_dir}
 #	meld ${ref_file} \
