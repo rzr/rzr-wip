@@ -30,6 +30,7 @@ iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 nuttx_rc_file?=rules/iotjs/rcS.template
 nuttx_romfs_file?=${nuttx_dir}/configs/nucleo-144/include/nsh_romfsimg.h
 
+iotjs_build_args+=--buildtype=debug
 
 rule/iotjs/%:
 	${make} %
@@ -38,7 +39,7 @@ rule/iotjs/%:
 rule/iotjs/nuttx/%: nuttx/%
 	sync
 
-rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
+rule/iotjs/devel: rule/nuttx/cleanall rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
 	cp -a ${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
@@ -89,12 +90,14 @@ rule/iotjs/configure: iotjs
 rule/iotjs/configured: ${nuttx_config_file}
 	grep 'CONFIG_NET_LOCAL=y' ${nuttx_config_file}
 
+iotjs_defconfigs_files?=$(shell ls rules/iotjs/defconfig*.in | sort)
 
-${iotjs_nuttx_config_file}: ${nuttx_config_file}
+${iotjs_nuttx_config_file}: ${nuttx_config_file} ${iotjs_defconfigs_files}
 	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file} 
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
-	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
-	cat ./rules/iotjs/defconfig-*.in >>  ${nuttx_config_file}
+#	cat ./rules/iotjs/defconfig.in >>  ${nuttx_config_file} # iotjs inspired stm32
+#	cat ./rules/iotjs/defconfig-*.in >>  ${nuttx_config_file}
+	cat ${iotjs_defconfigs_files} >>  ${nuttx_config_file}
 	${MAKE} rule/iotjs/configured
 	${MAKE} menuconfig
 	${MAKE} rule/iotjs/configured
@@ -121,8 +124,9 @@ rule/iotjs/lib: ${nuttx_include_file} ${nuttx_config_file}._iotjs.config
  --target-board=${iotjs_machine} \
  --jerry-heaplimit=78 \
  --profile=config/nuttx/${iotjs_machine}/nuttx.profile \
+ --cmake-param="-DCMAKE_VERBOSE_MAKEFILE=ON" \
+ ${iotjs_build_args} \
  #eol
-
 
 ${iotjs_lib_file}: rule/iotjs/lib
 	ls $@
