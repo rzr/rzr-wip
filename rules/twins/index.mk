@@ -13,10 +13,8 @@ ftp_url?=ftp://ftp@localhost
 gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
+twins_branch?=master
 twins_dir?=twins
-#twins_url=file:///home/${USER}/mnt/twins
-#webpack_exe?=./node_modules/webpack-cli/bin/cli.js
-sdcard_dir=/mnt/sdcard/
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
@@ -25,19 +23,13 @@ rule/twins/help:
 rule/twins/prep: rules/twins/rcS.template rule/twins/romfs
 	ls $<
 
-rule/twins/devel: rule/twins/prep
+rule/twins/devel: rule/twins/prep rule/iotjs/devel
 	sync
-
-#rule/twins/webpack: ${twins_www_dir}
-#	cd ${twins_www_dir} && ls package.json || npm init -y \
-#&& npm install --only=dev webpack-cli && npm install
-#	cd ${twins_www_dir} && npm run build
 
 rule/twins/property/%:
 	curl ${target_url}/properties/${@F}
 	curl -X PUT -d '{ "${@F}": ${value} }' ${target_url}/properties/${@F}
 	sleep 2
-
 
 rule/twins/test/%:
 	curl -X PUT -d '{ "${@F}": -90 }' ${target_url}/properties/${@F}
