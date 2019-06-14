@@ -46,23 +46,23 @@ rule/twins/test/%:
 	sleep 1
 
 rule/twins/test: \
- rule/twins/test/Torso \
- rule/twins/test/Shoulder \
- rule/twins/test/Arm \
- rule/twins/test/Hand \
+ rule/twins/test/torso \
+ rule/twins/test/shoulder \
+ rule/twins/test/arm \
+ rule/twins/test/hand \
  #eol
 
 make?=make -f rules/twins/index.mk
 rule/twins/robot:
 	curl ${target_url}/properties
-	${make} ${@D}/property/Torso value=0
-	${make} ${@D}/property/Shoulder value=0
-	${make} ${@D}/property/Arm value=0
-	${make} ${@D}/property/Hand value=0
-	${make} ${@D}/Torso
-	${make} ${@D}/Shoulder
-	${make} ${@D}/Arm
-	${make} ${@D}/Hand
+	${make} ${@D}/property/torso value=0
+	${make} ${@D}/property/shoulder value=0
+	${make} ${@D}/property/arm value=0
+	${make} ${@D}/property/hand value=0
+	${make} ${@D}/torso
+	${make} ${@D}/shoulder
+	${make} ${@D}/arm
+	${make} ${@D}/hand
 
 rule/twins/%:
 	${make} rule/twins/property/${@F} value=0
@@ -71,20 +71,20 @@ rule/twins/%:
 	${make} rule/twins/property/${@F} value=90
 	${make} rule/twins/property/${@F} value=0
 
-rule/twins/Shoulder: #[ -90, 45]
-	${make} rule/twins/property/Shoulder value=-90
-	${make} rule/twins/property/Shoulder value=10
-	${make} rule/twins/property/Shoulder value=30
-	${make} rule/twins/property/Shoulder value=45
-	${make} rule/twins/property/Shoulder value=0
+rule/twins/shoulder: #[ -90, 45]
+	${make} rule/twins/property/shoulder value=-90
+	${make} rule/twins/property/shoulder value=10
+	${make} rule/twins/property/shoulder value=30
+	${make} rule/twins/property/shoulder value=45
+	${make} rule/twins/property/shoulder value=0
 
-rule/twins/Arm: # [-45 +45]
+rule/twins/arm: # [-45 +45]
 	${make} rule/twins/property/${@F} value=0
 	${make} rule/twins/property/${@F} value=45
 	${make} rule/twins/property/${@F} value=-45
 	${make} rule/twins/property/${@F} value=0
 
-rule/twins/Hand: # [0 45]
+rule/twins/hand: # [0 45]
 	${make} rule/twins/property/${@F} value=0
 	${make} rule/twins/property/${@F} value=40
 #	${make} rule/twins/property/${@F} value=10
@@ -93,16 +93,16 @@ rule/twins/Hand: # [0 45]
 
 
 rule/twins/demo:
-	${make} rule/twins/property/Hand value=0
-	${make} rule/twins/property/Hand value=20
-	${make} rule/twins/property/Arm value=15
-	${make} rule/twins/property/Shoulder value=-20
-	${make} rule/twins/property/Shoulder value=-40
-	${make} rule/twins/property/Shoulder value=-60
-	${make} rule/twins/property/Hand value=-5
-	${make} rule/twins/property/Shoulder value=45
-	${make} rule/twins/property/Arm value=10
-	${make} rule/twins/property/Arm value=-15
+	${make} rule/twins/property/hand value=0
+	${make} rule/twins/property/hand value=20
+	${make} rule/twins/property/arm value=15
+	${make} rule/twins/property/shoulder value=-20
+	${make} rule/twins/property/shoulder value=-40
+	${make} rule/twins/property/shoulder value=-60
+	${make} rule/twins/property/hand value=-5
+	${make} rule/twins/property/shoulder value=45
+	${make} rule/twins/property/arm value=10
+	${make} rule/twins/property/arm value=-15
 
 
 ${twins_dir}: rules/webthing-iotjs
