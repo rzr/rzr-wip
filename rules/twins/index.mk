@@ -1,19 +1,8 @@
 # SPDX-License-Identifier: MPL-2.0
 project?=twins
 
-#TODO
-www_host?=rzr.online.fr
-www_dir?=tmp/${project}
-www_url?=http://${www_host}/${www_dir}
-
-#TODO
-www_host=192.168.1.12
-www_url=http://${www_host}/~${USER}/${www_dir}
-www_dir=tmp/${project}
-
 target_host?=192.168.1.13
 target_url?=http://${target_host}:8888
-twins_www_dir?=${HOME}/public_html/${www_dir}
 
 deploy_dir?=${twins_www_dir}
 #deploy_dir=${CURDIR}/tmp/deploy
@@ -27,39 +16,16 @@ twins_url?=https://github.com/rzr/twins
 twins_dir?=twins
 twins_url=file:///home/${USER}/mnt/twins
 webpack_exe?=./node_modules/webpack-cli/bin/cli.js
-
+sdcard_dir=/mnt/sdcard/
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
-	@echo "# make rule/twins/www"
-	@echo "# make rule/twins/www/ftp"
-	@echo "# make rule/twins/deploy/clean"
 	@echo "# make rule/twins/prep"
 
 rule/twins/prep: rules/twins/rcS.template rule/twins/romfs
 	ls $<
 
-rules/twins/rcS.template: rules/twins/rcS.template.in
-	sed -e "s|\$${base_url}|${www_url}|g" < $< > $@
-	cat $@
-
-rule/twins/www: ${twins_www_dir}
-	ls $^
-
-rule/twins/www/ftp: ${twins_www_dir}
-	command wput || sudo apt-get install wpu
-	cd $^ && wput "${ftp_url}/${www_dir}/" .
-
-rule/twins/www/scp: ${twins_www_dir}
-	scp -R $< ${gateway_host}/home/pi/mozilla-iot/gateway/build/static/
-	curl --insecure https://${gateway_host}:4443/${project}/index.js
-	curl https://${gateway_host}:4443/${project}/index.js
-
-${twins_www_dir}:
-	${make} rule/twins/deploy/clean deploy_dir=${twins_www_dir}
-	ls $<
-
-rule/twins/devel: rule/twins/prep rule/twins/www rule/iotjs/devel
+rule/twins/devel: rule/twins/prep
 	sync
 
 #rule/twins/webpack: ${twins_www_dir}
@@ -157,12 +123,6 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file}
 	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
 	ls -l $@
 
-
-twins/pack: ${twins_dir}
-	npm install webpack-cli
-	npm install webpack
-
-
 ${deploy_modules_dir}: ${twins_dir}
 	make -C $< deploy deploy_modules_dir=$@
 
@@ -181,31 +141,7 @@ rule/twins/romfs: ${nuttx_romfs_dir}
 	rm -rfv ${nuttx_romfs_img_file}
 	${make} rule/nuttx/romfs.img
 
-#twins/webpack: src
-#	${webpack_exe} # --context 
-
-webpack/help: ${webpack_exe}
-	${@} --help
-
-package.json:
-	npm init -y
-
-${webpack_exe}:
-	npm install webpack --save-dev
-	npm install webpack-cli --save-dev
-
 iotjs/start: ${example_file}
-#	iotjs $<
 	cd ${<D} && iotjs ${<F}
 
-sdcard_dir=/mnt/sdcard/
-
-rcS.template.in: ${deploy_dir}
-	cd ${deploy_dir}; \
-find . -type d \
-| while read dir; do \
-echo mkdir -p $${dir} ; \
-echo cd ${sdcard_dir}/$${dir} ; \
-echo "TODO: fetch files" ; \
-done
 
