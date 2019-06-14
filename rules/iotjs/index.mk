@@ -18,19 +18,32 @@ iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 iotjs_app_dir?=iotjs/config/nuttx/${iotjs_reference_machine}/app/
-IOTJS_ROOT_DIR="${iotjs_dir}"
-export IOTJS_ROOT_DIR
-IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
-export IOTJS_ABSOLUTE_ROOT_DIR
 
 iotjs_url?=https://github.com/Samsung/iotjs
 iotjs_branch?=master
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
-nuttx_rc_file?=rules/iotjs/rcS.template
-nuttx_romfs_file?=${nuttx_dir}/configs/nucleo-144/include/nsh_romfsimg.h
+
+iotjs_build_args?=\
+ --target-arch=arm \
+ --target-os=nuttx \
+ --nuttx-home=../${nuttx_dir} \
+ --target-board=${iotjs_machine} \
+ --jerry-heaplimit=78 \
+ --profile=config/nuttx/${iotjs_machine}/nuttx.profile \
+ #eol
 
 iotjs_build_args+=--buildtype=debug
+iotjs_build_args+=--cmake-param="-DCMAKE_VERBOSE_MAKEFILE=ON"
+
+#TODO
+nuttx_rc_file?=rules/iotjs/rcS.template
+
+IOTJS_ROOT_DIR="${iotjs_dir}"
+export IOTJS_ROOT_DIR
+IOTJS_ABSOLUTE_ROOT_DIR="${CURDIR}/${iotjs_dir}"
+export IOTJS_ABSOLUTE_ROOT_DIR
+
 
 rule/iotjs/%:
 	${make} %
@@ -117,16 +130,7 @@ rule/iotjs/base: rule/iotjs/prep
 	${MAKE} rule/iotjs/nuttx/build
 
 rule/iotjs/lib: ${nuttx_include_file} ${nuttx_config_file}._iotjs.config 
-	cd ${iotjs_dir} && ./tools/build.py \
- --target-arch=arm \
- --target-os=nuttx \
- --nuttx-home=../${nuttx_dir} \
- --target-board=${iotjs_machine} \
- --jerry-heaplimit=78 \
- --profile=config/nuttx/${iotjs_machine}/nuttx.profile \
- --cmake-param="-DCMAKE_VERBOSE_MAKEFILE=ON" \
- ${iotjs_build_args} \
- #eol
+	cd ${iotjs_dir} && ./tools/build.py ${iotjs_build_args}
 
 ${iotjs_lib_file}: rule/iotjs/lib
 	ls $@
