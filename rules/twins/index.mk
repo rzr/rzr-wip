@@ -14,8 +14,8 @@ gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
 twins_dir?=twins
-twins_url=file:///home/${USER}/mnt/twins
-webpack_exe?=./node_modules/webpack-cli/bin/cli.js
+#twins_url=file:///home/${USER}/mnt/twins
+#webpack_exe?=./node_modules/webpack-cli/bin/cli.js
 sdcard_dir=/mnt/sdcard/
 
 rule/twins/help:
