@@ -10,6 +10,7 @@ nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
 nuttx_apps_dir?=apps
+apps_dir?=${nuttx_apps_dir} # TODO
 nuttx_configure?=${nuttx_dir}/tools/configure.sh
 configure?=${nuttx_configure}
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
@@ -26,11 +27,6 @@ monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 nuttx_dev_id?=TODO
 dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
-
-#LDSCRIPT ?= f767-flash.ld
-#machine?=stm32f4dis
-#nuttx_config?=nucleo-f303re/hello
-
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
@@ -49,13 +45,9 @@ ${nuttx_dir}:
   --branch ${nuttx_branch} \
   ${nuttx_url} ${@}
 	ls $@
-#	# 
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
 	ls $@
-
-#${nuttx_dir}: ${nuttx_dir}/Makefile # ${nuttx_apps_dir}
-#	ls $<
 
 .PHONY: rule/nuttx/configure
 
@@ -92,23 +84,13 @@ ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 
 ${nuttx_config_file}:
 
-#${nuttx_dir}/Make.defs
-#	ls $@ || make rule/nuttx/configure
-
-#rule/nuttx/configure:
-#	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file}
-
 nuttx/config: ${nuttx_config_file}
 	ls $<
 
-#${apps_dir}/Kconfig: ${apps_dir}
-#	ls $@
 
 rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
-
-#nuttx: rule/nuttx/build
 
 ${image_file}: build
 	ls -l $@
@@ -130,20 +112,10 @@ ${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
 rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
 	ls $<
 
-#${nuttx_dir}/include/arch: rule/nuttx/menuconfig
-#	ls $@
-
-apps_dir?=apps
-
-
-
 rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
-#	ls ${nuttx_dir}/.config || make configure
-#	ls ${nuttx_dir}/.config
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	make -C ${nuttx_dir} ${@F}
 	make -C ${nuttx_dir} savedefconfig
-#	meld ${nuttx_dir}/defconfig ${nuttx_defconfig_file}
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
 	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp | tee ${nuttx_config_file}.diff
 	-diff -u ${nuttx_defconfig_file} ${nuttx_dir}/defconfig | tee ${nuttx_dir}/defconfig.diff
@@ -174,7 +146,6 @@ deploy:
 	udisksctl mount -b ${dev_file} ||:
 	cp -av ${nuttx_dir}/nuttx.bin  ${deploy_dir}
 	sleep 6
-
 
 rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
