@@ -1,43 +1,30 @@
-#machine?=stm32f767zi
 machine?=stm32f7nucleo
-
+nuttx_platform?=nucleo-144
+nuttx_config?=${nuttx_platform}/f767-netnsh
+nuttx_dir?=nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 nuttx_branch?=master
-nuttx_dir?=nuttx
-nuttx_platform=nucleo-144
-nuttx_config=${nuttx_platform}/f767-netnsh
+
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
-# TODO
-#nuttx_url=https://github.com/TizenTeam/nuttx
-#nuttx_url=file:///${HOME}/mnt/nuttx
-#nuttx_branch=sandbox/rzr/devel/master
-#nuttx_branch=sandbox/rzr/devel/stm32f7nucleo/master
-# nuttx_branch?=sandbox/rzr/review/master
-# nuttx_branch=sandbox/rzr/devel/${machine}/master
-# nuttx_branch=sandbox/rzr/devel/stm32f7/master
-
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
 nuttx_apps_dir?=apps
-nuttx_apps_dir?=apps-dir
 nuttx_configure?=${nuttx_dir}/tools/configure.sh
 configure?=${nuttx_configure}
-#nuttx_config?=stm32f7nucleo/nsh
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
 nuttx_romfs_img_file?=${nuttx_dir}/rom.img
 nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 
-
 image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
 monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 
 # TODO: keep private in ~/
-dev_id?=066EFF323535474B43065221
-dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${dev_id}-0:0
+nuttx_dev_id?=TODO
+dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 #LDSCRIPT ?= f767-flash.ld
