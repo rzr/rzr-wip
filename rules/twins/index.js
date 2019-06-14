@@ -3,7 +3,7 @@
 
 /**
  *
- * Copyright 2018-present Samsung Electronics France SAS, and other contributors
+ * Copyright 2019-present Samsung Electronics France SAS, and other contributors
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14,10 +14,9 @@ var console = require('console');
 var log = console.log || function () {};
 var verbose = console.log || function () {};
 
-console.log(process.iotjs);
-//process.iotjs.board = "TODO";
-console.log(process.iotjs.board);
+verbose.log(process.iotjs);
+verbose.log(process.iotjs.board);
 
 var app = require('twins');
-console.log(app);
+verbose.log(app);
 app.start();
