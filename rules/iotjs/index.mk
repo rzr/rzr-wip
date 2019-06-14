@@ -65,7 +65,7 @@ rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/
  IOTJS_ROOT_DIR=../${IOTJS_ROOT_DIR} \
  -C ${nuttx_dir}
 
-rule/iotjs/prep: rules/iotjs/rcS.template ${apps_dir}/system/iotjs/Kconfig
+rule/iotjs/prep: rules/iotjs/rcS.template ${nuttx_apps_dir}/system/iotjs/Kconfig
 	ls $<
 
 rules/iotjs/rcS.template:
