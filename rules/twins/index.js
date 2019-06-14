@@ -14,9 +14,9 @@ var console = require('console');
 var log = console.log || function () {};
 var verbose = console.log || function () {};
 
-verbose.log(process.iotjs);
-verbose.log(process.iotjs.board);
+verbose(process.iotjs);
+verbose(process.iotjs.board);
 
 var app = require('twins');
-verbose.log(app);
+verbose(app);
 app.start();
