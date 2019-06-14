@@ -26,7 +26,9 @@ monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
 dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
+# TODO
 deploy_dir?=/media/${USER}/NODE_F767ZI1/
+
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
@@ -122,6 +124,11 @@ rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/
 
 rule/nuttx/reconfigure: distclean rule/nuttx/menuconfig
 	ls -l ${nuttx_config_file}
+
+rule/nuttx/cleanall: rule/nuttx/clean
+	rm -rf ${nuttx_dir}/rom.img
+	rm -rf ${nuttx_dir}/rom.img.dir.tmp
+
 
 ${nuttx_dir}/defconfig: ${nuttx_dir}
 	make -C $< savedefconfig
