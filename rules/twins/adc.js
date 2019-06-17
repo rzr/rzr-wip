@@ -37,6 +37,7 @@ function start(pin)
 }
 
 console.log(process.argv[2]);
+console.log(board.pin);
 var pin = process.argv[2] || 'ADC1_3';
 start(board.pin[pin]);
 
