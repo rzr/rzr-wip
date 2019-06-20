@@ -13,6 +13,8 @@ webthing_url?=https://github.com/rzr/webthing-iotjs
 
 iotjs_modules+=iotjs_modules/webthing-iotjs
 node_modules+=node_modules/webthing-iotjs
+runtime?=iotjs
+
 
 help:
 	@echo "Usage:"
@@ -77,3 +79,5 @@ eslint: ${eslint_file} .eslintrc.js
 
 lint: eslint
 
+start: ${runtime}/run
+	sync
