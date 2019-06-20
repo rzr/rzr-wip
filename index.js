@@ -25,43 +25,73 @@ var fs = require('fs');
 var topic = 'io.github.rzr';
 var pub_topic = topic + '/relay/0/set';
 var port = Number(process.argv[2] || 8888);
-var mqtt_config = {
-  host: String(process.argv[3]) || 'broker.hivemq.com',
-  port: 1883
+var config = {
+  mqtt: {
+    host: 'localhost', // to update
+    port: 1883
+  }
 };
 
-function MqttProperty(thing) {
-    var self = this;
-    self.thing = thing;
-    webthing.Property.call(
-        this, thing, 'on',
-        new webthing.Value(false, function(data) {
-            var payload = data
-                ? '1' : '0';
-            self.thing.client.publish(pub_topic, payload);
-        }),
-        {'@type': 'OnOffProperty',
-         type: 'boolean'
-	}
-    );
+if (typeof(process.argv[3]) != 'undefined') {
+  config.mqtt.host = String(process.argv[3]);
 }
 
-
-var thing = new webthing.Thing('MqttOnOffSwitch', ['OnOffSwitch']);
-thing.client = new mqtt.connect(
-    mqtt_config,
-    function() {
-        thing.property = new MqttProperty(thing);
-        thing.addProperty(thing.property);
-        var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
-        server.start();
-        if (process.argv[2] === '-i') {
-            console.log('log: ready type 1 or 0 to update');
-            var istream = fs.createReadStream('/dev/stdin');
-            istream.on('data', function(data) {
-                var payload = JSON.stringify({onoff: Boolean(Number(data.toString()[0]))});
-                thing.client.publish(topic, payload);
-            });
-        }
+function MqttProperty(thing) {
+  var self = this;
+  self.thing = thing;
+  webthing.Property.call(
+    this, thing, 'on',
+    new webthing.Value(false, function(data) {
+      var payload = data
+          ? '1' : '0';
+      self.thing.client.publish(pub_topic, payload);
+    }),
+    {'@type': 'OnOffProperty',
+     type: 'boolean'
     }
-);
+  );
+}
+
+function App()
+{
+  var self = this;
+  self.thing = new webthing.Thing('MqttOnOffSwitch', ['OnOffSwitch']);
+  console.log('log: connecting');
+  console.log(config.mqtt);
+  thing.client = new mqtt.connect(
+    config.mqtt,
+    function() {
+      thing.property = new MqttProperty(thing);
+      thing.addProperty(thing.property);
+      var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
+      server.start();
+      if (process.argv[2] === '-i') {
+        console.log('log: ready type 1 or 0 to update');
+        var istream = fs.createReadStream('/dev/stdin');
+        istream.on('data', function(data) {
+          var payload = JSON.stringify({onoff: Boolean(Number(data.toString()[0]))});
+          thing.client.publish(topic, payload);
+        });
+      }
+
+      if (!false) {
+        var sub_topic="io.github.rzr/data";
+        var subscribe_opts = {
+          retain: false,
+          qos: 2
+        };
+
+        console.log('log: subscribing: ' + sub_topic);
+        self.thing.client.subscribe(sub_topic, subscribe_opts, function() {
+          console.log('subscribed: ' + this);
+          self.thing.client.on('message', function(data) {
+            console.log(String(data.message));
+          });
+        });
+      }
+    }
+  );
+
+}
+
+App();
