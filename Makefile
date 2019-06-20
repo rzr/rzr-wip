@@ -103,3 +103,6 @@ client/pub:
 	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "0"
 	sleep 1
 	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "1"
+
+client/pub/test:
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${sub_topic}" -m "{}"
