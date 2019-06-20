@@ -21,30 +21,51 @@ var mqtt = require('mqtt');
 var fs = require('fs');
 
 
-// Change topic here
-var topic = 'io.github.rzr';
-var pub_topic = topic + '/relay/0/set';
-var port = Number(process.argv[2] || 8888);
 var config = {
+  base_topic: 'io.github.rzr/espurna/0',
   mqtt: {
     host: 'localhost', // to update
     port: 1883
   }
 };
 
+config.subscribe = {
+  retain: false,
+  qos: 2
+};
+
+config.port = Number(process.argv[2] || 8888);
+// espruna endpoints
+config.pub_topic = config.base_topic + '/relay/0/set';
+config.sub_topic = config.base_topic + '/data';
+
+
+
 if (typeof(process.argv[3]) != 'undefined') {
-  config.mqtt.host = String(process.argv[3]);
+  config.base_topic = String(process.argv[3]);
 }
 
+if (typeof(process.argv[4]) != 'undefined') {
+  config.mqtt.host = String(process.argv[4]);
+}
+
+if (typeof(process.argv[5]) != 'undefined') {
+  config.mqtt.port = Number(process.argv[5]);
+}
+
+console.log(config);
+
 function MqttProperty(thing) {
+  console.log('MqttProperty');
   var self = this;
   self.thing = thing;
   webthing.Property.call(
     this, thing, 'on',
     new webthing.Value(false, function(data) {
+      console.log('publishing');
       var payload = data
           ? '1' : '0';
-      self.thing.client.publish(pub_topic, payload);
+      self.thing.client.publish(self.thing.config.pub_topic, payload);
     }),
     {'@type': 'OnOffProperty',
      type: 'boolean'
@@ -55,43 +76,34 @@ function MqttProperty(thing) {
 function App()
 {
   var self = this;
+  self.config = config;
   self.thing = new webthing.Thing('MqttOnOffSwitch', ['OnOffSwitch']);
+  self.thing.config = config;
+
   console.log('log: connecting');
-  console.log(config.mqtt);
-  thing.client = new mqtt.connect(
-    config.mqtt,
-    function() {
-      thing.property = new MqttProperty(thing);
-      thing.addProperty(thing.property);
-      var server = new webthing.WebThingServer(new webthing.SingleThing(thing), port);
-      server.start();
-      if (process.argv[2] === '-i') {
-        console.log('log: ready type 1 or 0 to update');
-        var istream = fs.createReadStream('/dev/stdin');
-        istream.on('data', function(data) {
-          var payload = JSON.stringify({onoff: Boolean(Number(data.toString()[0]))});
-          thing.client.publish(topic, payload);
-        });
-      }
-
-      if (!false) {
-        var sub_topic="io.github.rzr/data";
-        var subscribe_opts = {
-          retain: false,
-          qos: 2
-        };
-
-        console.log('log: subscribing: ' + sub_topic);
-        self.thing.client.subscribe(sub_topic, subscribe_opts, function() {
-          console.log('subscribed: ' + this);
-          self.thing.client.on('message', function(data) {
-            console.log(String(data.message));
-          });
-        });
-      }
+  thing.client = new mqtt.connect(config.mqtt, function() {
+    console.log('log: connected');
+    thing.property = new MqttProperty(thing);
+    thing.addProperty(thing.property);
+    self.server = new webthing.WebThingServer(new webthing.SingleThing(thing), config.port);
+    self.server.start();
+    console.log('log: reading');
+    if (process.argv[2] === '-i') {
+      console.log('log: ready type 1 or 0 to update');
+      var istream = fs.createReadStream('/dev/stdin');
+      istream.on('data', function(data) {
+        var payload = JSON.stringify({onoff: Boolean(Number(data.toString()[0]))});
+        thing.client.publish(self.config.topic, payload);
+      });
     }
-  );
-
+    console.log('log: subscribing: ' + self.config.sub_topic);
+    self.thing.client.subscribe(self.config.sub_topic, self.config.subscribe, function() {
+      console.log('subscribed: ' + this);
+      self.thing.client.on('message', function(data) {
+        console.log(String(data.message));
+      });
+    });
+  });
 }
 
 App();
