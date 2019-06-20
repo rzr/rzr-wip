@@ -109,7 +109,7 @@ function MqttProperty(thing, value, config) {
 }
 
 
-function main () {
+function App () {
   var port = process.argv[2] ? Number(process.argv[2]) : 8888;
   mqtt_options.client.endPoint = process.argv[3] ? String(process.argv[3])
     : "workgroup/com.github.rzr.webthing-iotjs.example.todo";
@@ -129,4 +129,4 @@ function main () {
   server.start();
 }
 
-main();
+App();
