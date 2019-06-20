@@ -5,12 +5,13 @@
 
 default: help iotjs/run
 
-example?=index.js
+example_file=index.js
+runtime?=iotjs
+iotjs_modules_dir?=${CURDIR}/iotjs_modules
+
 eslint_file?=node_modules/eslint/bin/eslint.js
 port?=8886
 base_url?=http://localhost:${port}
-
-runtime?=iotjs
 
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 #TODO: pin version
@@ -18,20 +19,25 @@ webthing-iotjs_revision?=master
 webthing-iotjs_dir?=${iotjs_modules_dir}/webthing-iotjs
 iotjs_modules_dirs+=${webthing-iotjs_dir}
 
-
-
 deploy_modules_dir?=${CURDIR}/tmp/deploy/iotjs_modules
 deploy_module_dir?= ${deploy_modules_dir}/${project}
 deploy_dirs+= ${deploy_module_dir}
 deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
 deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
+#mqtt_host = 'broker.hivemq.com'
+mqtt_host=localhost
+base_topic=io.github.rzr
+pub_topic=${base_topic}/relay/0/set
+sub_topic=${base_topic}/data
+run_args+=${port}
+run_args+=${mqtt_host}
 
 
 help:
 	@echo "Usage:"
 	@echo "# make run"
 
-${webthing-iotjs_dir}: Makefile
+${webthing-iotjs_dir}: # Makefile
 	rm -rf $@
 	git clone --recursive --depth 1 ${webthing-iotjs_url} -b ${webthing-iotjs_revision} $@
 	make -C $@ deploy deploy_modules_dir=${iotjs_modules_dir}
@@ -40,8 +46,8 @@ iotjs_modules: ${iotjs_modules}
 	mkdir -p $@
 	ls $@
 
-iotjs/run: ${example} iotjs_modules
-	iotjs $<
+iotjs/start: ${example_file} ${iotjs_modules_dirs}
+	iotjs $< ${run_args}
 
 node_modules: ${node_modules}
 	mkdir -p $@
@@ -87,5 +93,13 @@ eslint: ${eslint_file} .eslintrc.js
 
 lint: eslint
 
-start: ${runtime}/run
+start: ${runtime}/start
 	sync
+
+client/sub:
+	mosquitto_sub -h "${mqtt_host}" -t "${sub_topic}"
+
+client/pub:
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "0"
+	sleep 1
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "1"
