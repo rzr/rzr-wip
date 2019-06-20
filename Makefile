@@ -9,24 +9,32 @@ example?=index.js
 eslint_file?=node_modules/eslint/bin/eslint.js
 port?=8886
 base_url?=http://localhost:${port}
-webthing_url?=https://github.com/rzr/webthing-iotjs
 
-iotjs_modules+=iotjs_modules/webthing-iotjs
-node_modules+=node_modules/webthing-iotjs
 runtime?=iotjs
+
+webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
+#TODO: pin version
+webthing-iotjs_revision?=master
+webthing-iotjs_dir?=${iotjs_modules_dir}/webthing-iotjs
+iotjs_modules_dirs+=${webthing-iotjs_dir}
+
+
+
+deploy_modules_dir?=${CURDIR}/tmp/deploy/iotjs_modules
+deploy_module_dir?= ${deploy_modules_dir}/${project}
+deploy_dirs+= ${deploy_module_dir}
+deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
+deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
 
 
 help:
 	@echo "Usage:"
 	@echo "# make run"
 
-iotjs_modules/webthing-iotjs/%:
-	@mkdir -p iotjs_modules/webthing-iotjs
-	git clone --depth 1 --recursive ${webthing_url} iotjs_modules/webthing-iotjs
-
-iotjs_modules/webthing-iotjs: iotjs_modules/webthing-iotjs/index.js
-	@ls $@
-
+${webthing-iotjs_dir}: Makefile
+	rm -rf $@
+	git clone --recursive --depth 1 ${webthing-iotjs_url} -b ${webthing-iotjs_revision} $@
+	make -C $@ deploy deploy_modules_dir=${iotjs_modules_dir}
 
 iotjs_modules: ${iotjs_modules}
 	mkdir -p $@
