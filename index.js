@@ -22,11 +22,13 @@ var fs = require('fs');
 
 
 // Change topic here
-var mqtt_config = {host: 'iot.eclipse.org',
-    port: 1883};
 var topic = 'io.github.rzr';
 var pub_topic = topic + '/relay/0/set';
 var port = Number(process.argv[2] || 8888);
+var mqtt_config = {
+  host: String(process.argv[3]) || 'broker.hivemq.com',
+  port: 1883
+};
 
 function MqttProperty(thing) {
     var self = this;
