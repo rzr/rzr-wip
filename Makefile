@@ -25,12 +25,17 @@ deploy_dirs+= ${deploy_module_dir}
 deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
 deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
 #mqtt_host = 'broker.hivemq.com'
+
 mqtt_host=localhost
-base_topic=io.github.rzr
-pub_topic=${base_topic}/relay/0/set
-sub_topic=${base_topic}/data
+mqtt_port=1883
+mqtt_base_topic=io.github.rzr/espurna/0
+mqtt_pub_topic=${mqtt_base_topic}/relay/0/set
+mqtt_sub_topic=${mqtt_base_topic}/data
+
 run_args+=${port}
+run_args+=${mqtt_base_topic}
 run_args+=${mqtt_host}
+run_args+=${mqtt_port}
 
 
 help:
@@ -99,10 +104,12 @@ start: ${runtime}/start
 client/sub:
 	mosquitto_sub -h "${mqtt_host}" -t "${sub_topic}"
 
-client/pub:
-	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "0"
+client/pub/espurna:
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${mqtt_pub_topic}" -m "0"
 	sleep 1
-	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${pub_topic}" -m "1"
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${mqtt_pub_topic}" -m "1"
+	sleep 1
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${mqtt_pub_topic}" -m "0"
 
-client/pub/test:
-	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${sub_topic}" -m "{}"
+client/pub:
+	mosquitto_pub -h "${mqtt_host}" -p 1883  -t "${mqtt_sub_topic}" -m "{}"
