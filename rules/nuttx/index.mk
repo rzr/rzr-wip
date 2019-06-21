@@ -11,9 +11,8 @@ nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
 nuttx_apps_dir?=apps
-apps_dir?=${nuttx_apps_dir} # TODO
 nuttx_configure?=${nuttx_dir}/tools/configure.sh
-configure?=${nuttx_configure}
+
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 #nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
@@ -30,9 +29,11 @@ nuttx_dev_id?=TODO
 nuttx_deploy_dir?=/media/${USER}/NODE_TODO
 nuttx_deploy_dev?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 nuttx_deploy_delay?=6
+
 # TODO
 image_file?=${nuttx_image_file}
-
+apps_dir?=${nuttx_apps_dir} # TODO
+configure?=${nuttx_configure}
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
