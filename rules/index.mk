@@ -22,6 +22,8 @@ export make
 -include rules/st.mk
 -include rules/nuttx/index.mk
 
+main_project=stm32
+
 help:
 	@echo "# make devel"
 	@echo "# nuttx_defconfig_file=${nuttx_defconfig_file}"
@@ -68,7 +70,7 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
--include rules/twins/index.mk
+-include rules/${main_project}/index.mk
 
 deploy: rule/nuttx/deploy
 	sync
