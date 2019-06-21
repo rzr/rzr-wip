@@ -67,5 +67,5 @@ if (config.direction === gpio.DIRECTION.OUT) {
 }
 
 setInterval(function(){
-  console.log('log: running:' + String(new Date()))
+  console.log('log: running:' + String(new Date()));
 }, 60000);
