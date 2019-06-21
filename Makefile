@@ -1,34 +1,70 @@
 #!/bin/make -f
 # -*- makefile -*-
-# SPDX-License-Identifier: Apache-2.0
-# Copyright: 2018-present Samsung Electronics France SAS, and contributors
+# SPDX-License-Identifier: MPL-2.0
+#{
+# Copyright 2018-present Samsung Electronics France SAS, and other contributors
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+#}
 
 default: help iotjs/run
+	@echo "log: $@: $^"
 
-example?=index.js
+runtime?=iotjs
+example_file=index.js
+iotjs_modules_dir?=${CURDIR}/iotjs_modules
+
 eslint_file?=node_modules/eslint/bin/eslint.js
+
 port?=8888
 base_url?=http://localhost:${port}
-webthing_url?=https://github.com/rzr/webthing-iotjs
 
-iotjs_modules+=iotjs_modules/webthing-iotjs
+webthing_url?=https://github.com/rzr/webthing-iotjs
+webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
+#TODO: pin version
+webthing-iotjs_revision?=master
+webthing-iotjs_dir?=${iotjs_modules_dir}/webthing-iotjs
+iotjs_modules_dirs+=${webthing-iotjs_dir}
+
 node_modules+=node_modules/webthing-iotjs
+
+deploy_modules_dir?=${CURDIR}/tmp/deploy/iotjs_modules
+deploy_module_dir?= ${deploy_modules_dir}/${project}
+deploy_dirs+= ${deploy_module_dir}
+deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
+deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
+
+run_args+=${port}
+
 
 help:
 	@echo "Usage:"
-	@echo "# make run"
+	@echo "# make start"
 
-iotjs_modules/webthing-iotjs/%:
-	@mkdir -p iotjs_modules/webthing-iotjs
-	git clone --depth 1 --recursive ${webthing_url} iotjs_modules/webthing-iotjs
+${webthing-iotjs_dir}: # Makefile
+	rm -rf $@
+	git clone --recursive --depth 1 ${webthing-iotjs_url} -b ${webthing-iotjs_revision} $@
+	make -C $@ deploy deploy_modules_dir=${iotjs_modules_dir}
 
-iotjs_modules/webthing-iotjs: iotjs_modules/webthing-iotjs/index.js
-	@ls $@
+iotjs/modules: ${iotjs_modules_dirs}
+	ls $<
 
+${deploy_module_dir}/%: %
+	@echo "# TODO: minify: $< to $@"
+	install -d ${@D}
+	install $< $@
 
-iotjs_modules: ${iotjs_modules}
-	mkdir -p $@
-	ls $@
+${deploy_modules_dir}/webthing-iotjs: ${iotjs_modules_dir}/webthing-iotjs
+	make -C $< deploy deploy_modules_dir="${deploy_modules_dir}"
+
+deploy: ${deploy_srcs} ${deploy_dirs}
+	ls $<
+
+iotjs/start: ${example_file} ${iotjs_modules_dirs}
+	iotjs $< ${run_args}
+
 
 iotjs/run: ${example} iotjs_modules
 	iotjs $<
@@ -59,6 +95,9 @@ node/run: node_modules
 
 run: iotjs/run
 	@echo "# $@: $^"
+
+start: ${runtime}/start
+	sync
 
 cleanall:
 	rm -rf iotjs_modules node_modules
