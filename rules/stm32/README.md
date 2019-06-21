@@ -2,7 +2,7 @@
 * <https://os.mbed.com/platforms/ST-Nucleo-F767ZI/>
 
 
-* out: PB_0, PB_7
+* out: PB_0, PB_7 PB14
 * in: PC_13
 
 nsh> iotjs output.js PB_7
