@@ -32,7 +32,7 @@ rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 
 ${twins_dir}: rules/webthing-iotjs
 	rm -rf $@
-	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
+	make -C ${webthing-iotjs_dir} deploy deploy_modules_dir=${@}
 	cp -av $</*.js $@
 	cp -av $</*.json $@
 
