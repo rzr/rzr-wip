@@ -52,7 +52,7 @@ prep: nuttx apps patch
 all: prep configure build
 
 run: deploy monitor
-
+	sync
 
 build: rule/nuttx/build
 
@@ -70,6 +70,7 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
+-include rules/webthing-iotjs/index.mk
 -include rules/${main_project}/index.mk
 
 deploy: rule/nuttx/deploy
