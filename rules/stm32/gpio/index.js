@@ -95,12 +95,14 @@ if (board) {
 } else {
   board = {};
 }
-console.log(board);
-var pin = 0;
+console.log(board.pin);
+var pin = 'PB0';
 if (process.argv.length > 2) {
-  pin = Number(process.argv[2]);
+  pin = String(process.argv[2]);
 }
+console.log(pin);
 pin = Number(board.pin[pin]);
+console.log(pin);
 
 //TODO handle direction
 var config = { frequency: 1,
