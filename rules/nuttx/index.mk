@@ -1,4 +1,7 @@
-machine?=stm32f7nucleo
+# SPDX-License-Identifier: MPL-2.0
+
+rule/nuttx/default: rule/nuttx/help
+	sync
 
 nuttx_platform?=nucleo-144
 nuttx_config?=${nuttx_platform}/f767-netnsh
@@ -15,14 +18,12 @@ nuttx_configure?=${nuttx_dir}/tools/configure.sh
 
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
-#nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
-#nuttx_romfs_img_file?=${nuttx_dir}/rom.img
-nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 nuttx_image_file?=${nuttx_dir}/nuttx.bin
 nuttx_mkromfsimg?=${CURDIR}/nuttx/tools/mkromfsimg.sh
 
-monitor_rate?=115200
-monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
+#nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
+#nuttx_romfs_img_file?=${nuttx_dir}/rom.img
+nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
@@ -30,10 +31,19 @@ nuttx_deploy_dir?=/media/${USER}/NODE_TODO
 nuttx_deploy_dev?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 nuttx_deploy_delay?=6
 
+machine?=stm32f7nucleo
+monitor_rate?=115200
+monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
+
 # TODO
 image_file?=${nuttx_image_file}
 apps_dir?=${nuttx_apps_dir} # TODO
 configure?=${nuttx_configure}
+
+
+rule/nuttx/help:
+	@echo "Usage: "
+
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
@@ -43,20 +53,13 @@ ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
 	ls $@
 
-
 ${nuttx_dir}:
 	mkdir -p ${@D}
-	git clone \
-  --recursive \
-  --depth 1 \
-  --branch ${nuttx_branch} \
-  ${nuttx_url} ${@}
+	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@}
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
 	ls $@
-
-.PHONY: rule/nuttx/configure
 
 rule/nuttx/configure: ${configure} ${nuttx_defconfig_file}
 	ls -l $<
@@ -137,7 +140,6 @@ rule/nuttx/cleanall: rule/nuttx/clean
 	rm -rf ${nuttx_dir}/rom.img
 	rm -rf ${nuttx_dir}/rom.img.dir.tmp
 
-
 ${nuttx_dir}/defconfig: ${nuttx_dir}
 	make -C $< savedefconfig
 
@@ -168,7 +170,6 @@ rule/nuttx/deploy: ${nuttx_image_file}
 rule/nuttx/devel: rule/nuttx/menuconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
-
 ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	echo "#TTTTOL: $@"
 	cp -av ${nuttx_rc_file} $@
@@ -179,3 +180,5 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 	cd ${<D} && ${nuttx_mkromfsimg} -nofat  ../../..
 # {nuttx_dir}
 	ls -l $@
+
+.PHONY: rule/nuttx/configure
