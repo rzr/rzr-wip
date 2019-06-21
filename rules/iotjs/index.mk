@@ -120,6 +120,9 @@ ${iotjs_nuttx_config_file}: ${nuttx_config_file} ${iotjs_defconfigs_files}
  | while read line ; do grep "$${line}" $@ ; done
 	ls $@
 
+${nuttx_config_file}: ${iotjs_nuttx_config_file}
+	cp -av $< $@
+
 rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	ls $<
 
