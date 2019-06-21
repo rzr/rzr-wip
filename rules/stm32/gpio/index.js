@@ -17,41 +17,6 @@ var console = require('console');
 var verbose = console.log || function(arg) {};
 verbose(process);
 
-function GpioOutTest(config)
-{
-  var self = this;
-  if (!config) {
-    config = { gpio: { pin: 0 , direction: gpio.DIRECTION.OUT }};
-  }
-  if (!gpio || !config || !(config.gpio)) {
-    throw 'error: gpio: Invalid config: ' + gpio;
-  }
-  self.config = config;
-  verbose('log: opening: pin=' + config.gpio.pin);
-  self.port = gpio.open(config.gpio, function(err) {
-    verbose('log: gpio: ready: ' + err);
-    if (err) {
-      console.error('error: gpio: Fail to open pin: ' + config.gpio.pin);
-      throw err;
-    }
-    self.value = false;
-    self.inverval = setInterval(function() {
-      self.value = !self.value;
-      self.port.writeSync(self.value);
-      verbose('log: gpio: update: ' + Boolean(self.value));
-    }, self.config.period);
-  });
-
-  self.close = function() {
-    try {
-      self.inverval && clearInterval(self.inverval);
-      self.port && self.port.closeSync();
-    } catch(err) {
-      console.error('error: gpio: close:' + err);
-    }
-  }
-}
-
 
 function GpioInTest(config)
 {
@@ -75,6 +40,41 @@ function GpioInTest(config)
     self.inverval = setInterval(function() {
       var value = self.port.readSync();
       verbose('log: gpio: update: ' + Boolean(value));
+    }, self.config.period);
+  });
+
+  self.close = function() {
+    try {
+      self.inverval && clearInterval(self.inverval);
+      self.port && self.port.closeSync();
+    } catch(err) {
+      console.error('error: gpio: close:' + err);
+    }
+  }
+}
+
+function GpioOutTest(config)
+{
+  var self = this;
+  if (!config) {
+    config = { gpio: { pin: 0 , direction: gpio.DIRECTION.OUT }};
+  }
+  if (!gpio || !config || !(config.gpio)) {
+    throw 'error: gpio: Invalid config: ' + gpio;
+  }
+  self.config = config;
+  verbose('log: opening: pin=' + config.gpio.pin);
+  self.port = gpio.open(config.gpio, function(err) {
+    verbose('log: gpio: ready: ' + err);
+    if (err) {
+      console.error('error: gpio: Fail to open pin: ' + config.gpio.pin);
+      throw err;
+    }
+    self.value = false;
+    self.inverval = setInterval(function() {
+      self.value = !self.value;
+      self.port.writeSync(self.value);
+      verbose('log: gpio: update: ' + Boolean(self.value));
     }, self.config.period);
   });
 
