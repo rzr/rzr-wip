@@ -19,7 +19,7 @@ var gpio = require('gpio');
 verbose(process);
 
 
-function GpioTest(config)
+function GpioOutTest(config)
 {
   var self = this;
   if (!config) {
@@ -60,7 +60,11 @@ if (process.argv.length > 2) {
   pin = Number(process.argv[2]);
 }
 var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.OUT }};
-var test = new GpioTest(config);
+var test = null;
+
+if (config.direction === gpio.DIRECTION.OUT) {
+  test = new GpioOutTest(config);
+}
 
 setInterval(function(){
   console.log('log: running:' + String(new Date()))
