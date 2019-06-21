@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var webthing = require('webthing-iotjs');
 var console = require('console');
+var webthing = require('webthing-iotjs');
+
 var http = require('https');
 
-
-/* Replace with your openweathermap.org personal key here
-   https://api.opensensemap.org/boxes/5c3a9814c4c2f30019f679a1 */
 var app = {
 
   config: {
@@ -43,9 +41,8 @@ var app = {
 
 // TODO
 //app.config.port = 8892;
-
-/* App.config.server.hostname = 'localhost';
-   app.config.server.port = 8880; */
+// app.config.server.hostname = 'localhost';
+// app.config.server.port = 8880; 
 
 
 function receiveObject(incoming, callback) {
