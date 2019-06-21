@@ -6,7 +6,7 @@ target_url?=http://${target_host}:8888
 
 #TODO
 #twins_deploy_dir?=${twins_www_dir}
-twins_deploy_dir=${CURDIR}/tmp/deploy
+twins_deploy_dir?=${CURDIR}/tmp/deploy
 deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
 example_file=${twins_deploy_dir}/index.js
 nuttx_rc_file=rules/twins/rcS.template
@@ -64,7 +64,7 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 
 rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
 	${make} rule/twins/deploy deploy_modules_dir="$</iotjs-modules"
-	install ${twins_deploy_files} $</
+	install ${twins_deploy_files} ${example_file}
 	rm -rfv ${nuttx_romfs_img_file}
 	${make} rule/nuttx/romfs.img
 
