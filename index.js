@@ -31,18 +31,18 @@ var app = {
     },
     boxId: '5c3a9814c4c2f30019f679a1',
     sensors: [
-          {id: '5c3a9814c4c2f30019f679a5',
-           type: 'pm10'}
+      {id: '5c3a9814c4c2f30019f679a5',
+       type: 'pm10'}
     ]
   },
   // TODO: parse stream
   sensors: {}
 };
 
-// TODO
-//app.config.port = 8892;
-// app.config.server.hostname = 'localhost';
-// app.config.server.port = 8880; 
+/* TODO
+   app.config.port = 8892;
+   app.config.server.hostname = 'localhost';
+   app.config.server.port = 8880; */
 
 
 function receiveObject(incoming, callback) {
@@ -104,7 +104,8 @@ function SomeProperty(thing) {
   var self = this;
   webthing.Property.call(
     this, thing, 'pm10', new webthing.Value(0),
-    {'@type': 'LevelProperty', type: 'number'}
+    {'@type': 'LevelProperty',
+     type: 'number'}
   );
   setInterval(function() {
     update(app.config.server, function(err, object) {
