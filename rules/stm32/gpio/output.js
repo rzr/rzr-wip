@@ -59,7 +59,11 @@ var pin = 0;
 if (process.argv.length > 2) {
   pin = Number(process.argv[2]);
 }
-var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.OUT }};
+
+
+var config = { frequency: 1,
+               gpio: { pin: pin ,
+                       direction: gpio.DIRECTION.OUT }};
 var test = null;
 
 if (config.direction === gpio.DIRECTION.OUT) {
