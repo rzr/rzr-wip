@@ -25,9 +25,10 @@ monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
-dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
+nuttx_deploy_dir?=/media/${USER}/NODE_TODO
+nuttx_dev_file?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 # TODO
-deploy_dir?=/media/${USER}/NODE_F767ZI1/
+
 
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
@@ -146,13 +147,13 @@ rule/nuttx/diff:
 	ls ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 	diff ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 
-deploy:
+rule/nuttx/deploy:
 	sudo sync
-	ls -l ${dev_file}
-	sudo umount -f ${dev_file} ${deploy_dir} || echo $$?
+	ls -l ${nuttx_dev_file}
+	sudo umount -f ${nuttx_dev_file} ${nuttx_deploy_dir} || echo $$?
 	udisksctl mount -b ${dev_file} ||:
-	cp -av ${nuttx_dir}/nuttx.bin  ${deploy_dir}
+	cp -av ${nuttx_dir}/nuttx.bin  ${nuttx_deploy_dir}
 	sleep 6
 
-rule/nuttx/devel: rule/nuttx/menuconfig build deploy monitor rule/nuttx/savedefconfig
+rule/nuttx/devel: rule/nuttx/menuconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
