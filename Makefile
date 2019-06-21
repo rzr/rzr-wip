@@ -46,9 +46,19 @@ ${webthing-iotjs_dir}: # Makefile
 	git clone --recursive --depth 1 ${webthing-iotjs_url} -b ${webthing-iotjs_revision} $@
 	make -C $@ deploy deploy_modules_dir=${iotjs_modules_dir}
 
-iotjs_modules: ${iotjs_modules}
-	mkdir -p $@
-	ls $@
+iotjs/modules: ${iotjs_modules_dirs}
+	ls $<
+
+${deploy_module_dir}/%: %
+	@echo "# TODO: minify: $< to $@"
+	install -d ${@D}
+	install $< $@
+
+${deploy_modules_dir}/webthing-iotjs: ${iotjs_modules_dir}/webthing-iotjs
+	make -C $< deploy deploy_modules_dir="${deploy_modules_dir}"
+
+deploy: ${deploy_srcs} ${deploy_dirs}
+	ls $<
 
 iotjs/start: ${example_file} ${iotjs_modules_dirs}
 	iotjs $< ${run_args}
