@@ -9,14 +9,16 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.*
 #}
 
+iotjs_machine?=stm32f7nucleo
+
+nuttx_url?=file:///home/${USER}/mnt/nuttx/
+nuttx_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
-iotjs_machine?=stm32f7nucleo
-
 
 #iotjs_url?=https://github.com/tizenteam/iotjs
-#iotjs_url?=file:///home/user/mnt/iotjs
+#iotjs_url?=file:///home/${USER}/mnt/iotjs
 #iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
 
 docker/run:
