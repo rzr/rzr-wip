@@ -24,19 +24,37 @@ var WebThingServer = webthing.WebThingServer;
 
 var mqtt = require('mqtt');
 
-var mqtt_options = {
-  client: {
-    host: 'iot.eclipse.org',
-    endPoint: 'TODO',
-    port: 1883,
-    keepalive: 10,
-    clientId: 'IoT.js Client'
-  },
-  subscribe: {
-    retain: false,
-    qos: 2
+var config = {
+  port: 8888,
+  base_topic: 'io.github.rzr/rzr-wip/TODO/0',
+  mqtt: {
+    host: 'localhost', // to update
+    port: 1883
   }
 };
+
+config.subscribe = {
+  retain: false,
+  qos: 2
+};
+
+
+if (typeof(process.argv[2]) != 'undefined') {
+  config.port = Number(process.argv[2]);
+}
+
+if (typeof(process.argv[3]) != 'undefined') {
+  config.base_topic = String(process.argv[3]);
+}
+
+if (typeof(process.argv[4]) != 'undefined') {
+  config.mqtt.host = String(process.argv[4]);
+}
+
+if (typeof(process.argv[5]) != 'undefined') {
+  config.mqtt.port = Number(process.argv[5]);
+}
+
 
 var options = [
   {
@@ -44,7 +62,6 @@ var options = [
     description: 'Humidity Sensor',
     label: 'Humidity (%)',
     type: 'number',
-    mqtt: mqtt_options,
     topic: {
       endPoint: '/air/humidity',
       type: 'number',
@@ -53,6 +70,7 @@ var options = [
   }
 ];
 
+console.log(config);
 
 function MqttProperty(thing, value, config) {
   var self = this;
@@ -78,21 +96,22 @@ function MqttProperty(thing, value, config) {
     }
   );
   {
-    self.client = thing.client;
-    self.config.topic.uri =
-      self.config.mqtt.client.endPoint + self.config.topic.endPoint;
-    console.log('log: subscribing: ' + self.config.topic.uri);
-    self.client.subscribe(
-      self.config.topic.uri, self.config.mqtt.subscribe,
-      function(error) {
-        if (error) {
-          console.error('error: subscribe failed');
-        }
-      }
-    );
+    this.client = thing.parent.client;
 
-    self.client.on('message', function(data) {
-      if (data.topic === self.config.topic.uri) {
+    var sub_topic = thing.parent.config.base_topic + self.config.topic.endPoint;
+    console.log('log: subscribing: ' + sub_topic);
+    console.log(this.client.subscribe);
+    console.log(thing.parent.config.subscribe);
+    this.client.subscribe(sub_topic, thing.parent.config.subscribe,
+                          function(error) {
+                            if (error) {
+                              console.error('error: subscribe failed');
+                              throw error;
+                            }
+                          }
+                         );
+    this.client.on('message', function(data) {
+      if (data.topic === sub_topic) {
         var object = JSON.parse(data.message.toString());
         var updatedValue = object[self.config.topic.role];
         if (self.config.topic.type === 'number') {
@@ -109,24 +128,27 @@ function MqttProperty(thing, value, config) {
 }
 
 
-function App () {
-  var port = process.argv[2] ? Number(process.argv[2]) : 8888;
-  mqtt_options.client.endPoint = process.argv[3] ? String(process.argv[3])
-    : "workgroup/com.github.rzr.webthing-iotjs.example.todo";
-  
-  var thing = new Thing('HumidityMqttSensor', ['MultiLevelSensor'], 'A set of sensors');
-  
-  thing.client = new mqtt.connect(mqtt_options.client, function () {
-    for (var idx = 0; idx < options.length; idx++) {
-      thing.addProperty(new MqttProperty(thing, null, options[idx]));
-    }
-  });
+function App (config) {
+  var self = this;
+  this.config = config;
+  this.thing = new Thing('HumidityMqttSensor', ['MultiLevelSensor'], 'A set of sensors');
+  this.thing.parent = this;
 
-  var server = new WebThingServer(new SingleThing(thing), port);
+  if (!false) {
+    console.log('log: connecting: ' + config.mqtt.host);
+    this.client = new mqtt.connect(config.mqtt, function() {
+      console.log('log: connected, listening on port=' + config.mqtt.port);
+      for (var idx = 0; idx < options.length; idx++) {
+        self.thing.addProperty(new MqttProperty(self.thing, null, options[idx]));
+      }
+    });
+  }
+  console.log('log: http serving on port=' + config.port);
+  this.server = new webthing.WebThingServer(new webthing.SingleThing(thing), Number(config.port));
   process.on('SIGINT', function () {
-    server.stop();
+    self.server.stop();
   });
-  server.start();
+  this.server.start();
 }
 
-App();
+App(config);
