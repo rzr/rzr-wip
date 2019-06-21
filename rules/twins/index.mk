@@ -40,12 +40,6 @@ ${twins_dir}:
 	mkdir -p ${@D}
 	git clone ${twins_url} --branch ${twins_branch} --depth 1 $@
 
-${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file} $@
-
-${nuttx_romfs_file}: ${nuttx_config_rc_file}
-	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
-	ls -l $@
 
 ${deploy_modules_dir}: ${twins_dir}
 	make -C $< deploy deploy_modules_dir=$@
