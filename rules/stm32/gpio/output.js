@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 var console = require('console');
-var log = console.log || function(arg) {};
+var verbose = console.log || function(arg) {};
 var gpio = require('gpio');
 log(process);
 
@@ -29,17 +29,18 @@ function GpioTest(config)
     throw 'error: gpio: Invalid config: ' + gpio;
   }
   self.config = config;
+  verbose('log: opening: pin=' + config.gpio.pin);
   self.port = gpio.open(config.gpio, function(err) {
-    log('log: gpio: ready: ' + err);
+    verbose('log: gpio: ready: ' + err);
     if (err) {
       console.error('error: gpio: Fail to open pin: ' + config.gpio.pin);
-      return null;
+      throw err;
     }
-    self.value = 0;
+    self.value = false;
     self.inverval = setInterval(function() {
       self.value = !self.value;
       self.port.writeSync(self.value);
-      log('log: gpio: update: ' + Boolean(self.value));
+      verbose('log: gpio: update: ' + Boolean(self.value));
     }, self.config.period);
   });
 
@@ -61,4 +62,4 @@ if (process.argv.length > 2) {
 var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.OUT }};
 var test = new GpioTest(config);
 
-setTimeout(function(){ console.log('Exiting:') }, 100000);
+setTimer(function(){ console.log('log: running:' + String(new Date())) }, 60000);
