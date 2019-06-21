@@ -23,4 +23,5 @@ if (process.iotjs.board) {
     pin = board.pin[pin];
     console.log(pin);
     console.log(board.pin[pin]);
+  }
 }
