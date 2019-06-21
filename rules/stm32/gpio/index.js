@@ -102,7 +102,7 @@ if (process.argv.length > 2) {
 pin = String(board.pin[pin]);
 
 var config = { frequency: 1,
-               gpio: { pin: pin
+               gpio: { pin: pin,
                        direction: gpio.DIRECTION.IN
                      }
              };
