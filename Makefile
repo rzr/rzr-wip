@@ -10,9 +10,10 @@ example_file=index.js
 runtime?=iotjs
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
-base_url?=http://localhost:8888
-webthing_url?=https://github.com/rzr/webthing-iotjs
+port?=8888
+base_url?=http://localhost:${port}
 
+webthing_url?=https://github.com/rzr/webthing-iotjs
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 #TODO: pin version
 webthing-iotjs_revision?=master
@@ -29,6 +30,7 @@ deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
 mqtt_host=localhost
 mqtt_port=1883
 mqtt_base_topic=io.github.rzr
+mqtt_topic=${mqtt_topic}/0
 
 run_args+=${port}
 run_args+=${mqtt_base_topic}
@@ -80,3 +82,9 @@ start: ${runtime}/start
 
 cleanall:
 	rm -rf iotjs_modules node_modules
+
+client/sub:
+	mosquitto_sub -h "${mqtt_host}" -p "${mqtt_port}" -t '${mqtt_topic}'
+
+client/sub/debug:
+	mosquitto_sub -d -h "${mqtt_host}" -p "${mqtt_port}" -t '#'
