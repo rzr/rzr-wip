@@ -21,5 +21,5 @@ CONFIG_RGBLED=y
 
 nsh> 
 
-ls -l /dev ; cd /rom/gpio ; iotjs index.js PB1
+ls -l /dev ; cd /rom/gpio ; iotjs index.js PB0
 ls -l /dev ; cd /rom/gpio ; iotjs output.js PB0
