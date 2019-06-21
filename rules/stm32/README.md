@@ -11,3 +11,5 @@ nsh> iotjs output.js PB_7
 cd /rom/gpio
 
 iotjs index.js  PC_13
+
+EXAMPLES_GPIO=y
