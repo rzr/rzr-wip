@@ -1,17 +1,14 @@
 # SPDX-License-Identifier: MPL-2.0
-project=stm32
+
+iotjs_machine_family?=stm32
+iotjs_machine?=stm32f7nucleo
+iotjs_reference_machine?=stm32f4dis
 
 target_host?=TODO.target.host
 target_url?=http://${target_host}:8888
 
-
-st-flash?=/usr/bin/st-flash
-
-stm/monitor:
-	screen 
-
-
 #TODO
+
 #stm32_deploy_dir?=${stm32_www_dir}
 stm32_deploy_dir?=${CURDIR}/tmp/deploy
 stm32_dir?=stm32
@@ -24,12 +21,20 @@ make?=make -f rules/stm32/index.mk
 stm32_deploy_files?=$(shell ls rules/stm32/*.js | sort)
 
 
-stm32/setup/debian:
-	sudo apt-get install -y stlink-tools
+st-flash?=/usr/bin/st-flash
 
-
+baud?=115200
 deploy_address?=0x8000000
-nuttx_image_file?=${CURDIR}/nuttx/nuttx.bin
+#nuttx_image_file?=${CURDIR}/nuttx/nuttx.bin
+
+
+
+stm/monitor:
+	screen 
+
+rule/stm32/help:
+	@echo "# make rule/stm32/devel"
+	@echo "# make rule/stm32/prep"
 
 stm/deploy: ${nuttx_image_file}
 	-lsusb # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
@@ -37,11 +42,11 @@ stm/deploy: ${nuttx_image_file}
 	cp $< /media/philippe/NODE_F767ZI1/
 # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
 
-baud?=115200
 
-rule/stm32/help:
-	@echo "# make rule/stm32/devel"
-	@echo "# make rule/stm32/prep"
+
+stm32/setup/debian:
+	sudo apt-get install -y stlink-tools
+
 
 rule/stm32/prep: rules/stm32/rcS.template rule/stm32/romfs
 	ls $<
@@ -62,13 +67,6 @@ ${deploy_modules_dir}: ${stm32_dir}
 	ls $@
 #	make -C $< deploy deploy_modules_dir=$@
 
-
-${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file} $@
-
-${nuttx_romfs_file}: ${nuttx_config_rc_file}
-	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
-	ls -l $@
 
 
 rule/stm32/deploy: ${deploy_modules_dir}
@@ -104,4 +102,3 @@ rule/stm32/test/%:
 	sleep 1
 	curl -X PUT -d '{ "${@F}": 90 }' ${target_url}/properties/${@F}
 	sleep 1
-
