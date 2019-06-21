@@ -69,3 +69,6 @@ menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
 -include rules/twins/index.mk
+
+deploy: rule/nuttx/deploy
+	sync
