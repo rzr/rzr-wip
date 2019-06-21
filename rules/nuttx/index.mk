@@ -163,19 +163,12 @@ rule/nuttx/deploy: ${nuttx_image_file}
 rule/nuttx/devel: rule/nuttx/menuconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
+
 ${nuttx_config_rc_file}: ${nuttx_rc_file}
+	echo "#TTTTOL: $@"
 	cp -av ${nuttx_rc_file} $@
 
-${nuttx_romfs_file}: ${nuttx_config_rc_file}
-	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
+${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
+	pwd ../../../
+	cd ${<D} && ${nuttx_mkromfsimg} -nofat  ../../..
 	ls -l $@
-
-
-${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file} $@
-
-${nuttx_romfs_file}: ${nuttx_config_rc_file}
-	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
-	ls -l $@
-${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file}
