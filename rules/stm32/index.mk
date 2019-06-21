@@ -50,14 +50,18 @@ rule/stm32/devel: rule/nuttx/cleanall rule/stm32/prep rule/iotjs/devel
 	sync
 
 
-${stm32_dir}: rules/webthing-iotjs
+${stm32_dir}: rules/stm32/ ${webthing-iotjs_dir}
 	rm -rf $@
-	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
+	install -d $@
 	cp -av $</*.js $@
-	cp -av $</*.json $@
+#	cp -av $</*.json $@
 
-${stm32_dir}:
-	mkdir -p ${@D}
+${deploy_modules_dir}: ${stm32_dir}
+	make -C ${CURDIR} deploy deploy_modules_dir=${@}
+#	
+	ls $@
+#	make -C $< deploy deploy_modules_dir=$@
+
 
 ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	cp -av ${nuttx_rc_file} $@
@@ -66,8 +70,6 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file}
 	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
 	ls -l $@
 
-${deploy_modules_dir}: ${stm32_dir}
-	make -C $< deploy deploy_modules_dir=$@
 
 rule/stm32/deploy: ${deploy_modules_dir}
 	make -C stm32/iotjs_modules/webthing-iotjs deploy \
