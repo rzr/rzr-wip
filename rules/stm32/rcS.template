@@ -30,14 +30,16 @@ iotjs index
 echo "# Application"
 cd /rom
 
+# RED led 
+cd /rom/gpio ; iotjs index.js PB14
 
+
+# GREEN flash ?
 cd /rom/gpio ; iotjs index.js PB0
 
 # ?
 cd /rom/gpio ; iotjs index.js PB7
 
-# RED led 
-cd /rom/gpio ; iotjs index.js PB14
 
 
 
