@@ -22,9 +22,9 @@ nuttx_image_file?=${nuttx_dir}/nuttx.bin
 nuttx_mkromfsimg?=${CURDIR}/nuttx/tools/mkromfsimg.sh
 
 #TODO: disabled by default: if romfs is not configured
-#nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
-#nuttx_romfs_img_file?=${nuttx_dir}/rom.img
-#nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
+nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
+nuttx_romfs_img_file?=${nuttx_dir}/rom.img
+nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
@@ -99,33 +99,12 @@ nuttx/config: ${nuttx_config_file}
 	ls $<
 
 #TODO
-rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig rule/nuttx/roms
+rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig # rule/nuttx/roms
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
 ${nuttx_image_file}: rule/nuttx/build
 	ls -l $@
-
-#${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
-#	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
-#	ls -l $@
-
-#rule/nuttx/romfs: ${nuttx_romfs_file}
-#	ls -l $<
-
-#${nuttx_romfs_dir}:  ${nuttx_dir}
-#	mkdir -p $@
-
-#${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
-#	test -d $<
-#	genromfs -d "$<" -f $@
-#	ls $@
-
-#rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
-#	ls $<
-
-#rule/nuttx/roms: ${nuttx_romfs_file} ${nuttx_romfs_img_file}
-#	ls $<
 
 rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
@@ -177,6 +156,28 @@ ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	cp -av ${nuttx_rc_file} $@
 
 #TODO
+
+${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
+	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
+	ls -l $@
+
+#rule/nuttx/romfs: ${nuttx_romfs_file}
+#	ls -l $<
+
+${nuttx_romfs_dir}:  ${nuttx_dir}
+	mkdir -p $@
+
+${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
+	test -d $<
+	genromfs -d "$<" -f $@
+	ls $@
+
+rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
+	ls $<
+
+rule/nuttx/roms: ${nuttx_romfs_file} ${nuttx_romfs_img_file}
+	ls $<
+
 ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 	ls -l $<
 	pwd ${<D}/../../../
