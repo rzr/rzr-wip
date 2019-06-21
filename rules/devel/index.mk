@@ -37,5 +37,5 @@ distclean: clean
 	-${MAKE} rule/nuttx/distclean
 	sync
 
-devel: rule/twins/devel
+devel: rule/${main_project}/devel
 	sync
