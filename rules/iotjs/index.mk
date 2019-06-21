@@ -64,9 +64,6 @@ iotjs/%:
 iotjs: ${iotjs_app_dir}
 	ls $^
 
-${nuttx_config_rc_file}: ${nuttx_rc_file}
-	cp -av ${nuttx_rc_file}
-
 rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${nuttx_romfs_file}
 	cp -av $< ${nuttx_config_file}
 	${MAKE} rule/nuttx/build
