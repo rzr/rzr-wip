@@ -38,7 +38,7 @@ function GpioInTest(config)
     }
     self.inverval = setInterval(function() {
       var value = self.port.readSync();
-      verbose('log: gpio: update: ' + Boolean(value));
+      verbose('log: gpio: update: read: ' + Boolean(value));
     }, self.config.period);
   });
 
@@ -74,7 +74,7 @@ function GpioOutTest(config)
     self.inverval = setInterval(function() {
       self.value = !self.value;
       self.port.writeSync(self.value);
-      verbose('log: gpio: update: ' + Boolean(self.value));
+      verbose('log: gpio: update: write: ' + Boolean(self.value));
     }, self.config.period);
   });
 
@@ -111,11 +111,11 @@ pin = Number(board.pin[pin]);
 console.log(pin);
 
 //TODO handle direction
-var config = { frequency: .1,
-               gpio: { pin: Number(pin),
-                       direction: Number(direction)
-                     }
-             };
+var config = {
+  gpio: { pin: Number(pin),
+          direction: Number(direction)
+        }
+};
 
 verbose('log: Start application on pin: ' + pin);
 
