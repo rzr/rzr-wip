@@ -16,4 +16,7 @@ var verbose = console.log || function () {};
 
 verbose(process);
 verbose(process.iotjs);
-verbose(process.iotjs.board);
+if (process.iotjs.board) {
+  var board = require(process.iotjs.board);
+  console.log(board);
+}
