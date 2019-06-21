@@ -1,4 +1,5 @@
 machine?=stm32f7nucleo
+
 nuttx_platform?=nucleo-144
 nuttx_config?=${nuttx_platform}/f767-netnsh
 nuttx_dir?=nuttx
@@ -18,8 +19,9 @@ nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.templat
 nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
 nuttx_romfs_img_file?=${nuttx_dir}/rom.img
 nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
+nuttx_image_file?=${nuttx_dir}/nuttx.bin
+nuttx_mkromfsimg?=${CURDIR}/apps/tools/mkromfsimg.sh
 
-image_file?=${nuttx_dir}/nuttx.bin
 monitor_rate?=115200
 monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
 
@@ -29,7 +31,7 @@ nuttx_deploy_dir?=/media/${USER}/NODE_TODO
 nuttx_deploy_dev?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 nuttx_deploy_delay?=6
 # TODO
-
+image_file?=${nuttx_image_file}
 
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
@@ -91,16 +93,15 @@ ${nuttx_config_file}:
 nuttx/config: ${nuttx_config_file}
 	ls $<
 
-
-rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig
+rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig ${nuttx_romfs_file} ${nuttx_romfs_img_file}
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
-${image_file}: build
+${nuttx_image_file}: rule/nuttx/build
 	ls -l $@
 
 
-${nuttx_romfs_file}: ${nuttx_config_rc_file}
+${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
 	ls -l $@
 
@@ -148,7 +149,7 @@ rule/nuttx/diff:
 	ls ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 	diff ${nuttx_dir}/.config.old ${nuttx_dir}/.config
 
-rule/nuttx/deploy:
+rule/nuttx/deploy: ${nuttx_image_file}
 	-lsusb
 	sudo sync
 #	May contain % in file so it cant be used as dep
@@ -156,8 +157,15 @@ rule/nuttx/deploy:
 	-sudo umount -f ${nuttx_deploy_dev}
 	-sudo umount -f ${nuttx_deploy_dir}
 	-udisksctl mount -b ${nuttx_deploy_dev}
-	cp -av ${nuttx_dir}/nuttx.bin  ${nuttx_deploy_dir}
+	cp -av $<  ${nuttx_deploy_dir}
 	sleep ${nuttx_deploy_delay}
 
 rule/nuttx/devel: rule/nuttx/menuconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
+
+${nuttx_config_rc_file}: ${nuttx_rc_file}
+	cp -av ${nuttx_rc_file} $@
+
+${nuttx_romfs_file}: ${nuttx_config_rc_file}
+	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../..
+	ls -l $@
