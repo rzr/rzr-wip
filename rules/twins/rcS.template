@@ -33,6 +33,6 @@ cd /rom
 # iotjs adc.js
 
 cd /rom/iotjs_modules/webthing-iotjs/example/platform
-#iotjs index.js stm32
+iotjs index.js stm32
 
 echo "# exit"
