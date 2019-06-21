@@ -5,9 +5,9 @@ target_host?=TODO.target.host
 target_url?=http://${target_host}:8888
 
 #TODO
-twins_deploy_dir?=${twins_www_dir}
-#deploy_dir=${CURDIR}/tmp/deploy
-deploy_modules_dir=${deploy_dir}/iotjs_modules
+#twins_deploy_dir?=${twins_www_dir}
+twins_deploy_dir=${CURDIR}/tmp/deploy
+deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
 example_file=${twins_deploy_dir}/index.js
 nuttx_rc_file=rules/twins/rcS.template
 gateway_host=gateway.local
