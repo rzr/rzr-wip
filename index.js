@@ -24,54 +24,6 @@ var WebThingServer = webthing.WebThingServer;
 
 var mqtt = require('mqtt');
 
-var config = {
-  port: 8888,
-  base_topic: 'io.github.rzr/rzr-wip/TODO/0',
-  mqtt: {
-    host: 'localhost', // to update
-    port: 1883
-  }
-};
-
-config.subscribe = {
-  retain: false,
-  qos: 2
-};
-
-
-if (typeof(process.argv[2]) != 'undefined') {
-  config.port = Number(process.argv[2]);
-}
-
-if (typeof(process.argv[3]) != 'undefined') {
-  config.base_topic = String(process.argv[3]);
-}
-
-if (typeof(process.argv[4]) != 'undefined') {
-  config.mqtt.host = String(process.argv[4]);
-}
-
-if (typeof(process.argv[5]) != 'undefined') {
-  config.mqtt.port = Number(process.argv[5]);
-}
-
-
-var options = [
-  {
-    name: 'Humidity',
-    description: 'Humidity Sensor',
-    label: 'Humidity (%)',
-    type: 'number',
-    topic: {
-      endPoint: '/air/humidity',
-      type: 'number',
-      role: 'humidity'
-    }
-  }
-];
-
-console.log(config);
-
 function MqttProperty(thing, value, config) {
   var self = this;
   self.config = config || {};
@@ -100,7 +52,6 @@ function MqttProperty(thing, value, config) {
 
     var sub_topic = thing.parent.config.base_topic + self.config.topic.endPoint;
     console.log('log: subscribing: ' + sub_topic);
-    console.log(this.client.subscribe);
     console.log(thing.parent.config.subscribe);
     this.client.subscribe(sub_topic, thing.parent.config.subscribe,
                           function(error) {
@@ -127,22 +78,67 @@ function MqttProperty(thing, value, config) {
   }
 }
 
-
-function App (config) {
+function App () {
   var self = this;
+
+  var config = {
+    port: 8888,
+    base_topic: 'io.github.rzr/rzr-wip/TODO/0',
+    mqtt: {
+      host: 'localhost', // to update
+      port: 1883
+    }
+  };
+
+  config.subscribe = {
+    retain: false,
+    qos: 2
+  };
+
+  if (typeof(process.argv[2]) != 'undefined') {
+    config.port = Number(process.argv[2]);
+  }
+
+  if (typeof(process.argv[3]) != 'undefined') {
+    config.base_topic = String(process.argv[3]);
+  }
+
+  if (typeof(process.argv[4]) != 'undefined') {
+    config.mqtt.host = String(process.argv[4]);
+  }
+
+  if (typeof(process.argv[5]) != 'undefined') {
+    config.mqtt.port = Number(process.argv[5]);
+  }
+
+
+  this.properties = [
+    {
+      name: 'Humidity',
+      description: 'Humidity Sensor',
+      label: 'Humidity (%)',
+      type: 'number',
+      topic: {
+        endPoint: '/air/humidity',
+        type: 'number',
+        role: 'humidity'
+      }
+    }
+  ];
+
+
   this.config = config;
   this.thing = new Thing('HumidityMqttSensor', ['MultiLevelSensor'], 'A set of sensors');
   this.thing.parent = this;
 
-  if (!false) {
-    console.log('log: connecting: ' + config.mqtt.host);
-    this.client = new mqtt.connect(config.mqtt, function() {
-      console.log('log: connected, listening on port=' + config.mqtt.port);
-      for (var idx = 0; idx < options.length; idx++) {
-        self.thing.addProperty(new MqttProperty(self.thing, null, options[idx]));
-      }
-    });
-  }
+  console.log('log: connecting: ' + config.mqtt.host);
+  this.client = new mqtt.connect(config.mqtt, function() {
+    console.log('log: connected, listening on port=' + config.mqtt.port);
+    for (var property in self.properties) {
+      property = self.properties[property];
+      self.thing.addProperty(new MqttProperty(self.thing, null, property));
+    }
+  });
   console.log('log: http serving on port=' + config.port);
   this.server = new webthing.WebThingServer(new webthing.SingleThing(thing), Number(config.port));
   process.on('SIGINT', function () {
@@ -151,4 +147,4 @@ function App (config) {
   this.server.start();
 }
 
-App(config);
+App();
