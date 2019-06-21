@@ -96,7 +96,7 @@ ${CURDIR}/nuttx/.config: ${nuttx_dir}/.config
 
 ${nuttx_config_file}:
 
-nuttx/config: ${nuttx_config_file}
+rule/nuttx/config: ${nuttx_config_file}
 	ls $<
 
 
@@ -186,5 +186,14 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 	cd ${<D} && ${nuttx_mkromfsimg} -nofat  ../../..
 # {nuttx_dir}
 	ls -l $@
+
+rule/nuttx/monitor: ${monitor_file} # deploy
+	echo "# TODO: use C-a k to quit"
+	sleep 1
+	${sudo} screen $< ${monitor_rate}
+
+${monitor_file}:
+	lsusb
+	ls $@
 
 .PHONY: rule/nuttx/configure
