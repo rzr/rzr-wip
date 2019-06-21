@@ -25,14 +25,8 @@ cd /mnt/sdcard
 echo "console.log(process)" > index.js
 iotjs index
 
-echo "# main"
+echo "# Application"
 cd /rom
 #iotjs index.js
 
-# TODO
-# iotjs adc.js
-
-cd /rom/iotjs_modules/webthing-iotjs/example/platform
-iotjs index.js stm32
-
-echo "# exit"
+echo "# Exit"
