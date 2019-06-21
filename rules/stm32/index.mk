@@ -10,7 +10,8 @@ target_url?=http://${target_host}:8888
 #TODO
 
 #stm32_deploy_dir?=${stm32_www_dir}
-stm32_deploy_dir?=${CURDIR}/tmp/deploy
+#stm32_deploy_dir?=${CURDIR}/tmp/deploy
+stm32_deploy_dir?=${nuttx_romfs_dir}
 stm32_dir?=stm32
 deploy_modules_dir=${stm32_deploy_dir}/iotjs_modules
 example_file=${stm32_deploy_dir}/index.js
@@ -20,6 +21,9 @@ gateway_host=gateway.local
 make?=make -f rules/stm32/index.mk
 stm32_deploy_files?=$(shell ls rules/stm32/*.js | sort)
 
+#TODO
+stm32_romfs_img_file?=${nuttx_dir}/rom.img
+stm32_romfs_dir?=${CURDIR}/${stm32_romfs_img_file}.dir.tmp
 
 st-flash?=/usr/bin/st-flash
 
@@ -43,12 +47,11 @@ stm/deploy: ${nuttx_image_file}
 # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
 
 
-
 stm32/setup/debian:
 	sudo apt-get install -y stlink-tools
 
 
-rule/stm32/prep: rules/stm32/rcS.template
+rule/stm32/prep: rules/stm32/rcS.template rule/stm32/deploy
 	ls $<
 
 rule/stm32/devel: rule/nuttx/cleanall rule/stm32/prep rule/iotjs/devel
@@ -62,7 +65,8 @@ ${stm32_dir}: rules/stm32/ ${webthing-iotjs_dir}
 #	cp -av $</*.json $@
 
 ${deploy_modules_dir}: ${stm32_dir}
-	make -C ${CURDIR} deploy deploy_modules_dir=${@}
+	mkdir -p $@
+#	make -C ${CURDIR} deploy deploy_modules_dir=${@}
 #	
 	ls $@
 #	make -C $< deploy deploy_modules_dir=$@
@@ -70,11 +74,12 @@ ${deploy_modules_dir}: ${stm32_dir}
 
 
 rule/stm32/deploy: ${deploy_modules_dir}
-	make -C stm32/iotjs_modules/webthing-iotjs deploy \
- deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+#	make -C stm32/iotjs_modules/webthing-iotjs deploy \
+ # deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
 	@echo "TODO"
-	install rules/stm32/stm32.js $</webthing-iotjs/example/platform/board/
-	install rules/stm32/index.js $</
+#	install rules/stm32/stm32.js $</webthing-iotjs/example/platform/board/
+	install -d ${stm32_romfs_dir}
+	install rules/stm32/index.js ${stm32_romfs_dir}
 	du -ksc $<
 
 rule/stm32/deploy/clean: ${deploy_modules_dir} rule/stm32/deploy 
