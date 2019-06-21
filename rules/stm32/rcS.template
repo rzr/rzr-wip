@@ -29,6 +29,6 @@ iotjs index
 
 echo "# Application"
 cd /rom
-#iotjs index.js
+cd /rom/gpio ; iotjs index.js PB0
 
 echo "# Exit"
