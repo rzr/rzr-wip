@@ -1,13 +1,19 @@
 #!/bin/make -f
 # -*- makefile -*-
-# SPDX-License-Identifier: Apache-2.0
-# Copyright: 2018-present Samsung Electronics France SAS, and contributors
+# SPDX-License-Identifier: MPL-2.0
+#{
+# Copyright 2018-present Samsung Electronics France SAS, and other contributors
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+#}
 
 default: help iotjs/run
-	sync
+	@echo "log: $@: $^"
 
-example_file=index.js
 runtime?=iotjs
+example_file=index.js
 iotjs_modules_dir?=${CURDIR}/iotjs_modules
 
 port?=8888
@@ -25,7 +31,6 @@ deploy_module_dir?= ${deploy_modules_dir}/${project}
 deploy_dirs+= ${deploy_module_dir}
 deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
 deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
-#mqtt_host = 'broker.hivemq.com'
 
 mqtt_host=localhost
 mqtt_port=1883
