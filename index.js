@@ -19,6 +19,8 @@ var webthing = require('webthing-iotjs');
 
 var http = require('https');
 
+var verbose = !console.error || function () {};
+
 var app = {
 
   config: {
@@ -56,7 +58,7 @@ function receiveObject(incoming, callback) {
       data = '{ "data": ' + data + '}';
       object = JSON.parse(data);
     } catch (exception) {
-      console.log('err:' + exception);
+      console.error('err:' + exception);
     }
     if (callback) {
       return callback(err, object);
@@ -75,12 +77,12 @@ function update(config, callback) {
   if (!config.host) {
     config.host = config.hostname;
   }
-  console.log('TODO: async loop');
-  if (typeof app.sensors === 'undefined') {
+  verbose('TODO: async loop');
+  if (!app.sensors) {
     config.path = '/boxes/' + app.config.boxId;
     http.request(config, function(res) {
       receiveObject(res, function (err, object) {
-        console.log(object);
+        verbose(object);
         app.sensors = [];
         app.sensors[0] = object.data.sensors[0];
         callback && callback(err, null);
@@ -90,7 +92,7 @@ function update(config, callback) {
     var idx = 0;
     config.path = '/boxes/' + app.config.boxId +
       '/data/' + app.config.sensors[idx].id;
-    console.log('log: path: ' + config.path);
+    verbose('log: path: ' + config.path);
     http.request(config, function(res) {
       receiveObject(res, function (err, object) {
         callback && callback(err, object);
@@ -104,8 +106,7 @@ function SomeProperty(thing) {
   var self = this;
   webthing.Property.call(
     this, thing, 'pm10', new webthing.Value(0),
-    {'@type': 'LevelProperty',
-     type: 'number'}
+    {'@type': 'LevelProperty', type: 'number'}
   );
   setInterval(function() {
     update(app.config.server, function(err, object) {
@@ -117,9 +118,10 @@ function SomeProperty(thing) {
         var value = object.data[0].value;
         self.value.notifyOfExternalUpdate(value);
         app.sensors[app.config.sensors[0].type] = value;
-        console.log(app.sensors);
+        verbose(app.sensors);
       } catch (exception) {
-        console.log(exception);
+        console.error(exception);
+        verbose(JSON.stringify(object));
       }
     });
   }, 2 * 1000);
