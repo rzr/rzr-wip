@@ -48,7 +48,7 @@ stm32/setup/debian:
 	sudo apt-get install -y stlink-tools
 
 
-rule/stm32/prep: rules/stm32/rcS.template rule/stm32/romfs
+rule/stm32/prep: rules/stm32/rcS.template
 	ls $<
 
 rule/stm32/devel: rule/nuttx/cleanall rule/stm32/prep rule/iotjs/devel
