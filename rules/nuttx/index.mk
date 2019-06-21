@@ -106,25 +106,26 @@ rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig rule/nuttx/roms
 ${nuttx_image_file}: rule/nuttx/build
 	ls -l $@
 
+#${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
+#	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
+#	ls -l $@
 
-${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
-	cd ${<D} && ../../../tools/mkromfsimg.sh -nofat  ../../../
-	ls -l $@
+#rule/nuttx/romfs: ${nuttx_romfs_file}
+#	ls -l $<
 
-rule/nuttx/romfs: ${nuttx_romfs_file}
-	ls -l $<
+#${nuttx_romfs_dir}:  ${nuttx_dir}
+#	mkdir -p $@
 
-${nuttx_romfs_dir}:  ${nuttx_dir}
-	mkdir -p $@
+#${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
+#	test -d $<
+#	genromfs -d "$<" -f $@
+#	ls $@
 
-${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
-	genromfs -d "$<" -f $@
+#rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
+#	ls $<
 
-rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
-	ls $<
-
-rule/nuttx/roms: ${nuttx_romfs_file} ${nuttx_romfs_img_file}
-	ls $<
+#rule/nuttx/roms: ${nuttx_romfs_file} ${nuttx_romfs_img_file}
+#	ls $<
 
 rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
