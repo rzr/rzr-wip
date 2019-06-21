@@ -15,8 +15,6 @@
  */
 var console = require('console');
 var verbose = console.log || function(arg) {};
-verbose(process);
-
 
 function GpioInTest(config)
 {
@@ -58,6 +56,7 @@ function GpioOutTest(config)
   if (!config) {
     config = { gpio: { pin: 0 , direction: gpio.DIRECTION.OUT }};
   }
+  config.frequency = config.frequency || 1;
   if (!gpio || !config || !(config.gpio)) {
     throw 'error: gpio: Invalid config: ' + gpio;
   }
@@ -95,7 +94,6 @@ if (board) {
 } else {
   board = {};
 }
-console.log(board.pin);
 var pin = 'PC13';
 if (process.argv.length > 2) {
   pin = String(process.argv[2]);
@@ -104,17 +102,12 @@ var direction = 'IN';
 if (process.argv.length > 3) {
   direction = String(process.argv[3]);
 }
-direction = gpio.DIRECTION[direction];
-console.log(direction);
-console.log(pin);
+direction = Number(gpio.DIRECTION[direction]);
 pin = Number(board.pin[pin]);
-console.log(pin);
 
 //TODO handle direction
 var config = {
-  gpio: { pin: Number(pin),
-          direction: Number(direction)
-        }
+  gpio: { pin: pin, direction: direction }
 };
 
 verbose('log: Start application on pin: ' + pin);
