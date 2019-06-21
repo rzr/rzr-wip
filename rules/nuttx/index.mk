@@ -27,6 +27,8 @@ nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
+
+#TODO: move to stm32
 nuttx_deploy_dir?=/media/${USER}/NODE_TODO
 nuttx_deploy_dev?=/dev/disk/by-id/usb-MBED_microcontroller_${nuttx_dev_id}-0:0
 nuttx_deploy_delay?=6
