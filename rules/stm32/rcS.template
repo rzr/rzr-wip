@@ -2,6 +2,8 @@
 
 echo "# NuttX:"
 help
+mount
+ls -l /dev/
 pwd
 
 echo "# Network"
