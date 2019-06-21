@@ -29,7 +29,6 @@ function GpioInTest(config)
   }
   config.frequency = config.frequency || 1;
   config.range = config.range || 0xfff;
-  config.period = config.frequency && (1000. / config.frequency );
   self.config = config;
   self.port = gpio.open(config.gpio, function(err) {
     verbose('log: gpio: ready: ' + err);
@@ -63,6 +62,7 @@ function GpioOutTest(config)
     throw 'error: gpio: Invalid config: ' + gpio;
   }
   self.config = config;
+  self.config.period = config.frequency && (1000. / config.frequency );
   verbose('log: opening: pin=' + config.gpio.pin);
   self.port = gpio.open(config.gpio, function(err) {
     verbose('log: gpio: ready: ' + err);
@@ -100,6 +100,12 @@ var pin = 'PB0';
 if (process.argv.length > 2) {
   pin = String(process.argv[2]);
 }
+var direction = 'OUT';
+if (process.argv.length > 3) {
+  direction = String(process.argv[3]);
+}
+direction = gpio.DIRECTION[direction];
+console.log(direction);
 console.log(pin);
 pin = Number(board.pin[pin]);
 console.log(pin);
