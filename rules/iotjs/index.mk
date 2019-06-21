@@ -56,19 +56,21 @@ rule/iotjs/devel: rule/nuttx/cleanall rule/iotjs/base rule/iotjs/lib rule/iotjs/
 	cp -a ${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
-iotjs/%:
+${iotjs_dir}/%:
 	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
 	@echo "TODO: --depth 1"
 	ls $@
 
-iotjs: ${iotjs_app_dir}
+${iotjs_dir}: ${iotjs_app_dir}
 	ls $^
 
 rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${nuttx_romfs_file}
 	cp -av $< ${nuttx_config_file}
-	${MAKE} rule/nuttx/build
+	${MAKE} rule/nuttx/build \
+ nuttx_romfs_file=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h \
+ nuttx_romfs_img_file=${nuttx_dir}/rom.img
 
-rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs ${nuttx_romfs_file} rule/nuttx/roms
+rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs rule/nuttx/roms
 	cp -av $< ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -82,9 +84,9 @@ rule/iotjs/prep: rules/iotjs/rcS.template ${nuttx_apps_dir}/system/iotjs/Kconfig
 rules/iotjs/rcS.template:
 	echo "echo \"~~~ $(shell date -u)\"" > $@
 
-iotjs/build/arm-nuttx/debug/lib/%: rule/iotjs/build
+#TODO
+${iotjs_dir}/build/arm-nuttx/debug/lib/%: rule/iotjs/build
 	ls $@
-
 
 rule/iotjs/config: ${iotjs_dir}
 	ls ${nuttx_dir}/.config
@@ -175,3 +177,5 @@ rule/iotjs/distclean:
 	rm -rf iotjs/build
 	find . -iname "*.obj" -exec rm -v {} \;
 	rm -rf ${nuttx_apps_dir}/system/iotjs/lib*.a
+
+rule/iotjs/roms:
