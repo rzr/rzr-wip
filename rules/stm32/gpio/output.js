@@ -60,3 +60,5 @@ if (process.argv.length > 2) {
 }
 var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.OUT }};
 var test = new GpioTest(config);
+
+setTimeout(function(){ console.log('Exiting:') }, 100000);
