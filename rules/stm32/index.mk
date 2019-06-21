@@ -13,7 +13,7 @@ target_url?=http://${target_host}:8888
 #stm32_deploy_dir?=${CURDIR}/tmp/deploy
 stm32_deploy_dir?=${nuttx_romfs_dir}
 stm32_dir?=stm32
-deploy_modules_dir=${stm32_deploy_dir}/iotjs_modules
+#deploy_modules_dir=${stm32_deploy_dir}/iotjs_modules
 example_file=${stm32_deploy_dir}/index.js
 nuttx_rc_file=rules/stm32/rcS.template
 gateway_host=gateway.local
@@ -73,7 +73,8 @@ ${deploy_modules_dir}: ${stm32_dir}
 
 
 
-rule/stm32/deploy: ${deploy_modules_dir}
+#TODO
+rule/stm32/deploy: # ${deploy_modules_dir}
 #	make -C stm32/iotjs_modules/webthing-iotjs deploy \
  # deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
 	@echo "TODO"
