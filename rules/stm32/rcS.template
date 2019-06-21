@@ -29,7 +29,12 @@ iotjs index
 
 echo "# Application"
 cd /rom
+
 cd /rom/gpio ; iotjs index.js PB7
+
+# RED led 
+cd /rom/gpio ; iotjs index.js PB14
+
 cd /rom/gpio ; iotjs index.js PB0
 
 echo "# Exit"
