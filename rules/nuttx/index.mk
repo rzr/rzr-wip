@@ -20,7 +20,7 @@ nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
 nuttx_romfs_img_file?=${nuttx_dir}/rom.img
 nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 nuttx_image_file?=${nuttx_dir}/nuttx.bin
-nuttx_mkromfsimg?=${CURDIR}/apps/tools/mkromfsimg.sh
+nuttx_mkromfsimg?=${CURDIR}/nuttx/tools/mkromfsimg.sh
 
 monitor_rate?=115200
 monitor_file?=$(shell ls /dev/ttyACM* | sort -n | tail -n1)
@@ -169,6 +169,8 @@ ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	cp -av ${nuttx_rc_file} $@
 
 ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
+	ls -l $<
 	pwd ${<D}/../../../
 	cd ${<D} && ${nuttx_mkromfsimg} -nofat  ../../..
+# {nuttx_dir}
 	ls -l $@
