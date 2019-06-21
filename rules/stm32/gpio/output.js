@@ -62,4 +62,6 @@ if (process.argv.length > 2) {
 var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.OUT }};
 var test = new GpioTest(config);
 
-setTimer(function(){ console.log('log: running:' + String(new Date())) }, 60000);
+setInterval(function(){
+  console.log('log: running:' + String(new Date()))
+}, 60000);
