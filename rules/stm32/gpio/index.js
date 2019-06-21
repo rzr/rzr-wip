@@ -26,6 +26,7 @@ function GpioInTest(config)
     throw 'error: gpio: Invalid config: ' + gpio;
   }
   config.frequency = config.frequency || 1;
+  self.config.period = config.frequency && (1000. / config.frequency );
   config.range = config.range || 0xfff;
   self.config = config;
   self.port = gpio.open(config.gpio, function(err) {
