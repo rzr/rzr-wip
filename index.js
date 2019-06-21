@@ -134,4 +134,5 @@ if (module.parent === null) {
     app.config.port
   );
   app.server.start();
+  console.log('http://localhost:' + app.config.port + '/properties');
 }
