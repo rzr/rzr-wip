@@ -17,12 +17,17 @@ export V
 
 make?=make -C rules
 export make
+main_project=stm32
 
 -include rules/devel/index.mk
 -include rules/st.mk
 -include rules/nuttx/index.mk
 
-main_project=stm32
+-include rules/devel/index.mk
+-include rules/iotjs/index.mk
+-include rules/webthing-iotjs/index.mk
+-include rules/${main_project}/index.mk
+
 
 help:
 	@echo "# make devel"
@@ -39,6 +44,8 @@ screen \
 sudo \
 #EOL
 
+deploy: rule/nuttx/deploy
+	sync
 
 configure: nuttx/.config
 	ls $<
@@ -50,28 +57,16 @@ prep: nuttx apps patch
 	sync
 
 all: prep configure build
+	sync
+
+monitor: rule/nuttx/monitor
+	sync
 
 run: deploy monitor
 	sync
 
 build: rule/nuttx/build
-
-monitor: ${monitor_file} # deploy
-	echo "# TODO: use C-a k to quit"
-	sleep 1
-	${sudo} screen $< ${monitor_rate}
-
-${monitor_file}:
-	lsusb
-	ls $@
+	sync
 
 menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
 	ls ${nuttx_config_file}
-
--include rules/devel/index.mk
--include rules/iotjs/index.mk
--include rules/webthing-iotjs/index.mk
--include rules/${main_project}/index.mk
-
-deploy: rule/nuttx/deploy
-	sync
