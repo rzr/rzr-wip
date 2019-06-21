@@ -10,11 +10,14 @@
 #}
 
 nuttx_dev_id?=066EFF323535474B43065221
+nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 iotjs_machine?=stm32f7nucleo
+
+
 #iotjs_url?=https://github.com/tizenteam/iotjs
-iotjs_url?=file:///home/user/mnt/iotjs
-iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
+#iotjs_url?=file:///home/user/mnt/iotjs
+#iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
 
 docker/run:
 	docker-compose up ||:
