@@ -16,7 +16,7 @@
 var console = require('console');
 var verbose = console.log || function(arg) {};
 var gpio = require('gpio');
-log(process);
+verbose(process);
 
 
 function GpioTest(config)
