@@ -95,15 +95,16 @@ if (board) {
 } else {
   board = {};
 }
+console.log(board);
 var pin = 0;
 if (process.argv.length > 2) {
   pin = Number(process.argv[2]);
 }
-pin = String(board.pin[pin]);
+pin = Number(board.pin[pin]);
 
 //TODO handle direction
 var config = { frequency: 1,
-               gpio: { pin: pin,
+               gpio: { pin: Number(pin),
                        direction: gpio.DIRECTION.OUT
                      }
              };
