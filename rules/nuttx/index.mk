@@ -118,6 +118,14 @@ rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig # rule/nuttx/roms
 ${nuttx_image_file}: rule/nuttx/build
 	ls -l $@
 
+rule/nuttx/olddefconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
+	make -C ${nuttx_dir} ${@F}
+	make -C ${nuttx_dir} savedefconfig
+	cp -av ${nuttx_config_file} ${nuttx_config_file}._post.tmp
+	-diff -u ${nuttx_config_file}._pre.tmp ${nuttx_config_file}._post.tmp | tee ${nuttx_config_file}.diff
+	-diff -u ${nuttx_defconfig_file} ${nuttx_dir}/defconfig | tee ${nuttx_dir}/defconfig.diff
+
 rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
 	cp -av ${nuttx_config_file} ${nuttx_config_file}._pre.tmp
 	make -C ${nuttx_dir} ${@F}
@@ -160,7 +168,7 @@ rule/nuttx/deploy: ${nuttx_image_file}
 	cp -av $<  ${nuttx_deploy_dir}
 	sleep ${nuttx_deploy_delay}
 
-rule/nuttx/devel: rule/nuttx/menuconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
+rule/nuttx/devel: rule/nuttx/olddefconfig build rule/nuttx/deploy monitor rule/nuttx/savedefconfig
 	@echo "#TODO: # cp -av ${nuttx_dir}/.config ${nuttx_defconfig_file}"
 
 ${nuttx_config_rc_file}: ${nuttx_rc_file}
