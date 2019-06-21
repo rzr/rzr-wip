@@ -111,9 +111,9 @@ pin = Number(board.pin[pin]);
 console.log(pin);
 
 //TODO handle direction
-var config = { frequency: 1,
+var config = { frequency: .1,
                gpio: { pin: Number(pin),
-                       direction: gpio.DIRECTION.OUT
+                       direction: Number(direction)
                      }
              };
 
