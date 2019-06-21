@@ -109,10 +109,12 @@ var config = { frequency: 1,
                      }
              };
 
+verbose('log: Start application on pin: ' + pin);
+
 var app = null;
-if (config.direction === gpio.DIRECTION.IN) {
+if (config.gpio.direction === gpio.DIRECTION.IN) {
   app = new GpioInTest(config);
-} else if (config.direction === gpio.DIRECTION.OUT) {
+} else if (config.gpio.direction === gpio.DIRECTION.OUT) {
   app = new GpioOutTest(config);
 }
 
