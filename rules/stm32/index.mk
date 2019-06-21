@@ -72,7 +72,6 @@ ${deploy_modules_dir}: ${stm32_dir}
 #	make -C $< deploy deploy_modules_dir=$@
 
 
-
 #TODO
 rule/stm32/deploy: # ${deploy_modules_dir}
 #	make -C stm32/iotjs_modules/webthing-iotjs deploy \
