@@ -96,11 +96,11 @@ if (board) {
   board = {};
 }
 console.log(board.pin);
-var pin = 'PB0';
+var pin = 'PC13';
 if (process.argv.length > 2) {
   pin = String(process.argv[2]);
 }
-var direction = 'OUT';
+var direction = 'IN';
 if (process.argv.length > 3) {
   direction = String(process.argv[3]);
 }
