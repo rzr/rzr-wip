@@ -16,7 +16,6 @@ nuttx_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
-
 #iotjs_url?=https://github.com/tizenteam/iotjs
 #iotjs_url?=file:///home/${USER}/mnt/iotjs
 #iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
