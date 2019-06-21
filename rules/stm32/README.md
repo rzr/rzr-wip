@@ -18,3 +18,6 @@ CONFIG_ARCH_LED=y
 CONFIG_RGBLED=y
 
 
+
+nsh> cd /rom/gpio
+nsh> iotjs output PB1
