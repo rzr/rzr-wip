@@ -21,9 +21,10 @@ nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.templat
 nuttx_image_file?=${nuttx_dir}/nuttx.bin
 nuttx_mkromfsimg?=${CURDIR}/nuttx/tools/mkromfsimg.sh
 
+#TODO: disabled by default: if romfs is not configured
 #nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
 #nuttx_romfs_img_file?=${nuttx_dir}/rom.img
-nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
+#nuttx_romfs_dir?=${CURDIR}/${nuttx_romfs_img_file}.dir.tmp
 
 # TODO: keep private in ~/
 nuttx_dev_id?=TODO
@@ -174,6 +175,7 @@ ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	echo "#TTTTOL: $@"
 	cp -av ${nuttx_rc_file} $@
 
+#TODO
 ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 	ls -l $<
 	pwd ${<D}/../../../
