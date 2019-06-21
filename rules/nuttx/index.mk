@@ -93,7 +93,8 @@ ${nuttx_config_file}:
 nuttx/config: ${nuttx_config_file}
 	ls $<
 
-rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig ${nuttx_romfs_file} ${nuttx_romfs_img_file}
+#TODO
+rule/nuttx/build: ${nuttx_dir}/Make.defs ${nuttx_dir}/Kconfig # rule/nuttx/roms
 	which arm-none-eabi-gcc || sudo apt-get install gcc-arm-none-eabi
 	${MAKE} -C ${<D} # LDSCRIPT=f767-flash.ld
 
@@ -115,6 +116,9 @@ ${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
 	genromfs -d "$<" -f $@
 
 rule/nuttx/romfs.img: ${nuttx_romfs_img_file}
+	ls $<
+
+rule/nuttx/roms: ${nuttx_romfs_file} ${nuttx_romfs_img_file}
 	ls $<
 
 rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/Kconfig
