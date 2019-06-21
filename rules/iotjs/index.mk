@@ -68,7 +68,7 @@ rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${nut
 	cp -av $< ${nuttx_config_file}
 	${MAKE} rule/nuttx/build
 
-rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs ${nuttx_romfs_file}
+rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs ${nuttx_romfs_file} rule/nuttx/roms
 	cp -av $< ${nuttx_config_file}
 	@echo 'CONFIG_IOTJS=y' >> ${nuttx_config_file}
 	${MAKE} \
@@ -120,8 +120,8 @@ ${iotjs_nuttx_config_file}: ${nuttx_config_file} ${iotjs_defconfigs_files}
  | while read line ; do grep "$${line}" $@ ; done
 	ls $@
 
-${nuttx_config_file}: ${iotjs_nuttx_config_file}
-	cp -av $< $@
+#${nuttx_config_file}: ${iotjs_nuttx_config_file}
+#	cp -av $< $@
 
 rule/iotjs/nuttx/configure: ${iotjs_nuttx_config_file}
 	ls $<
