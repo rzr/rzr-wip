@@ -13,3 +13,8 @@ cd /rom/gpio
 iotjs index.js  PC_13
 
 EXAMPLES_GPIO=y
+CONFIG_ARCH_BUTTONS=y
+CONFIG_ARCH_LED=y
+CONFIG_RGBLED=y
+
+
