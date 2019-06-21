@@ -64,11 +64,10 @@ ${iotjs_dir}/%:
 ${iotjs_dir}: ${iotjs_app_dir}
 	ls $^
 
-rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file} ${nuttx_romfs_file}
+rule/iotjs/nuttx/build: ${iotjs_nuttx_config_file} ${nuttx_defconfig_file}
 	cp -av $< ${nuttx_config_file}
-	${MAKE} rule/nuttx/roms rule/nuttx/build \
- nuttx_romfs_file=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h \
- nuttx_romfs_img_file=${nuttx_dir}/rom.img
+	${MAKE} rule/nuttx/roms rule/nuttx/build
+	ls ${nuttx_romfs_file}
 
 rule/iotjs/link: ${iotjs_nuttx_config_file} ${iotjs_lib_file} ${nuttx_apps_dir}/system/iotjs rule/nuttx/roms
 	cp -av $< ${nuttx_config_file}
