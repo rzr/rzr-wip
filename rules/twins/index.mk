@@ -50,12 +50,12 @@ ${deploy_modules_dir}: ${twins_dir}
 	make -C $< deploy deploy_modules_dir=$@
 
 rule/twins/deploy: ${deploy_modules_dir}
-	install rules/twins/index.js ${example_file}
-	du -ksc $<
-	@echo "TODO"
-	install rules/twins/stm32.js $</webthing-iotjs/example/platform/board/
 	make -C twins/iotjs_modules/webthing-iotjs deploy \
  deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+	@echo "TODO"
+	install rules/twins/stm32.js $</webthing-iotjs/example/platform/board/
+	install rules/twins/index.js ${example_file}
+	du -ksc $<
 
 rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy 
 	du -ksc $<
