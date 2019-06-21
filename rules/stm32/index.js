@@ -17,7 +17,3 @@ var verbose = console.log || function () {};
 verbose(process);
 verbose(process.iotjs);
 verbose(process.iotjs.board);
-
-var app = require('twins');
-verbose(app);
-app.start();
