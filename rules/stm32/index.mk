@@ -58,7 +58,7 @@ rule/stm32/devel: rule/nuttx/cleanall rule/stm32/prep rule/iotjs/devel
 	sync
 
 
-${stm32_dir}: rules/stm32/ ${webthing-iotjs_dir}
+${stm32_dir}: rules/stm32/
 	rm -rf $@
 	install -d $@
 	cp -av $</*.js $@
@@ -80,6 +80,8 @@ rule/stm32/deploy: # ${deploy_modules_dir}
 #	install rules/stm32/stm32.js $</webthing-iotjs/example/platform/board/
 	install -d ${stm32_romfs_dir}
 	install rules/stm32/index.js ${stm32_romfs_dir}
+	install -d ${stm32_romfs_dir}/gpio
+	install rules/stm32/gpio/*.js ${stm32_romfs_dir}/gpio
 	du -ksc $<
 
 rule/stm32/deploy/clean: ${deploy_modules_dir} rule/stm32/deploy 
