@@ -19,4 +19,8 @@ verbose(process.iotjs);
 if (process.iotjs.board) {
   var board = require(process.iotjs.board);
   console.log(board);
+  for (var pin in board.pin) {
+    pin = board.pin[pin];
+    console.log(pin);
+    console.log(board.pin[pin]);
 }
