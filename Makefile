@@ -20,6 +20,7 @@ eslint_file?=node_modules/eslint/bin/eslint.js
 
 port?=8888
 base_url?=http://localhost:${port}
+json_url?=${base_url}/properties
 
 webthing_url?=https://github.com/rzr/webthing-iotjs
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
@@ -112,3 +113,5 @@ eslint: ${eslint_file} .eslintrc.js
 
 lint: eslint
 
+client:
+	curl ${json_url}
