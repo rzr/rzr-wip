@@ -169,6 +169,6 @@ ${nuttx_config_rc_file}: ${nuttx_rc_file}
 	cp -av ${nuttx_rc_file} $@
 
 ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
-	pwd ../../../
+	pwd ${<D}/../../../
 	cd ${<D} && ${nuttx_mkromfsimg} -nofat  ../../..
 	ls -l $@
