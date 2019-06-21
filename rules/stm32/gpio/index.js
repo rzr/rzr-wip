@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 var console = require('console');
-var log = console.log || function(arg) {};
-log(process);
+var verbose = console.log || function(arg) {};
+verbose(process);
 
 
-function GpioTest(config)
+function GpioInTest(config)
 {
   var self = this;
   if (!config) {
@@ -32,14 +32,14 @@ function GpioTest(config)
   config.period = config.frequency && (1000. / config.frequency );
   self.config = config;
   self.port = gpio.open(config.gpio, function(err) {
-    log('log: gpio: ready: ' + err);
+    verbose('log: gpio: ready: ' + err);
     if (err) {
       console.error('error: gpio: Fail to open pin: ' + config.gpio.pin);
       return null;
     }
     self.inverval = setInterval(function() {
       var value = self.port.readSync();
-      log('log: gpio: update: ' + Boolean(value));
+      verbose('log: gpio: update: ' + Boolean(value));
     }, self.config.period);
   });
 
@@ -59,4 +59,8 @@ if (process.argv.length > 2) {
   pin = Number(process.argv[2]);
 }
 var config = { frequency: 1, gpio: { pin: pin , direction: gpio.DIRECTION.IN }};
-var test = new GpioTest(config);
+
+var test = null;
+if (config.direction === gpio.DIRECTION.IN) {
+  test = new GpioInTest(config);
+}
