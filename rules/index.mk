@@ -17,7 +17,7 @@ export V
 
 make?=make -C rules
 export make
-main_project=stm32
+main_project=twins
 
 -include rules/devel/index.mk
 -include rules/st.mk
