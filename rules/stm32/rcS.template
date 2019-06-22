@@ -32,7 +32,7 @@ cd /rom
 
 
 # Button
-cd /rom/gpio ; iotjs index.js PC13 IN
+#cd /rom/gpio ; iotjs index.js PC13 IN
 
 
 # RED led 
