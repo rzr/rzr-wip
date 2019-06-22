@@ -36,13 +36,13 @@ cd /rom
 
 
 # RED led 
-cd /rom/gpio ; iotjs index.js PB14
+cd /rom/gpio ; iotjs index.js PB14 OUT
 
 # GREEN flash ?
-cd /rom/gpio ; iotjs index.js PB0
+cd /rom/gpio ; iotjs index.js PB0 OUT
 
 # ?
-cd /rom/gpio ; iotjs index.js PB7
+cd /rom/gpio ; iotjs index.js PB7 OUT
 
 
 
