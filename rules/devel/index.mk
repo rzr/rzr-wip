@@ -1,14 +1,11 @@
 #!/bin/make -f
 # -*- makefile -*-
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: Apache-2.0
 #{
 # Copyright 2018-present Samsung Electronics France SAS, and other contributors
-#
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
 #}
 
+main_project?=devel
 iotjs_machine?=stm32f7nucleo
 
 nuttx_dev_id?=066EFF323535474B43065221
@@ -21,7 +18,7 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #iotjs_url?=file:///home/${USER}/mnt/iotjs
 #iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
 
-docker/run:
+rule/docker/run:
 	docker-compose up ||:
 	docker build -t "rzrwip_default" .
 	docker run --privileged --rm -ti "rzrwip_default" run
@@ -37,7 +34,6 @@ clean:
 
 distclean: clean
 	-${MAKE} rule/nuttx/distclean
-	sync
 
 devel: rule/${main_project}/devel
 	sync
