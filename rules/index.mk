@@ -17,7 +17,7 @@ export V
 
 make?=make -C rules
 export make
-main_project=twins
+main_project?=twins
 
 -include rules/devel/index.mk
 -include rules/st.mk
@@ -25,7 +25,7 @@ main_project=twins
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
--include rules/webthing-iotjs/index.mk
+#-include rules/webthing-iotjs/index.mk
 -include rules/${main_project}/index.mk
 
 
