@@ -17,9 +17,11 @@ export V
 
 make?=make -C rules
 export make
-main_project?=twins
 
 -include rules/devel/index.mk
+
+main_project?=twins
+
 -include rules/st.mk
 -include rules/nuttx/index.mk
 
