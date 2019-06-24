@@ -5,7 +5,7 @@
 # Copyright 2018-present Samsung Electronics France SAS, and other contributors
 #}
 
-main_project?=devel
+main_project?=webthing-iotjs
 iotjs_machine?=stm32f7nucleo
 
 nuttx_dev_id?=066EFF323535474B43065221
