@@ -71,6 +71,7 @@ ${nuttx_dir}:
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
+	ls $<
 	ls $@
 
 rule/nuttx/configure: ${configure} ${nuttx_defconfig_file}
