@@ -29,5 +29,6 @@ iotjs index
 
 echo "# Application"
 cd /rom
+iotjs iotjs_modules/webthing-iotjs/example/platform/index.js nucleo-f767zi
 
 echo "# Exit"
