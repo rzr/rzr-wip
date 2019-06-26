@@ -27,6 +27,7 @@ nuttx_rc_file=rules/${webthing-iotjs}/rcS.template.sh
 webthing-iotjs_romfs_img_file?=${nuttx_dir}/rom.img
 webthing-iotjs_romfs_dir?=${CURDIR}/${webthing-iotjs_romfs_img_file}.dir.tmp
 
+
 rule/webthing-iotjs/help:
 	@echo "# make rule/webthing-iotjs/devel"
 	@echo "# make rule/webthing-iotjs/prep"
@@ -101,8 +102,6 @@ rule/webthing-iotjs/deploy: # ${deploy_modules_dir}
 #	install rules/webthing-iotjs/webthing-iotjs.js $</webthing-iotjs/example/platform/board/
 	install -d ${webthing-iotjs_romfs_dir}
 	install rules/webthing-iotjs/index.js ${webthing-iotjs_romfs_dir}
-	install -d ${webthing-iotjs_romfs_dir}/gpio
-	install rules/webthing-iotjs/gpio/*.js ${webthing-iotjs_romfs_dir}/gpio
 	du -ksc $<
 
 
