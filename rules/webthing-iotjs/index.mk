@@ -48,20 +48,6 @@ ${webthing_iotjs_www_dir}: rules/webthing-iotjs
 	cp -av $</*.js $@
 	cp -av $</*.json $@
 
-rule/webthing-iotjs/www/wget:
-	mkdir -p ${HOME}/public_html/tmp/wt
-	cd ${HOME}/public_html/tmp/wt && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/webthing.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/index.js && \
-wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/lib/express.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/property.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/server.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/thing.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/utils.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/value.js && \
-wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/example/simplest-thing.js && \
-wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/iotjs-express.js \
-sync
 
 rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/webthing-iotjs/www rule/iotjs/devel
 	sync
@@ -95,8 +81,8 @@ ${webthing-iotjs_dir}:
 	git clone ${webthing-iotjs_url} --branch ${webthing-iotjs_branch} --depth 1 $@
 
 rule/webthing-iotjs/deploy: ${nuttx_dir}/Makefile # ${deploy_modules_dir}
-#	make -C webthing-iotjs/iotjs_modules/webthing-iotjs deploy \
- # deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+	make -C webthing-iotjs/iotjs_modules/webthing-iotjs deploy \
+ deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
 	@echo "TODO"
 #	install rules/webthing-iotjs/webthing-iotjs.js $</webthing-iotjs/example/platform/board/
 	install -d ${webthing-iotjs_romfs_dir}
@@ -110,3 +96,21 @@ rule/webthing-iotjs/romfs: ${nuttx_romfs_dir} ${webthing-iotjs_deploy_files}
 	rm -rfv ${nuttx_romfs_img_file}
 	${make} rule/nuttx/romfs.img
 
+
+#{ obsolete:
+rule/webthing-iotjs/www/wget:
+	mkdir -p ${HOME}/public_html/tmp/wt
+	cd ${HOME}/public_html/tmp/wt && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/webthing.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/index.js && \
+wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/lib/express.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/property.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/server.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/thing.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/utils.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/lib/value.js && \
+wget https://raw.githubusercontent.com/rzr/webthing-iotjs/master/example/simplest-thing.js && \
+wget https://raw.githubusercontent.com/SamsungInternet/iotjs-express/master/iotjs-express.js \
+sync
+
+#} obsolete
