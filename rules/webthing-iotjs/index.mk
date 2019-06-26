@@ -32,7 +32,6 @@ rule/webthing-iotjs/help:
 	@echo "# make rule/webthing-iotjs/devel"
 	@echo "# make rule/webthing-iotjs/prep"
 
-
 rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template.sh rule/webthing-iotjs/deploy
 	ls $<
 
@@ -95,7 +94,7 @@ ${webthing-iotjs_dir}:
 	mkdir -p ${@D}
 	git clone ${webthing-iotjs_url} --branch ${webthing-iotjs_branch} --depth 1 $@
 
-rule/webthing-iotjs/deploy: # ${deploy_modules_dir}
+rule/webthing-iotjs/deploy: ${nuttx_dir}/Makefile # ${deploy_modules_dir}
 #	make -C webthing-iotjs/iotjs_modules/webthing-iotjs deploy \
  # deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
 	@echo "TODO"
