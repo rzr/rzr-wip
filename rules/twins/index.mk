@@ -19,7 +19,7 @@ target_url?=http://${target_host}:8888
 twins_deploy_dir?=${CURDIR}/tmp/deploy
 deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
 example_file=${twins_deploy_dir}/index.js
-nuttx_rc_file=rules/twins/rcS.template
+nuttx_rc_file=rules/twins/rcS.template.sh
 gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
@@ -33,7 +33,7 @@ rule/twins/help:
 	@echo "# make rule/twins/devel"
 	@echo "# make rule/twins/prep"
 
-rule/twins/prep: rules/twins/rcS.template rule/twins/romfs
+rule/twins/prep: rules/twins/rcS.template.sh rule/twins/romfs
 	ls $<
 
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
