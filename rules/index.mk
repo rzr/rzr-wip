@@ -21,9 +21,9 @@ export make
 -include rules/devel/index.mk
 
 main_project?=twins
+os?=nuttx
 
--include rules/st.mk
--include rules/nuttx/index.mk
+-include rules/${os}/index.mk
 
 -include rules/devel/index.mk
 -include rules/iotjs/index.mk
@@ -46,7 +46,7 @@ screen \
 sudo \
 #EOL
 
-deploy: rule/nuttx/deploy
+deploy: rule/${os}/deploy
 	sync
 
 configure: nuttx/.config
@@ -61,14 +61,14 @@ prep: nuttx apps patch
 all: prep configure build
 	sync
 
-monitor: rule/nuttx/monitor
+monitor: rule/${os}/monitor
 	sync
 
 run: deploy monitor
 	sync
 
-build: rule/nuttx/build
+build: rule/${os}/build
 	sync
 
-menuconfig: rule/nuttx/menuconfig rule/nuttx/savedefconfig
+menuconfig: rule/${os}/menuconfig rule/${os}/savedefconfig
 	ls ${nuttx_config_file}
