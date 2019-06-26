@@ -21,7 +21,17 @@ webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 webthing-iotjs_branch?=master
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
-rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template.sh
+webthing-iotjs_deploy_dir?=${nuttx_romfs_dir}
+example_file=${webthing-iotjs_deploy_dir}/index.js
+nuttx_rc_file=rules/${webthing-iotjs}/rcS.template.sh
+
+
+rule/webthing-iotjs/help:
+	@echo "# make rule/webthing-iotjs/devel"
+	@echo "# make rule/webthing-iotjs/prep"
+
+
+rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template.sh rule/webthing-iotjs/deploy
 	ls $<
 
 rules/webthing-iotjs/rcS.template: rules/webthing-iotjs/rcS.template.in
@@ -82,3 +92,22 @@ rule/webthing-iotjs/%:
 ${webthing-iotjs_dir}:
 	mkdir -p ${@D}
 	git clone ${webthing-iotjs_url} --branch ${webthing-iotjs_branch} --depth 1 $@
+
+rule/webthing-iotjs/deploy: # ${deploy_modules_dir}
+#	make -C webthing-iotjs/iotjs_modules/webthing-iotjs deploy \
+ # deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+	@echo "TODO"
+#	install rules/webthing-iotjs/webthing-iotjs.js $</webthing-iotjs/example/platform/board/
+	install -d ${webthing-iotjs_romfs_dir}
+	install rules/webthing-iotjs/index.js ${webthing-iotjs_romfs_dir}
+	install -d ${webthing-iotjs_romfs_dir}/gpio
+	install rules/webthing-iotjs/gpio/*.js ${webthing-iotjs_romfs_dir}/gpio
+	du -ksc $<
+
+
+rule/webthing-iotjs/romfs: ${nuttx_romfs_dir} ${webthing-iotjs_deploy_files}
+	${make} rule/webthing-iotjs/deploy deploy_modules_dir="$</iotjs_modules"
+	install ${webthing-iotjs_deploy_files} ${<}
+	rm -rfv ${nuttx_romfs_img_file}
+	${make} rule/nuttx/romfs.img
+
