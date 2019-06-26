@@ -24,7 +24,7 @@ stm32_deploy_dir?=${nuttx_romfs_dir}
 stm32_dir?=stm32
 #deploy_modules_dir=${stm32_deploy_dir}/iotjs_modules
 example_file=${stm32_deploy_dir}/index.js
-nuttx_rc_file=rules/stm32/rcS.template
+nuttx_rc_file=rules/stm32/rcS.template.sh
 gateway_host=gateway.local
 
 make?=make -f rules/stm32/index.mk
@@ -60,7 +60,7 @@ stm32/setup/debian:
 	sudo apt-get install -y stlink-tools
 
 
-rule/stm32/prep: rules/stm32/rcS.template rule/stm32/deploy
+rule/stm32/prep: rules/stm32/rcS.template.sh rule/stm32/deploy
 	ls $<
 
 rule/stm32/devel: rule/nuttx/cleanall rule/stm32/prep rule/iotjs/devel
