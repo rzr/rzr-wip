@@ -41,7 +41,7 @@ var port = pwm.open(config, function(err) {
   port.cycle = port.m_cycle;
   port.o_cycle = .001;
   port.s_cycle = 1;
-  console.log('cycle=' + port.cycle);
+  console.log('servo cycle=' + port.cycle);
 
   port.setEnableSync(true);
   
