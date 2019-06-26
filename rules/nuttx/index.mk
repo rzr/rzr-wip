@@ -184,7 +184,7 @@ ${nuttx_romfs_file}: ${nuttx_config_rc_file} ${nuttx_mkromfsimg}
 #rule/nuttx/romfs: ${nuttx_romfs_file}
 #	ls -l $<
 
-${nuttx_romfs_dir}:  ${nuttx_dir}
+${nuttx_romfs_dir}: ${nuttx_dir}
 	mkdir -p $@
 
 ${nuttx_romfs_img_file}: ${nuttx_romfs_dir}
