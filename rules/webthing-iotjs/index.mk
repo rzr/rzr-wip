@@ -24,7 +24,8 @@ webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 webthing-iotjs_deploy_dir?=${nuttx_romfs_dir}
 example_file=${webthing-iotjs_deploy_dir}/index.js
 nuttx_rc_file=rules/${webthing-iotjs}/rcS.template.sh
-
+webthing-iotjs_romfs_img_file?=${nuttx_dir}/rom.img
+webthing-iotjs_romfs_dir?=${CURDIR}/${webthing-iotjs_romfs_img_file}.dir.tmp
 
 rule/webthing-iotjs/help:
 	@echo "# make rule/webthing-iotjs/devel"
