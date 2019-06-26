@@ -21,7 +21,7 @@ webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 webthing-iotjs_branch?=master
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
-rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template
+rule/webthing-iotjs/prep: rules/webthing-iotjs/rcS.template.sh
 	ls $<
 
 rules/webthing-iotjs/rcS.template: rules/webthing-iotjs/rcS.template.in
