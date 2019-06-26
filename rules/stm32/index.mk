@@ -41,13 +41,12 @@ deploy_address?=0x8000000
 #nuttx_image_file?=${CURDIR}/nuttx/nuttx.bin
 
 
-
-stm/monitor:
-	screen 
-
 rule/stm32/help:
 	@echo "# make rule/stm32/devel"
 	@echo "# make rule/stm32/prep"
+
+stm/monitor:
+	screen 
 
 stm/deploy: ${nuttx_image_file}
 	-lsusb # 0483:374b STMicroelectronics ST-LINK/V2.1 (Nucleo-F103RB)
