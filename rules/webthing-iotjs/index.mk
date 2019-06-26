@@ -80,9 +80,10 @@ ${webthing-iotjs_dir}:
 	mkdir -p ${@D}
 	git clone ${webthing-iotjs_url} --branch ${webthing-iotjs_branch} --depth 1 $@
 
-rule/webthing-iotjs/deploy: ${nuttx_dir}/Makefile # ${deploy_modules_dir}
-	make -C webthing-iotjs/iotjs_modules/webthing-iotjs deploy \
- deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+rule/webthing-iotjs/deploy: ${nuttx_dir}/Makefile  ${webthing-iotjs_dir} # ${deploy_modules_dir}
+	make -C ${webthing-iotjs_dir} deploy \
+ deploy_modules_dir=${webthing-iotjs_romfs_dir}/iotjs_modules
+# webthing-iotjs/example/platform/iotjs_modules
 	@echo "TODO"
 #	install rules/webthing-iotjs/webthing-iotjs.js $</webthing-iotjs/example/platform/board/
 	install -d ${webthing-iotjs_romfs_dir}
