@@ -71,7 +71,7 @@ ${nuttx_dir}:
 	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@} \
  || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${@} \
  || git clone ${nuttx_branch} ${nuttx_url} ${@}
-	git reset --hard ${nuttx_branch}
+	cd ${@} && git reset --hard ${nuttx_branch}
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
