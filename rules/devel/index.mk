@@ -10,6 +10,7 @@ iotjs_machine?=stm32f7nucleo
 
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
+#nuttx_branch?=master
 #nuttx_url?=file:///home/${USER}/mnt/nuttx/
 #nuttx_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #nuttx_branch?=sandbox/rzr/review/master
