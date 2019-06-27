@@ -13,7 +13,7 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #nuttx_url?=file:///home/${USER}/mnt/nuttx/
 #nuttx_branch?=sandbox/rzr/devel/${iotjs_machine}/master
 #nuttx_branch?=sandbox/rzr/review/master
-#nuttx_branch?=9209119b65cc225d08d0cf8c6a9744ef7870d7fe
+nuttx_branch?=9209119b65cc225d08d0cf8c6a9744ef7870d7fe
 
 #iotjs_url?=https://github.com/tizenteam/iotjs
 #iotjs_url?=file:///home/${USER}/mnt/iotjs
