@@ -20,7 +20,9 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 #webthing-iotjs_url?=https://github.com/tizenteam/webthing-iotjs
 webthing-iotjs_url?=file:///home/${USER}/mnt/webthing-iotjs
-webthing-iotjs_branch?=sandbox/rzr/devel/master
+#webthing-iotjs_branch?=sandbox/rzr/devel/master
+webthing-iotjs_branch?=sandbox/rzr/next/master
+
 
 rule/docker/run:
 	docker-compose up ||:
