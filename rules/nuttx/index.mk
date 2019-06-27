@@ -18,7 +18,7 @@ nuttx_config?=${nuttx_platform}/f767-netnsh
 nuttx_dir?=nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 #TODO: Pin to latest
-nuttx_branch?=master
+nuttx_branch?=4445a78b365134cb415a8eced33064516244dc95
 
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
