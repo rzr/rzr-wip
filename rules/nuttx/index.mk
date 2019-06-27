@@ -60,7 +60,7 @@ rule/nuttx/help:
 
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
 	mkdir -p ${@D}
-	git clone --depth 1 --recursive ${nuttx_apps_url} $@
+	git clone --depth 1 --recursive ${nuttx_apps_url} $@ 
 	ls $@
 
 ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
@@ -68,7 +68,8 @@ ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
 
 ${nuttx_dir}:
 	mkdir -p ${@D}
-	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@}
+	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@} \
+ || 	git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${@}
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
