@@ -69,7 +69,7 @@ ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
 ${nuttx_dir}:
 	mkdir -p ${@D}
 	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@} \
- || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${@}
+ || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${@} \
  || git clone ${nuttx_branch} ${nuttx_url} ${@}
 	git reset --hard ${nuttx_branch}
 	ls $@
