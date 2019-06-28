@@ -22,10 +22,10 @@ nuttx_branch?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
 #iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
 
 #webthing-iotjs_url?=https://github.com/tizenteam/webthing-iotjs
-webthing-iotjs_url?=file:///home/${USER}/mnt/webthing-iotjs
+#webthing-iotjs_url?=file:///home/${USER}/mnt/webthing-iotjs
 #webthing-iotjs_branch?=sandbox/rzr/devel/master
-webthing-iotjs_branch?=sandbox/rzr/next/master
-webthing-iotjs_branch?=sandbox/rzr/master
+#webthing-iotjs_branch?=sandbox/rzr/next/master
+#webthing-iotjs_branch?=sandbox/rzr/master
 
 
 rule/docker/run:
