@@ -18,7 +18,7 @@ target_url?=http://${target_host}:8888
 webthing-iotjs_dir?=${CURDIR}/iotjs_modules/webthing-iotjs
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 #TODO: pin version
-webthing-iotjs_branch?=master
+webthing-iotjs_branch?=webthing-iotjs-0.11.2-1
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
 webthing-iotjs_deploy_dir?=${nuttx_romfs_dir}
