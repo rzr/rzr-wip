@@ -23,7 +23,8 @@ nuttx_rc_file=rules/twins/rcS.template.sh
 gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
-twins_branch?=master
+#TODO: pin
+twins_revision?=master
 twins_dir?=twins
 #TODO: rename
 make?=make -f rules/twins/index.mk
@@ -48,7 +49,7 @@ ${twins_dir}: rules/webthing-iotjs
 
 ${twins_dir}:
 	mkdir -p ${@D}
-	git clone ${twins_url} --branch ${twins_branch} --depth 1 $@
+	git clone ${twins_url} --revision ${twins_revision} --depth 1 $@
 
 
 ${deploy_modules_dir}: ${twins_dir}
