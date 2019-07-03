@@ -10,22 +10,22 @@ iotjs_machine?=stm32f7nucleo
 
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
-#nuttx_branch?=master
+#nuttx_revision?=master
 #nuttx_url?=file:///home/${USER}/mnt/nuttx/
-#nuttx_branch?=sandbox/rzr/devel/${iotjs_machine}/master
-#nuttx_branch?=sandbox/rzr/review/master
-nuttx_branch?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
-#nuttx_branch?=nuttx-7.30
+#nuttx_revision?=sandbox/rzr/devel/${iotjs_machine}/master
+#nuttx_revision?=sandbox/rzr/review/master
+nuttx_revision?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
+#nuttx_revision?=nuttx-7.30
 
 #iotjs_url?=https://github.com/tizenteam/iotjs
 #iotjs_url?=file:///home/${USER}/mnt/iotjs
-#iotjs_branch?=sandbox/rzr/${iotjs_machine}/master
+#iotjs_revision?=sandbox/rzr/${iotjs_machine}/master
 
 #webthing-iotjs_url?=https://github.com/tizenteam/webthing-iotjs
 #webthing-iotjs_url?=file:///home/${USER}/mnt/webthing-iotjs
-#webthing-iotjs_branch?=sandbox/rzr/devel/master
-#webthing-iotjs_branch?=sandbox/rzr/next/master
-#webthing-iotjs_branch?=sandbox/rzr/master
+#webthing-iotjs_revision?=sandbox/rzr/devel/master
+#webthing-iotjs_revision?=sandbox/rzr/next/master
+#webthing-iotjs_revision?=sandbox/rzr/master
 
 
 rule/docker/run:
