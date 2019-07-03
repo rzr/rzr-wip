@@ -6,7 +6,7 @@
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+# file, You can obtain one at http://mozilla.org/MPL/2.0/#
 #}
 
 iotjs_machine?=${machine}
@@ -20,7 +20,7 @@ iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 iotjs_app_dir?=iotjs/config/nuttx/${iotjs_reference_machine}/app/
 
 iotjs_url?=https://github.com/Samsung/iotjs
-iotjs_branch?=master
+iotjs_revision?=master
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
@@ -57,7 +57,7 @@ rule/iotjs/devel: rule/nuttx/cleanall rule/iotjs/base rule/iotjs/lib rule/iotjs/
 	-git diff
 
 ${iotjs_dir}/%:
-	git clone --recursive -b ${iotjs_branch} ${iotjs_url}
+	git clone --recursive -b ${iotjs_revision} ${iotjs_url}
 	@echo "TODO: --depth 1"
 	ls $@
 
