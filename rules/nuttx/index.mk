@@ -18,13 +18,14 @@ nuttx_config?=${nuttx_platform}/f767-netnsh
 nuttx_dir?=nuttx
 nuttx_url?=https://bitbucket.org/nuttx/nuttx
 #TODO: Pin to latest
-nuttx_branch?=nuttx-7.30-196
+nuttx_revision?=nuttx-7.30-196
 
 nuttx_config_file=${nuttx_dir}/.config
 nuttx_defconfig_file=${nuttx_dir}/configs/${nuttx_config}/defconfig
 
 nuttx_apps_url?=https://bitbucket.org/nuttx/apps
 nuttx_apps_dir?=apps
+nuttx_apps_revision?=nuttx-7.30
 nuttx_configure?=${nuttx_dir}/tools/configure.sh
 
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
@@ -68,10 +69,10 @@ ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
 
 ${nuttx_dir}:
 	mkdir -p ${@D}
-	git clone --recursive  --depth 1 --branch ${nuttx_branch} ${nuttx_url} ${@} \
- || git clone --recursive --branch ${nuttx_branch} ${nuttx_url} ${@} \
+	git clone --recursive  --depth 1 --branch ${nuttx_revision} ${nuttx_url} ${@} \
+ || git clone --recursive --branch ${nuttx_revision} ${nuttx_url} ${@} \
  || git clone ${nuttx_url} ${@}
-	cd ${@} && git reset --hard ${nuttx_branch}
+	cd ${@} && git reset --hard ${nuttx_revision}
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
