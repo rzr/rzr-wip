@@ -18,7 +18,7 @@ target_url?=http://${target_host}:8888
 webthing-iotjs_dir?=${CURDIR}/iotjs_modules/webthing-iotjs
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
 #TODO: pin version
-webthing-iotjs_branch?=webthing-iotjs-0.11.2-1
+webthing-iotjs_revision?=webthing-iotjs-0.11.2-1
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
 webthing-iotjs_deploy_dir?=${nuttx_romfs_dir}
@@ -78,7 +78,7 @@ rule/webthing-iotjs/%:
 
 ${webthing-iotjs_dir}:
 	mkdir -p ${@D}
-	git clone ${webthing-iotjs_url} --branch ${webthing-iotjs_branch} --depth 1 $@
+	git clone ${webthing-iotjs_url} --branch "${webthing-iotjs_revision}" --depth 1 $@
 
 rule/webthing-iotjs/deploy: ${nuttx_dir}/Makefile  ${webthing-iotjs_dir} # ${deploy_modules_dir}
 	make -C ${webthing-iotjs_dir} deploy \
