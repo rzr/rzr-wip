@@ -31,11 +31,12 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #webthing-iotjs_revision?=sandbox/rzr/next/master
 #webthing-iotjs_revision?=sandbox/rzr/master
 
+docker_tag?="rzr_wip_${main_project}_default"
 
 rule/docker/run:
 	docker-compose up ||:
-	docker build -t "rzrwip_default" .
-	docker run --privileged --rm -ti "rzrwip_default" run
+	docker build -t "${docker_tag}" .
+	docker run --privileged --rm -ti "${docker_tag}" run
 
 patch/%: patches/% tmp/done/patch/%
 	wc -l $<
