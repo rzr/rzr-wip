@@ -23,8 +23,7 @@ nuttx_rc_file=rules/twins/rcS.template.sh
 gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
-#TODO: pin
-twins_revision?=master
+twins_revision?=v0.0.1
 twins_dir?=twins
 #TODO: rename
 make?=make -f rules/twins/index.mk
