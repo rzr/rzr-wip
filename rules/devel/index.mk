@@ -11,11 +11,14 @@ iotjs_machine?=stm32f7nucleo
 
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
-#nuttx_revision?=master
+nuttx_revision?=master
+nuttx_apps_revision?=master
+
 #nuttx_url?=file:///home/${USER}/mnt/nuttx/
 #nuttx_revision?=sandbox/rzr/devel/${iotjs_machine}/master
 #nuttx_revision?=sandbox/rzr/review/master
-nuttx_revision?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
+#nuttx_revision?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
+
 #nuttx_revision?=nuttx-7.30
 
 #iotjs_url?=https://github.com/tizenteam/iotjs
