@@ -181,3 +181,4 @@ rule/iotjs/distclean:
 	rm -rf ${nuttx_apps_dir}/system/iotjs/lib*.a
 
 rule/iotjs/roms:
+	@echo "# $@: $^"
