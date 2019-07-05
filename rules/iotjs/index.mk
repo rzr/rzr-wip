@@ -20,7 +20,8 @@ iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 iotjs_app_dir?=iotjs/config/nuttx/${iotjs_reference_machine}/app/
 
 iotjs_url?=https://github.com/Samsung/iotjs
-iotjs_revision?=master
+# TODO : pin to latest release
+iotjs_revision?=bc9a5dad9b59634b47ecadc17498668c35311b44
 iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
