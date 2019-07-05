@@ -27,12 +27,6 @@ iotjs index
 
 echo "# main"
 cd /rom
-#iotjs index.js
-
-# TODO
-# iotjs adc.js
-
-cd /rom/iotjs_modules/webthing-iotjs/example/platform
-iotjs index.js stm32
+iotjs index.js
 
 echo "# exit"
