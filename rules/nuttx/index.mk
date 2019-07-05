@@ -58,10 +58,11 @@ configure?=${nuttx_configure}
 rule/nuttx/help:
 	@echo "Usage: "
 
-
 ${nuttx_apps_dir}: ${nuttx_dir}/Makefile
-	mkdir -p ${@D}
-	git clone --depth 1 --recursive ${nuttx_apps_url} $@ 
+	git clone --recursive --branch "${nuttx_apps_revision}" --depth 1 "${nuttx_apps_url}" "${nuttx_apps_dir}" \
+|| git clone --recursive --branch "${nuttx_apps_revision}" "${nuttx_apps_url}" "${nuttx_apps_dir}" \
+|| git clone --recursive "${nuttx_apps_url}" "${nuttx_apps_dir}"
+	cd "${nuttx_apps_dir}" && git reset --hard "${nuttx_apps_revision}"
 	ls $@
 
 ${nuttx_apps_dir}/%: ${nuttx_apps_dir}
@@ -72,7 +73,7 @@ ${nuttx_dir}:
 	git clone --recursive  --depth 1 --branch ${nuttx_revision} ${nuttx_url} ${@} \
  || git clone --recursive --branch ${nuttx_revision} ${nuttx_url} ${@} \
  || git clone ${nuttx_url} ${@}
-	cd ${@} && git reset --hard ${nuttx_revision}
+	cd ${@} && git reset --hard "${nuttx_revision}"
 	ls $@
 
 ${nuttx_dir}/Makefile: ${nuttx_dir}
