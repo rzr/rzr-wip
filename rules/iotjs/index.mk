@@ -58,8 +58,10 @@ rule/iotjs/devel: rule/nuttx/cleanall rule/iotjs/base rule/iotjs/lib rule/iotjs/
 	-git diff
 
 ${iotjs_dir}/%:
-	git clone --recursive -b ${iotjs_revision} ${iotjs_url}
-	@echo "TODO: --depth 1"
+	git clone --recursive -b ${iotjs_revision} --depth 1 "${iotjs_url}" "${iotjs_dir}" \
+|| git clone --recursive -b ${iotjs_revision} "${iotjs_url}" "${iotjs_dir}" \
+|| git clone --recursive ${iotjs_url} "${iotjs_url}" "${iotjs_dir}"
+	cd "${iotjs_dir}" && git reset --hard "${iotjs_revision}"
 	ls $@
 
 ${iotjs_dir}: ${iotjs_app_dir}
