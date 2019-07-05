@@ -48,8 +48,8 @@ ${twins_dir}: rules/webthing-iotjs
 	cp -av $</*.json $@
 
 ${twins_dir}:
-	mkdir -p ${@D}
-	git clone ${twins_url} --revision ${twins_revision} --depth 1 $@
+	@mkdir -p "${@D}"
+	git clone --branch "${twins_revision}" --depth 1 "${twins_url}" "$@"
 
 
 ${deploy_modules_dir}: ${twins_dir}
