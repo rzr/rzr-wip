@@ -17,8 +17,9 @@ target_url?=http://${target_host}:8888
 
 webthing-iotjs_dir?=${CURDIR}/iotjs_modules/webthing-iotjs
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
-#TODO: pin version
 webthing-iotjs_revision?=webthing-iotjs-0.11.2-1
+
+# TODO: rm
 webthing_iotjs_www_dir?=${HOME}/public_html/${www_dir}
 
 webthing-iotjs_deploy_dir?=${nuttx_romfs_dir}
@@ -44,12 +45,12 @@ rule/webthing-iotjs/www: ${webthing_iotjs_www_dir}
 
 ${webthing_iotjs_www_dir}: rules/webthing-iotjs
 	rm -rf $@
-	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
-	cp -av $</*.js $@
-	cp -av $</*.json $@
+#	cd ~/mnt/webthing-iotjs && make deploy deploy_modules_dir=${@}
+#	cp -av $</*.js $@
+#	cp -av $</*.json $@
 
 
-rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/webthing-iotjs/www rule/iotjs/devel
+rule/webthing-iotjs/devel: rule/webthing-iotjs/prep rule/iotjs/devel
 	sync
 
 rule/webthing-iotjs/webpack: ${webthing_iotjs_www_dir}
