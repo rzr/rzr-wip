@@ -31,10 +31,12 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #webthing-iotjs_revision?=sandbox/rzr/next/master
 #webthing-iotjs_revision?=sandbox/rzr/master
 
-twins_url?=file:///home/${USER}/mnt/twins
+# TODO: pin version
+#twins_url?=file:///home/${USER}/mnt/twins
 twins_revision?=master
 
 docker_tag?="rzr_wip_${main_project}_default"
+
 
 rule/docker/run:
 	docker-compose up ||:
