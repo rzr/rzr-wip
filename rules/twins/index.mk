@@ -12,6 +12,7 @@ project?=twins
 twins_url?=https://github.com/rzr/twins
 twins_revision?=v0.0.1
 twins_dir?=deps/twins
+# TODO: check tmp dir
 twins_deploy_dir?=${CURDIR}/tmp/deploy
 twins_deploy_files?=$(shell ls rules/twins/*.js | sort)
 twins_example_src_file?=rules/twins/index.js
@@ -50,16 +51,17 @@ rule/twins/deploy: ${deploy_modules_dir} ${twins_dir} ${twins_example_src_file}
 	@echo "TODO"
  #	make -C ${twins_dir}/iotjs_modules/webthing-iotjs deploy \
  #deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
-	install ${twins_example_src_file} $<
+	${INSTALL} ${twins_example_src_file} $<
 	du -ksc $<
 
 rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy 
 	du -ksc $<
+	@echo "TODO: Add rule to strip in module"
 	rm -rfv $</webthing-iotjs/example
 	du -ksc $<
 
 rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
 	${MAKE} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
-	install ${twins_deploy_files} ${<}
+	${INSTALL} ${twins_deploy_files} ${<}
 	rm -rfv ${nuttx_romfs_img_file}
 	${MAKE} rule/nuttx/romfs.img
