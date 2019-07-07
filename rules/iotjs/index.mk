@@ -177,7 +177,12 @@ rule/iotjs/stm32f4dis: ${iotjs_dir}/config/nuttx/stm32f4dis/config.alloptions
 	meld $< ${nuttx_config_file}
 	meld $< ${nuttx_defconfig_file}
 
+
 rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
+	cp -a ${nuttx_dir}/defconfig rules/iotjs
+	-git diff
+
+rule/iotjs/all: rule/iotjs/base rule/iotjs/lib rule/iotjs/link
 	cp -a ${nuttx_dir}/defconfig rules/iotjs
 	-git diff
 
