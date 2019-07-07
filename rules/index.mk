@@ -72,3 +72,6 @@ build: rule/${os}/build
 
 menuconfig: rule/${os}/menuconfig rule/${os}/savedefconfig
 	ls ${nuttx_config_file}
+
+oldconfig: rule/${os}/oldconfig rule/${os}/savedefconfig
+	ls ${nuttx_config_file}
