@@ -15,39 +15,42 @@ rule/twins/default: rules/twins/help
 
 project?=twins
 
-#TODO: rename
-twins_deploy_dir?=${CURDIR}/tmp/deploy
-deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
-example_file=${twins_deploy_dir}/index.js
-nuttx_rc_file=rules/twins/rcS.template.sh
-
 twins_url?=https://github.com/rzr/twins
 twins_revision?=v0.0.1
 twins_dir?=deps/twins
+twins_deploy_dir?=${CURDIR}/tmp/deploy
 twins_deploy_files?=$(shell ls rules/twins/*.js | sort)
 twins_example_src_file?=rules/twins/index.js
+twins_nuttx_rc_file?=rules/twins/rcS.template.sh
+
+# TODO: rename
+deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
+example_file?=${twins_example_src_file}
+example_file=${twins_deploy_dir}/index.js
+nuttx_rc_file=${twins_nuttx_rc_file}
 
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
 	@echo "# make rule/twins/prep"
 
-rule/twins/prep: rules/twins/rcS.template.sh rule/twins/romfs
+rule/twins/prep: ${twins_nuttx_rc_file} rule/twins/romfs
 	ls $<
 
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
-	sync
+	@echo "# $@: $^"
 
 ${twins_dir}: rules/twins/index.mk
-	@rm -rf $@
-	git clone --recursive --branch "${twins_revision}" --depth 1 "${twins_url}" "${twins_dir}" \
-|| git clone --recursive --branch "${twins_revision}" "${twins_url}" "${twins_dir}" \
-|| git clone --recursive "${twins_url}" "${twins_dir}"
+	@rm -rf "$@/../twins"
+	git clone \
+  --recursive --branch "${twins_revision}" --depth 1 "${twins_url}" "${twins_dir}" \
+ || git clone --recursive --branch "${twins_revision}" "${twins_url}" "${twins_dir}" \
+ || git clone --recursive "${twins_url}" "${twins_dir}"
 	cd "${twins_dir}" && git reset --hard "${twins_revision}"
 	ls "$@"
 
 ${deploy_modules_dir}: ${twins_dir}
-	make -C "$<" deploy deploy_modules_dir="$@"
+	${MAKE} -C "$<" deploy deploy_modules_dir="$@"
 
 rule/twins/deploy: ${deploy_modules_dir} ${twins_dir} ${twins_example_src_file}
 	@echo "TODO"
