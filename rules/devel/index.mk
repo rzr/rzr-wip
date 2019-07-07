@@ -21,6 +21,8 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #nuttx_revision?=master
 #nuttx_apps_revision?=master
 
+# TODO: pin versions in sub rules not here
+
 #nuttx_url?=https://github.com/tizenteam/nuttx
 #nuttx_url?=file:///home/${USER}/mnt/nuttx/
 #nuttx_revision?=sandbox/rzr/review/master
@@ -39,7 +41,6 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #webthing-iotjs_revision?=sandbox/rzr/next/master
 #webthing-iotjs_revision?=sandbox/rzr/master
 
-# TODO: pin version
 #twins_url?=file:///home/${USER}/mnt/twins
 twins_revision?=master
 
