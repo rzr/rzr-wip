@@ -1,6 +1,7 @@
 #!/bin/nsh
 
 echo "# NuttX:"
+cat /proc/version
 help
 pwd
 
@@ -25,8 +26,13 @@ cd /mnt/sdcard
 echo "console.log(process)" > index.js
 iotjs index
 
+
 echo "# main"
 cd /rom
+cat /proc/uptime
+cat /proc/meminfo
 iotjs index.js
-reboot
-echo "# exit"
+cat /proc/uptime
+cat /proc/meminfo
+echo "# exit, rebooting"
+echo "# failure"
