@@ -47,10 +47,10 @@ rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 
 ${twins_dir}: rules/twins/index.mk
 	@rm -rf $@
-	git clone --recursive --branch "${twins__revision}" --depth 1 "${twins__url}" "${twins_dir}" \
-|| git clone --recursive --branch "${twins__revision}" "${twins__url}" "${twins_dir}" \
-|| git clone --recursive "${twins__url}" "${twins_dir}"
-	cd "${twins_dir}" && git reset --hard "${twins__revision}"
+	git clone --recursive --branch "${twins_revision}" --depth 1 "${twins_url}" "${twins_dir}" \
+|| git clone --recursive --branch "${twins_revision}" "${twins_url}" "${twins_dir}" \
+|| git clone --recursive "${twins_url}" "${twins_dir}"
+	cd "${twins_dir}" && git reset --hard "${twins_revision}"
 	ls $@
 
 ${deploy_modules_dir}: ${twins_dir}
