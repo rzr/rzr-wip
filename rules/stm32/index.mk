@@ -1,13 +1,7 @@
-##!/bin/make -f
+#!/bin/make -f
 # -*- makefile -*-
-# SPDX-License-Identifier: MPL-2.0
-#{
+# SPDX-License-Identifier: Apache-2.0
 # Copyright 2018-present Samsung Electronics France SAS, and other contributors
-#
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
-#}
 
 iotjs_machine_family?=stm32
 iotjs_machine?=stm32f7nucleo
