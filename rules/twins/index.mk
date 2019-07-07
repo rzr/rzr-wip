@@ -24,7 +24,7 @@ gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
 twins_revision?=v0.0.1
-twins_dir?=twins
+twins_dir?=deps/twins
 #TODO: rename
 make?=make -f rules/twins/index.mk
 twins_deploy_files?=$(shell ls rules/twins/*.js | sort)
