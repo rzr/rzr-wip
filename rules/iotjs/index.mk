@@ -142,7 +142,7 @@ ${iotjs_lib_file}: rule/iotjs/lib
 rule/iotjs/menuconfig:
 	ls ${nuttx_config_file}
 
-${nuttx_apps_dir}/system/iotjs: iotjs ${nuttx_apps_dir}
+${nuttx_apps_dir}/system/iotjs: ${iotjs_dir} ${nuttx_apps_dir}
 	@mkdir -p $@
 	cp -rf ${iotjs_app_dir}/* $@/
 	make -C ${nuttx_apps_dir} Kconfig TOPDIR=${CURDIR}/${nuttx_dir}
@@ -151,12 +151,12 @@ ${nuttx_apps_dir}/system/iotjs/%: ${nuttx_apps_dir}/system/iotjs
 	ls $@
 
 rule/iotjs/clean:
-	rm -rf ${iotjs_dir}/build
+	rm -rf ${iotjs_dir}/../iotjs/build
 
 rule/build/iotjs: ${nuttx_apps_dir}/system/iotjs menuconfig build
 
 rule/iotjs/cleanall:
-	rm -rf iotjs/build
+	rm -rf ${iotjs_dir}/../iotjs/build
 
 
 apps/system/Kconfig: ${apps_dir}/Kconfig ${apps_dir}/system/iotjs/Kconfig
@@ -178,7 +178,7 @@ rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
 rule/iotjs/distclean:
 	rm -rf ${iotjs_dir}/../iotjs/build
 	find . -iname "*.obj" -exec rm -v {} \;
-	rm -rf ${nuttx_apps_dir}/system/iotjs/lib*.a
+	rm -rf ${nuttx_apps_dir}/../apps/system/iotjs/lib*.a
 
 rule/iotjs/roms:
 	@echo "# $@: $^"
