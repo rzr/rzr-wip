@@ -117,7 +117,8 @@ ${iotjs_nuttx_config_file}: ${nuttx_config_file} ${iotjs_defconfigs_files}
 #	cat ./rules/iotjs/defconfig-*.in >>  ${nuttx_config_file}
 	cat ${iotjs_defconfigs_files} >>  ${nuttx_config_file}
 	${MAKE} rule/iotjs/configured
-	${MAKE} menuconfig
+#	${MAKE} menuconfig
+	${MAKE} oldconfig
 	${MAKE} rule/iotjs/configured
 	-diff -u ${nuttx_dir}/defconfig ${iotjs_config_file} | tee ${iotjs_config_file}.diff.tmp
 	grep -v 'CONFIG_IOTJS=y' ${nuttx_config_file} > $@
