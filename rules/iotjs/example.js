@@ -13,4 +13,4 @@ var start = Number(new Date());
 
 setInterval(function() {
   console.log('uptime: secs=' + (Number(new Date()) - start) / 1000);
-}, 1 * 1000);
+}, 60 * 1000);
