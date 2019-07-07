@@ -8,11 +8,14 @@
 rule/devel/default:
 	@echo "# $@: $^"
 
+top_project?=rzr-wip
 #main_project?=webthing-iotjs
 main_project?=twins
 iotjs_machine?=stm32f7nucleo
 project_os?=nuttx
 
+# TODO: Keep private
+-include ~/bin/rzr-wip.mk
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #nuttx_revision?=master
