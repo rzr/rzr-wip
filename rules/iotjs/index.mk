@@ -26,12 +26,12 @@ iotjs_lib_file?=${iotjs_dir}/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
 iotjs_build_args?=\
- --target-arch=arm \
- --target-os=nuttx \
- --nuttx-home=../${nuttx_dir} \
- --target-board=${iotjs_machine} \
- --jerry-heaplimit=78 \
- --profile=config/nuttx/${iotjs_machine}/nuttx.profile \
+ --target-arch="arm" \
+ --target-os="nuttx" \
+ --nuttx-home="${CURDIR}/${nuttx_dir}" \
+ --target-board="${iotjs_machine}" \
+ --jerry-heaplimit="78" \
+ --profile="config/nuttx/${iotjs_machine}/nuttx.profile" \
  #eol
 
 iotjs_build_args+=--buildtype=debug
