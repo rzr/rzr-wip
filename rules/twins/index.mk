@@ -67,7 +67,7 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 	du -ksc $<
 
 rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
-	${twins_make} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
+	${MAKE} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
 	install ${twins_deploy_files} ${<}
 	rm -rfv ${nuttx_romfs_img_file}
-	${twins_make} rule/nuttx/romfs.img
+	${MAKE} rule/nuttx/romfs.img
