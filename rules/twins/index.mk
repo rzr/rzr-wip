@@ -9,25 +9,24 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.*
 #}
 
-project=twins
+rule/twins/default: rules/twins/help:
+	@echo "# $@: $^"
 
-target_host?=TODO.target.host
-target_url?=http://${target_host}:8888
 
-#TODO
-#twins_deploy_dir?=${twins_www_dir}
+project?=twins
+
+#TODO: rename
 twins_deploy_dir?=${CURDIR}/tmp/deploy
 deploy_modules_dir=${twins_deploy_dir}/iotjs_modules
 example_file=${twins_deploy_dir}/index.js
 nuttx_rc_file=rules/twins/rcS.template.sh
-gateway_host=gateway.local
 
 twins_url?=https://github.com/rzr/twins
 twins_revision?=v0.0.1
 twins_dir?=deps/twins
-#TODO: rename
-twins_make?=make -f rules/twins/index.mk
 twins_deploy_files?=$(shell ls rules/twins/*.js | sort)
+twins_example_src_file?=rules/twins/index.js
+
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
@@ -51,17 +50,16 @@ ${twins_dir}: rules/twins/index.mk
 || git clone --recursive --branch "${twins_revision}" "${twins_url}" "${twins_dir}" \
 || git clone --recursive "${twins_url}" "${twins_dir}"
 	cd "${twins_dir}" && git reset --hard "${twins_revision}"
-	ls $@
+	ls "$@"
 
 ${deploy_modules_dir}: ${twins_dir}
-	make -C $< deploy deploy_modules_dir=$@
+	make -C "$<" deploy deploy_modules_dir="$@"
 
-rule/twins/deploy: ${deploy_modules_dir} ${twins_dir}
+rule/twins/deploy: ${deploy_modules_dir} ${twins_dir} ${twins_example_src_file}
+	@echo "TODO"
 	make -C ${twins_dir}/iotjs_modules/webthing-iotjs deploy \
  deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
-	@echo "TODO"
-#	install rules/stm32/stm32.js $</webthing-iotjs/example/platform/board/
-	install rules/twins/index.js $</
+	install ${twins_example_src_file} $<
 	du -ksc $<
 
 rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy 
