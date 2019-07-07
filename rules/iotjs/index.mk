@@ -14,15 +14,15 @@ iotjs_machine_family?=stm32
 iotjs_machine?=stm32f7nucleo
 iotjs_reference_machine?=stm32f4dis
 iotjs_dir=deps/iotjs
-iotjs_config_dir?=iotjs/config/nuttx/${iotjs_machine}
+iotjs_config_dir?=${iotjs_dir}/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
-iotjs_app_dir?=iotjs/config/nuttx/${iotjs_reference_machine}/app/
+iotjs_app_dir?=${iotjs_dir}/config/nuttx/${iotjs_reference_machine}/app/
 
 iotjs_url?=https://github.com/Samsung/iotjs
 # TODO : pin to latest release
 iotjs_revision?=bc9a5dad9b59634b47ecadc17498668c35311b44
-iotjs_lib_file?=iotjs/build/arm-nuttx/debug/lib/libiotjs.a
+iotjs_lib_file?=${iotjs_dir}/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
 iotjs_build_args?=\
