@@ -35,6 +35,9 @@ rule/twins/prep: ${twins_nuttx_rc_file} rule/twins/romfs
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 	@echo "# $@: $^"
 
+rule/twins/all: rule/nuttx/cleanall rule/twins/prep rule/iotjs/all
+	@echo "# $@: $^"
+
 ${twins_dir}: rules/twins/index.mk
 	@rm -rf "$@/../twins"
 	git clone \
