@@ -39,16 +39,19 @@ rule/twins/prep: rules/twins/rcS.template.sh rule/twins/romfs
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 	sync
 
-${twins_dir}: rules/webthing-iotjs
-	rm -rf $@
-	make -C ${webthing-iotjs_dir} deploy deploy_modules_dir=${@}
-	cp -av $</*.js $@
-	cp -av $</*.json $@
+#${twins_dir}: rules/webthing-iotjs
+#	rm -rf $@
+#	make -C ${webthing-iotjs_dir} deploy deploy_modules_dir=${@}
+#	cp -av $</*.js $@
+#	cp -av $</*.json $@
 
-${twins_dir}:
-	@mkdir -p "${@D}"
-	git clone --branch "${twins_revision}" --depth 1 "${twins_url}" "$@"
-
+${twins_dir}: rules/twins/index.mk
+	@rm -rf $@
+	git clone --recursive --branch "${twins__revision}" --depth 1 "${twins__url}" "${twins_dir}" \
+|| git clone --recursive --branch "${twins__revision}" "${twins__url}" "${twins_dir}" \
+|| git clone --recursive "${twins__url}" "${twins_dir}"
+	cd "${twins_dir}" && git reset --hard "${twins__revision}"
+	ls $@
 
 ${deploy_modules_dir}: ${twins_dir}
 	make -C $< deploy deploy_modules_dir=$@
