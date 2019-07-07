@@ -49,7 +49,7 @@ configure: nuttx/.config
 reconfigure:
 	mv nuttx/.config 
 
-prep: nuttx apps patch
+prep: rules/nuttx/dir patch
 	sync
 
 all: prep configure build
