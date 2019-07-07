@@ -28,5 +28,5 @@ iotjs index
 echo "# main"
 cd /rom
 iotjs index.js
-
+reboot
 echo "# exit"
