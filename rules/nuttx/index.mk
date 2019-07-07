@@ -143,7 +143,7 @@ rule/nuttx/menuconfig: ${nuttx_config_file} #${nuttx_dir}/Make.defs apps/system/
 
 # 	olddefconfig
 rule/nuttx/oldconfig:
-	yes | make -C ${nuttx_dir} ${@F}
+	yes "" | make -C ${nuttx_dir} ${@F}
 
 rule/nuttx/reconfigure: distclean rule/nuttx/menuconfig
 	ls -l ${nuttx_config_file}
