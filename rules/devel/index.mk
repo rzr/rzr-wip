@@ -40,7 +40,7 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #webthing-iotjs_revision?=sandbox/rzr/master
 
 # TODO: pin version
-twins_url?=file:///home/${USER}/mnt/twins
+#twins_url?=file:///home/${USER}/mnt/twins
 twins_revision?=master
 
 docker_tag?="rzr_wip_${main_project}_default"
