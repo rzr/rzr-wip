@@ -24,6 +24,8 @@ example_file?=${twins_example_src_file}
 example_file=${twins_deploy_dir}/index.js
 nuttx_rc_file=${twins_nuttx_rc_file}
 
+# Used here but defined elsewhere, it should align
+os?=nuttx
 
 rule/twins/help:
 	@echo "# make rule/twins/devel"
@@ -32,10 +34,10 @@ rule/twins/help:
 rule/twins/prep: ${twins_nuttx_rc_file} rule/twins/romfs
 	ls $<
 
-rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
+rule/twins/devel: rule/${os}/cleanall rule/twins/prep rule/iotjs/devel
 	@echo "# $@: $^"
 
-rule/twins/all: rule/nuttx/cleanall rule/twins/prep rule/iotjs/all
+rule/twins/all: rule/${os}/cleanall rule/twins/prep rule/iotjs/all
 	@echo "# $@: $^"
 
 ${twins_dir}: rules/twins/index.mk
