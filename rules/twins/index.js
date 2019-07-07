@@ -22,11 +22,6 @@ var app = require('twins');
 verbose(app);
 app.start();
 
-var start = Number(new Date());
-
 setInterval(function() {
-  var now = Number(new Date());
-  console.log(start);
-  console.log(now);
-  console.log('uptime: secs=' + (Number(new Date()) - start) / 1000);
+  console.log(new Date());
 }, 10 * 1000);
