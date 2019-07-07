@@ -12,12 +12,16 @@
 iotjs_machine?=${machine}
 iotjs_machine_family?=stm32
 iotjs_machine?=stm32f7nucleo
+iotjs_target_arch?=arm
+iotjs_target_os?=nuttx
 iotjs_reference_machine?=stm32f4dis
+iotjs_jerry_heaplimit?=78
 iotjs_dir=deps/iotjs
+iotjs_profile_file?=config/${iotjs_target_os}/${iotjs_machine}/${iotjs_target_os}.profile
 iotjs_config_dir?=${iotjs_dir}/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
-iotjs_app_dir?=${iotjs_dir}/config/nuttx/${iotjs_reference_machine}/app/
+iotjs_app_dir?=${iotjs_dir}/config/${iotjs_target_os}/${iotjs_reference_machine}/app/
 
 iotjs_url?=https://github.com/Samsung/iotjs
 # TODO : pin to latest release
@@ -26,12 +30,12 @@ iotjs_lib_file?=${iotjs_dir}/build/arm-nuttx/debug/lib/libiotjs.a
 iotjs_nuttx_config_file?=${nuttx_config_file}._iotjs.config
 
 iotjs_build_args?=\
- --target-arch="arm" \
- --target-os="nuttx" \
+ --target-arch="${iotjs_target_arch}" \
+ --target-os="${iotjs_target_os}" \
  --nuttx-home="${CURDIR}/${nuttx_dir}" \
  --target-board="${iotjs_machine}" \
- --jerry-heaplimit="78" \
- --profile="config/nuttx/${iotjs_machine}/nuttx.profile" \
+ --jerry-heaplimit="${iotjs_jerry_heaplimit}" \
+ --profile="${iotjs_profile_file}" \
  #eol
 
 iotjs_build_args+=--buildtype=debug
