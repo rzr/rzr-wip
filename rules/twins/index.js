@@ -23,6 +23,8 @@ verbose(app);
 app.start();
 
 var start = new Date();
+console.log(start.now());
+
 setInterval(function() {
-  console.log('uptime: mins=' + (new Date().now() - start.now()) / 1000 / 60);
+  console.log('uptime: mins=' + ((new Date().now() - start.now()) / 1000 / 60));
 }, 60 * 1000);
