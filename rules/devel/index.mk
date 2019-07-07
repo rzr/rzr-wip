@@ -5,6 +5,9 @@
 # Copyright 2018-present Samsung Electronics France SAS, and other contributors
 #}
 
+rule/devel/default:
+	@echo "# $@: $^"
+
 #main_project?=webthing-iotjs
 main_project?=twins
 iotjs_machine?=stm32f7nucleo
@@ -59,4 +62,4 @@ distclean: clean
 	-${MAKE} rule/${project_os}/distclean
 
 devel: rule/${main_project}/devel
-	sync
+	@echo "# $@: $^"
