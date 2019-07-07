@@ -154,6 +154,7 @@ rule/iotjs/clean:
 	rm -rf ${iotjs_dir}/../iotjs/build
 
 rule/build/iotjs: ${nuttx_apps_dir}/system/iotjs menuconfig build
+	@echo "# $@: $^"
 
 rule/iotjs/cleanall:
 	rm -rf ${iotjs_dir}/../iotjs/build
