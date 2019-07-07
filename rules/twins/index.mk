@@ -69,5 +69,5 @@ rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
 	rm -rfv ${nuttx_romfs_img_file}
 	${MAKE} rule/nuttx/romfs.img
 
-rule/twins/prep: rule/${target_os}/prep
+rule/twins/prep: rule/${os}/prep
 	@echo "# $@: $^"
