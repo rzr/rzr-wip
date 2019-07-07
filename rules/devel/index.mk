@@ -20,11 +20,10 @@ nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 
 #nuttx_url?=https://github.com/tizenteam/nuttx
 nuttx_url?=file:///home/${USER}/mnt/nuttx/
-nuttx_revision?=sandbox/rzr/devel/master
-#nuttx_revision?=sandbox/rzr/devel/${iotjs_machine}/master
 #nuttx_revision?=sandbox/rzr/review/master
+#nuttx_revision?=sandbox/rzr/devel/master
+#nuttx_revision?=sandbox/rzr/devel/${iotjs_machine}/master
 #nuttx_revision?=a54f9d5b2af681255ac4e6bfe9b7cd29efdc9768
-
 #nuttx_revision?=nuttx-7.30
 
 #iotjs_url?=https://github.com/tizenteam/iotjs
