@@ -9,7 +9,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.*
 #}
 
-rule/twins/default: rules/twins/help:
+rule/twins/default: rules/twins/help
 	@echo "# $@: $^"
 
 
