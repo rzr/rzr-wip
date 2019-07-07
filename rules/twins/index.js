@@ -15,8 +15,10 @@ var log = console.log || function () {};
 var verbose = console.log || function () {};
 
 verbose(process);
+verbose(process.uptime && process.uptime() );
 verbose(process.iotjs);
 verbose(process.iotjs.board);
+verbose(process.iotjs.board.pin);
 
 var app = require('twins');
 verbose(app);
