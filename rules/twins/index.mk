@@ -38,12 +38,6 @@ rule/twins/prep: rules/twins/rcS.template.sh rule/twins/romfs
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 	sync
 
-#${twins_dir}: rules/webthing-iotjs
-#	rm -rf $@
-#	make -C ${webthing-iotjs_dir} deploy deploy_modules_dir=${@}
-#	cp -av $</*.js $@
-#	cp -av $</*.json $@
-
 ${twins_dir}: rules/twins/index.mk
 	@rm -rf $@
 	git clone --recursive --branch "${twins_revision}" --depth 1 "${twins_url}" "${twins_dir}" \
@@ -57,8 +51,8 @@ ${deploy_modules_dir}: ${twins_dir}
 
 rule/twins/deploy: ${deploy_modules_dir} ${twins_dir} ${twins_example_src_file}
 	@echo "TODO"
-	make -C ${twins_dir}/iotjs_modules/webthing-iotjs deploy \
- deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
+ #	make -C ${twins_dir}/iotjs_modules/webthing-iotjs deploy \
+ #deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
 	install ${twins_example_src_file} $<
 	du -ksc $<
 
