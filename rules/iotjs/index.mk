@@ -22,6 +22,7 @@ iotjs_config_dir?=${iotjs_dir}/config/nuttx/${iotjs_machine}
 iotjs_config_file?=${iotjs_config_dir}/config.default
 iotjs_nuttx_dir?=${nuttx_apps_dir}/system/iotjs
 iotjs_app_dir?=${iotjs_dir}/config/${iotjs_target_os}/${iotjs_reference_machine}/app/
+iotjs_defconfigs_files?=$(shell ls rules/iotjs/defconfig*.in | sort)
 
 iotjs_url?=https://github.com/Samsung/iotjs
 # TODO : pin to latest release
@@ -108,8 +109,6 @@ rule/iotjs/configure: iotjs
 
 rule/iotjs/configured: ${nuttx_config_file}
 	grep 'CONFIG_NET_LOCAL=y' ${nuttx_config_file}
-
-iotjs_defconfigs_files?=$(shell ls rules/iotjs/defconfig*.in | sort)
 
 ${iotjs_nuttx_config_file}: ${nuttx_config_file} ${iotjs_defconfigs_files}
 	ls ${nuttx_config_file} || ${MAKE} ${nuttx_config_file} 
