@@ -23,3 +23,8 @@ verbose(process.iotjs.board.pin);
 var app = require('twins');
 verbose(app);
 app.start();
+
+var start = new Date();
+setInterval(function() {
+  console.log(new Date() - start);
+}, 60 * 1000);
