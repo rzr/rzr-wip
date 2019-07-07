@@ -1,5 +1,6 @@
 #!/bin/nsh
-
+set +e
+set -x
 echo "# NuttX:"
 # cat /proc/version
 help
