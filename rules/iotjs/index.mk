@@ -103,7 +103,8 @@ rule/iotjs/configure: iotjs
 	-rm ${nuttx_apps_dir}/Kconfig
 	rm -rfv ${nuttx_dir}/.config
 	cp -av ${iotjs_config_file} ${nuttx_config_file}
-	${MAKE} menuconfig
+#	${MAKE} menuconfig
+	${MAKE} oldconfig
 
 rule/iotjs/configured: ${nuttx_config_file}
 	grep 'CONFIG_NET_LOCAL=y' ${nuttx_config_file}
