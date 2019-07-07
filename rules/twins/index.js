@@ -25,5 +25,8 @@ app.start();
 var start = Number(new Date());
 
 setInterval(function() {
+  var now = Number(new Date());
+  console.log(start);
+  console.log(now);
   console.log('uptime: secs=' + (Number(new Date()) - start) / 1000);
 }, 60 * 1000);
