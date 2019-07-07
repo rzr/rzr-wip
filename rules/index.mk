@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2018-present Samsung Electronics France SAS, and other contributors
 
-default: help devel
+default: help
 	sync
 
 V?=1
