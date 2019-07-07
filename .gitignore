@@ -1,4 +1,6 @@
+# .gitignore
 *~
 tmp/
 *.tmp
 **/node_modules
+deps/
