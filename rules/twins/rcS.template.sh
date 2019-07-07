@@ -35,4 +35,5 @@ iotjs index.js
 cat /proc/uptime
 cat /proc/meminfo
 echo "# exit, rebooting"
+reboot
 echo "# failure"
