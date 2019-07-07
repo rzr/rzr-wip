@@ -218,4 +218,7 @@ ${monitor_file}:
 	lsusb
 	ls $@
 
+nuttx: ${nuttx_dir}
+	ls $<
+
 .PHONY: rule/nuttx/configure
