@@ -31,7 +31,7 @@ nuttx_configure?=${nuttx_dir}/tools/configure.sh
 nuttx_include_file?=${nuttx_dir}/include/nuttx/config.h
 nuttx_config_rc_file?=${nuttx_dir}/configs/${nuttx_platform}/include/rcS.template
 nuttx_image_file?=${nuttx_dir}/nuttx.bin
-nuttx_mkromfsimg?=${CURDIR}/nuttx/tools/mkromfsimg.sh
+nuttx_mkromfsimg?=${CURDIR}/${nuttx_dir}/tools/mkromfsimg.sh
 
 nuttx_romfs_file?=${nuttx_dir}/configs/${nuttx_platform}/include/nsh_romfsimg.h
 nuttx_romfs_img_file?=${nuttx_dir}/rom.img
