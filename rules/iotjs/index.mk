@@ -151,7 +151,7 @@ ${nuttx_apps_dir}/system/iotjs/%: ${nuttx_apps_dir}/system/iotjs
 	ls $@
 
 rule/iotjs/clean:
-	rm -rf iotjs/build
+	rm -rf ${iotjs_dir}/build
 
 rule/build/iotjs: ${nuttx_apps_dir}/system/iotjs menuconfig build
 
@@ -162,12 +162,12 @@ rule/iotjs/cleanall:
 apps/system/Kconfig: ${apps_dir}/Kconfig ${apps_dir}/system/iotjs/Kconfig
 	ls $@
 
-rule/iotjs/meld: iotjs/config/nuttx/${iotjs_machine}/config.alloptions
+rule/iotjs/meld: ${iotjs_dir}/config/nuttx/${iotjs_machine}/config.alloptions
 	meld $< ${nuttx_config_file}
 	meld $< ${nuttx_defconfig_file}
 
 
-rule/iotjs/stm32f4dis: iotjs/config/nuttx/stm32f4dis/config.alloptions
+rule/iotjs/stm32f4dis: ${iotjs_dir}/config/nuttx/stm32f4dis/config.alloptions
 	meld $< ${nuttx_config_file}
 	meld $< ${nuttx_defconfig_file}
 
@@ -176,7 +176,7 @@ rule/iotjs/devel: rule/iotjs/base rule/iotjs/lib rule/iotjs/link deploy monitor
 	-git diff
 
 rule/iotjs/distclean:
-	rm -rf iotjs/build
+	rm -rf ${iotjs_dir}/../iotjs/build
 	find . -iname "*.obj" -exec rm -v {} \;
 	rm -rf ${nuttx_apps_dir}/system/iotjs/lib*.a
 
