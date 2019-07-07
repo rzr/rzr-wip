@@ -26,7 +26,7 @@ twins_url?=https://github.com/rzr/twins
 twins_revision?=v0.0.1
 twins_dir?=deps/twins
 #TODO: rename
-make?=make -f rules/twins/index.mk
+twins_make?=make -f rules/twins/index.mk
 twins_deploy_files?=$(shell ls rules/twins/*.js | sort)
 
 rule/twins/help:
@@ -38,7 +38,6 @@ rule/twins/prep: rules/twins/rcS.template.sh rule/twins/romfs
 
 rule/twins/devel: rule/nuttx/cleanall rule/twins/prep rule/iotjs/devel
 	sync
-
 
 ${twins_dir}: rules/webthing-iotjs
 	rm -rf $@
@@ -68,80 +67,7 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 	du -ksc $<
 
 rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
-	${make} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
+	${twins_make} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
 	install ${twins_deploy_files} ${<}
 	rm -rfv ${nuttx_romfs_img_file}
-	${make} rule/nuttx/romfs.img
-
-iotjs/start: ${example_file}
-	cd ${<D} && iotjs ${<F}
-
-
-rule/twins/property/%:
-	curl ${target_url}/properties/${@F}
-	curl -X PUT -d '{ "${@F}": ${value} }' ${target_url}/properties/${@F}
-	sleep 2
-
-rule/twins/test/%:
-	curl -X PUT -d '{ "${@F}": -90 }' ${target_url}/properties/${@F}
-	sleep 1
-	curl -X PUT -d '{ "${@F}": 90 }' ${target_url}/properties/${@F}
-	sleep 1
-
-rule/twins/test: \
- rule/twins/test/torso \
- rule/twins/test/shoulder \
- rule/twins/test/arm \
- rule/twins/test/hand \
- #eol
-
-
-rule/twins/robot:
-	curl ${target_url}/properties
-	${make} ${@D}/property/torso value=0
-	${make} ${@D}/property/shoulder value=0
-	${make} ${@D}/property/arm value=0
-	${make} ${@D}/property/hand value=0
-	${make} ${@D}/torso
-	${make} ${@D}/shoulder
-	${make} ${@D}/arm
-	${make} ${@D}/hand
-
-rule/twins/%:
-	${make} rule/twins/property/${@F} value=0
-	${make} rule/twins/property/${@F} value=-90
-	${make} rule/twins/property/${@F} value=0
-	${make} rule/twins/property/${@F} value=90
-	${make} rule/twins/property/${@F} value=0
-
-rule/twins/shoulder: #[ -90, 45]
-	${make} rule/twins/property/shoulder value=-90
-	${make} rule/twins/property/shoulder value=10
-	${make} rule/twins/property/shoulder value=30
-	${make} rule/twins/property/shoulder value=45
-	${make} rule/twins/property/shoulder value=0
-
-rule/twins/arm: # [-45 +45]
-	${make} rule/twins/property/${@F} value=0
-	${make} rule/twins/property/${@F} value=45
-	${make} rule/twins/property/${@F} value=-45
-	${make} rule/twins/property/${@F} value=0
-
-rule/twins/hand: # [0 45]
-	${make} rule/twins/property/${@F} value=0
-	${make} rule/twins/property/${@F} value=40
-#	${make} rule/twins/property/${@F} value=10
-	${make} rule/twins/property/${@F} value=-5
-	${make} rule/twins/property/${@F} value=0
-
-rule/twins/demo:
-	${make} rule/twins/property/hand value=0
-	${make} rule/twins/property/hand value=20
-	${make} rule/twins/property/arm value=15
-	${make} rule/twins/property/shoulder value=-20
-	${make} rule/twins/property/shoulder value=-40
-	${make} rule/twins/property/shoulder value=-60
-	${make} rule/twins/property/hand value=-5
-	${make} rule/twins/property/shoulder value=45
-	${make} rule/twins/property/arm value=10
-	${make} rule/twins/property/arm value=-15
+	${twins_make} rule/nuttx/romfs.img
