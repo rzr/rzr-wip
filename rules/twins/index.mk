@@ -51,7 +51,7 @@ rule/twins/deploy: ${deploy_modules_dir} ${twins_dir} ${twins_example_src_file}
 	@echo "TODO"
  #	make -C ${twins_dir}/iotjs_modules/webthing-iotjs deploy \
  #deploy_modules_dir=$</webthing-iotjs/example/platform/iotjs_modules
-	${INSTALL} ${twins_example_src_file} $<
+	install ${twins_example_src_file} $<
 	du -ksc $<
 
 rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy 
@@ -62,6 +62,6 @@ rule/twins/deploy/clean: ${deploy_modules_dir} rule/twins/deploy
 
 rule/twins/romfs: ${nuttx_romfs_dir} ${twins_deploy_files}
 	${MAKE} rule/twins/deploy deploy_modules_dir="$</iotjs_modules"
-	${INSTALL} ${twins_deploy_files} ${<}
+	install ${twins_deploy_files} ${<}
 	rm -rfv ${nuttx_romfs_img_file}
 	${MAKE} rule/nuttx/romfs.img
