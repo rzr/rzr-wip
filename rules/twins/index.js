@@ -7,7 +7,7 @@
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/#
  */
 var console = require('console');
 // Disable logs here by editing to '!console.log'
@@ -22,6 +22,7 @@ var app = require('twins');
 verbose(app);
 app.start();
 
+var loops = 0;
 setInterval(function() {
-  console.log(new Date());
-}, 10 * 1000);
+  console.log('status: ' + loops++);
+}, 60 * 1000);
