@@ -15,10 +15,8 @@ var log = console.log || function () {};
 var verbose = console.log || function () {};
 
 verbose(process);
-verbose(process.uptime && process.uptime() );
 verbose(process.iotjs);
 verbose(process.iotjs.board);
-verbose(process.iotjs.board.pin);
 
 var app = require('twins');
 verbose(app);
@@ -26,5 +24,5 @@ app.start();
 
 var start = new Date();
 setInterval(function() {
-  console.log(new Date() - start);
+  console.log((new Date().now - start.now) / 1000 / 60);
 }, 60 * 1000);
