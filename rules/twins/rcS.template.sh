@@ -1,7 +1,7 @@
 #!/bin/nsh
 
 echo "# NuttX:"
-cat /proc/version
+# cat /proc/version
 help
 pwd
 
