@@ -8,12 +8,14 @@
 #main_project?=webthing-iotjs
 main_project?=twins
 iotjs_machine?=stm32f7nucleo
+project_os?=nuttx
 
 nuttx_dev_id?=066EFF323535474B43065221
 nuttx_deploy_dir?=/media/${USER}/NODE_F767ZI1/
 #nuttx_revision?=master
 #nuttx_apps_revision?=master
 
+#nuttx_url?=https://github.com/tizenteam/nuttx
 nuttx_url?=file:///home/${USER}/mnt/nuttx/
 nuttx_revision?=sandbox/rzr/devel/master
 #nuttx_revision?=sandbox/rzr/devel/${iotjs_machine}/master
@@ -54,7 +56,7 @@ clean:
 	-find . -iname "*.a" -exec rm {} \;
 
 distclean: clean
-	-${MAKE} rule/nuttx/distclean
+	-${MAKE} rule/${project_os}/distclean
 
 devel: rule/${main_project}/devel
 	sync
