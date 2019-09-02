@@ -16,7 +16,9 @@
     "url": "https://github.com/rzr/rzr-wip/issues"
   },
   "homepage": "https://github.com/rzr/rzr-wip#readme",
-  "dependencies": {},
+  "dependencies": {
+    "webthing-iotjs": "^0.12.1-1"
+  },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.12.1"
