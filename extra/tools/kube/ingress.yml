@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: iotjs-express
+  name: rzr-wip
 spec:
   rules:
-  - host: iotjs-express.localhost
+  - host: rzr-wip.localhost
     http:
       paths:
       - backend:
-          serviceName: iotjs-express
+          serviceName: rzr-wip
           servicePort: 8888
