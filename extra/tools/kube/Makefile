@@ -7,6 +7,7 @@
 default: help
 	@echo "# log: $@: $<"
 
+
 name?=rzr-wip
 revision?=$(shell git describe --tags || echo "0.0.0")
 port?=8888
@@ -20,7 +21,7 @@ username?=tmp
 image?=${username}/${name}:${revision}
 namespace?=k8s.io
 hostname=localhost
-domain?=${namespace}.${hostname}
+domain?=${hostname}
 host?=${name}.${domain}
 endpoint?=/
 url?=http://${host}${endpoint}
@@ -107,14 +108,14 @@ ingress: ingress.yml enable
 client:
 	-ping -c 1 ${host}
 	curl -kLi ${url}
-	-curl -kLi ${url}.well-known/security.txt
 
 client/error:
 	curl -kLi ${url}favicon.ico
 
 status:
 	${MAKE} status/all | grep ${name}
-	-${kubectl} describe ingress.extensions/${name} | grep "Address:"
+	-${kubectl} describe ingress.extensions/${name}
+	-${kubectl} describe ingress.extensions/${name} | grep "Address:" || echo "warning: Address missing"
 	-${k8s}.ctr --namespace ${namespace} image list | grep "${image}"
 	-grep "${host}" /etc/hosts
 
