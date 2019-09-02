@@ -1,0 +1,45 @@
+#YAML
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rzr-wip
+  name: rzr-wip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rzr-wip
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rzr-wip
+    spec:
+      containers:
+      - image: tmp/rzr-wip:0.0.0-32-g1833548
+        name: rzr-wip
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rzr-wip
+  name: rzr-wip
+spec:
+  ports:
+  - port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    app: rzr-wip
+  type: NodePort
+status:
+  loadBalancer: {}
+---
