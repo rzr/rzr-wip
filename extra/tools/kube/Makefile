@@ -8,7 +8,7 @@ default: help
 	@echo "# log: $@: $<"
 
 
-name?=webthing-example
+name?=rzr-wip
 revision?=$(shell git describe --tags || echo "0.0.0")
 port?=8888
 nodePort?=30080
