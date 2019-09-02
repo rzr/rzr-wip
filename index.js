@@ -47,7 +47,6 @@ function MqttNumberProperty(thing, name, metadata, config) {
     metadata
   );
   verbose('log: connecting: ' + this.config.mqtt.connect.host);
-
   this.client = new mqtt.connect(this.config.mqtt.connect, function() {
     verbose('log: connected, listening on port=' + self.config.mqtt.connect.port);
     self.client.subscribe(self.config.mqtt.topic,
