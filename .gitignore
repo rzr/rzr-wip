@@ -1,3 +1,6 @@
+# .gitignore
 *~
 *.tmp
-/tnp/
+/tmp/
+**/iotjs_modules/
+**/node_modules/
