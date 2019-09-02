@@ -16,14 +16,19 @@ default: help
 
 runtime?=iotjs
 example_file=index.js
-iotjs_modules_dir?=${CURDIR}/iotjs_modules
-
+run_args?=
 port?=8888
-base_url?=http://localhost:${port}
+target_url?=http://localhost:${port}
+export target_url
 
-webthing_url?=https://github.com/rzr/webthing-iotjs
+lib_srcs?=$(wildcard *.js lib/*.js | sort | uniq)
+srcs?=${lib_srcs}
+
+iotjs_modules_dir?=${CURDIR}/iotjs_modules
+export iotjs_modules_dir
+
 webthing-iotjs_url?=https://github.com/rzr/webthing-iotjs
-webthing-iotjs_revision?=0.12.1-1
+webthing-iotjs_revision ?= webthing-iotjs-0.12.1-1
 webthing-iotjs_dir?=${iotjs_modules_dir}/webthing-iotjs
 iotjs_modules_dirs+=${webthing-iotjs_dir}
 
@@ -48,12 +53,22 @@ help:
 	@echo "Usage:"
 	@echo "# make start"
 
-${webthing-iotjs_dir}: # Makefile
-	rm -rf $@
-	git clone --recursive --depth 1 ${webthing-iotjs_url} -b ${webthing-iotjs_revision} $@
-	make -C $@ deploy deploy_modules_dir=${iotjs_modules_dir}
+LICENSE: /usr/share/common-licenses/MPL-2.0
+	cp -a $< $@
+
 
 iotjs/modules: ${iotjs_modules_dirs}
+	ls $^
+
+${webthing-iotjs_dir}: Makefile
+	@echo "log: $@: $^"
+	git clone --recursive --depth=1 \
+ --branch "${webthing-iotjs_revision}" \
+ "${webthing-iotjs_url}" \
+ "$@"
+	${MAKE} -C $@ ${runtime}/modules
+
+deploy: ${deploy_srcs} ${deploy_dirs}
 	ls $<
 
 ${deploy_module_dir}/%: %
@@ -62,10 +77,7 @@ ${deploy_module_dir}/%: %
 	install $< $@
 
 ${deploy_modules_dir}/webthing-iotjs: ${iotjs_modules_dir}/webthing-iotjs
-	make -C $< deploy deploy_modules_dir="${deploy_modules_dir}"
-
-deploy: ${deploy_srcs} ${deploy_dirs}
-	ls $<
+	make -C $< deploy deploy_modules_dir="${deploy_modules_dir}" project="${@F}"
 
 iotjs/start: ${example_file} ${iotjs_modules_dirs}
 	iotjs $< ${run_args}
@@ -74,7 +86,7 @@ iotjs/debug:
 #	rm -rf node_modules
 	NODE_PATH=iotjs_modules:../.. node index.js
 
-test:
+client/test:
 	curl ${base_url}
 	@echo
 	curl ${base_url}/properties
@@ -111,3 +123,12 @@ client:
 
 check:
 	@echo "# $@: $^"
+
+test:
+	@echo "# $@: $^"
+
+setup:
+	which iotjs
+	which make
+
+modules: ${runtime}/modules
