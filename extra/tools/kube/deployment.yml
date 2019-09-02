@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rzr-wip
+  name: rzr-wip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rzr-wip
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rzr-wip
+    spec:
+      containers:
+      - image: tmp/rzr-wip:0.0.0-32-g1833548
+        name: rzr-wip
+        resources: {}
+status: {}
