@@ -6,11 +6,13 @@
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.*
+# file, You can obtain one at http://mozilla.org/MPL/2.0/# .
 #}
 
 default: help
 	@echo "log: $@: $^"
+
+-include config.mk
 
 runtime?=iotjs
 example_file=index.js
@@ -31,10 +33,10 @@ deploy_dirs+= ${deploy_module_dir}
 deploy_dirs+= ${deploy_modules_dir}/webthing-iotjs
 deploy_srcs+= $(addprefix ${deploy_module_dir}/, ${srcs})
 
-mqtt_host=localhost
-mqtt_port=1883
-mqtt_topic=#
-mqtt_topic_key=level
+mqtt_host?=localhost
+mqtt_port?=1883
+mqtt_topic?=#
+mqtt_topic_key?=level
 
 run_args+="${port}"
 run_args+="${mqtt_host}"
