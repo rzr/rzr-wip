@@ -9,7 +9,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.*
 #}
 
-default: help iotjs/run
+default: help
 	@echo "log: $@: $^"
 
 runtime?=iotjs
@@ -106,3 +106,6 @@ client/sub/debug:
 
 client:
 	curl -i ${base_url}/properties
+
+check:
+	@echo "# $@: $^"
