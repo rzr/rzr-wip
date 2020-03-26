@@ -14,6 +14,7 @@ RUN set -x \
 
 ENV project TODO
 ENV workdir /usr/local/opt/${project}
+ENV rtmpPort 1935
 
 WORKDIR ${workdir}
 ADD http://nginx.org/download/nginx-1.15.1.tar.gz .
@@ -28,10 +29,10 @@ RUN set -x \
   && sync
 
 RUN set -x \
-  echo '\n\
+  && printf "\n\
   rtmp { \n\
         server { \n\
-                listen 1935; \n\
+                listen ${rtmpPort}; \n\
                 chunk_size 4096; \n\
                 application live { \n\
                         live on; \n\
@@ -39,7 +40,14 @@ RUN set -x \
                 } \n\
         } \n\
 } \n\
-' > /usr/local/nginx/conf/nginx.conf  \
+" | tee -a /usr/local/nginx/conf/nginx.conf \
+ && cat /usr/local/nginx/conf/nginx.conf \
  && sync
 
-#  sudo /usr/local/nginx/sbin/nginx
+#  sudo 
+
+EXPOSE ${rtmpPort}
+EXPOSE 80
+WORKDIR /usr/local/nginx/
+ENTRYPOINT [ "/usr/local/nginx/sbin/nginx"]
+
