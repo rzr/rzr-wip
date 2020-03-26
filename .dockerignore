@@ -1,0 +1,8 @@
+# .dockerignore
+**/.git/
+
+# .gitignore
+
+**/tmp/
+*.tmp
+*~
