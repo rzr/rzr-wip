@@ -1,0 +1,8 @@
+# .gitignore
+# SPDX-License-Identifier: CC-BY-4.0
+# SPDX-License-URL: https://spdx.org/licenses/CC-BY-4.0.html
+# SPDX-FileCopyrightText: Huawei Inc.
+
+**/tmp/
+*.tmp
+*~
