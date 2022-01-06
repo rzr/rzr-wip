@@ -6,7 +6,7 @@
 
 FROM ubuntu:20.04
 LABEL maintainer="Philippe Coval (https://purl.org/rzr)"
-ENV project rzr-presentations
+ENV project oniro-presentations
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL en_US.UTF-8
