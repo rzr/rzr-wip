@@ -45,6 +45,11 @@ Everyone is welcome now to join the oniro project at https://oniroproject.org/
   - Summary
   - Q&A
 
+* Video Playback
+  @@html:<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/p-gSvehb-As#OniroWelcome" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>@@
+
+#+TODO: update link when record is published
+
 *                                                                      
   #+ATTR_HTML: :width 45% :align center style="border:0px solid black;"
   https://oniroproject.org/images/share.png
