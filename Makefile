@@ -22,6 +22,8 @@ sudo?=sudo
 url?=https://github.com/yjwen/org-reveal
 suffix?=/0/
 
+deploy_dir?=tmp/deploy
+
 help:
 	@echo "# Usage:"
 	@echo "#  make help # Usage"
@@ -101,3 +103,14 @@ all/%: ${srcs}
 
 run:
 	python3 -m http.server ${PORT}
+
+${deploy_dir}:
+	install -d $@
+
+deploy: all ${deploy_dir}
+	find docs/ -type f | while read file ; do \
+	  dirname=$$(dirname $${file}) ; \
+	  install -d ${deploy_dir}/$${dirname} ; \
+	  install $${file} ${deploy_dir}/$${dirname}/ ; \
+	done
+	find ${deploy_dir} -type f
