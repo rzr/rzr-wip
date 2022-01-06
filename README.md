@@ -15,3 +15,8 @@ docker-compose up --build
 x-www-browser http://localhost:8888/
 ```
 
+## RESOURCES ##
+
+- https://booting.oniroproject.org/rzr/oniro-presentations
+- https://oniroproject.org/
+- https://github.com/yjwen/org-reveal
