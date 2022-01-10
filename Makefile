@@ -61,6 +61,7 @@ setup/debian: /etc/debian_version
 
 setup: /etc/os-release
 	@echo "# Please install tools, On debian: make setup/debian"
+	cat $<
 	emacs --version
 	emacs \
  --no-init-file  \
