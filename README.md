@@ -14,6 +14,10 @@ cp -rfa docs/_template docs/TODO-$USER
 docker-compose up --build
 x-www-browser http://localhost:8888/
 ```
+To playback install this addon for firefox (press Ctrl+F do remove browser decoration)
+
+- https://addons.mozilla.org/en-US/firefox/addon/fullscreen_plus/
+
 
 ## RESOURCES ##
 
