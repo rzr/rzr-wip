@@ -45,6 +45,36 @@ Everyone is welcome now to join the oniro project at https://oniroproject.org/
   - Summary
   - Q&A
 
+*                                                                         ::
+  :PROPERTIES:
+  :reveal_background: https://oniroproject.org/images/share.png
+  :reveal_background_opacity: 1
+  :END:
+  #+ATTR_HTML: :width 45% :align center style="border:0px solid black;"
+
+
+* Oniro
+   #+ATTR_REVEAL: :frag (fade-in)
+  - Oniro is an [[https://projects.eclipse.org/projects/oniro][Eclipse Foundation]] project
+  - focused on reducing fragmentation
+  - in the consumer and IoT device industry
+  - led by a working group organization
+  - of which [[https://ostc-eu.org][Huawei (org)]] is an active member
+
+* Get Oniro from sources
+
+  #+BEGIN_SRC sh
+  $ repo init -u https://booting.oniroproject.org/distro/oniro
+  #+END_SRC
+
+* Oniro releases
+  
+  | Year | Nickname | OpenHarmony | Yocto base | Zephyr base   |
+  |------+----------+-------------+------------+---------------|
+  | 2021 | jasmine  | (2)         | dunfell    | v1.0.0-beta-5 |
+  | 2022 | goofy    | (3)         | kirkstone  | ?             |
+  |------+----------+-------------+------------+---------------|
+
 * Video Playback
   @@html:<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/p-gSvehb-As#OniroWelcome" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>@@
 
