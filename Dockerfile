@@ -4,7 +4,7 @@
 # SPDX-License-URL: https://spdx.org/licenses/CC-BY-4.0.html
 # SPDX-FileCopyrightText: Huawei Inc.
 
-FROM ubuntu:20.04
+FROM debian:11
 LABEL maintainer="Philippe Coval (https://purl.org/rzr)"
 ENV project oniro-presentations
 
