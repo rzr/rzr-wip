@@ -1,0 +1,175 @@
+#+TITLE: Oniro's Cooperation
+#+AUTHOR: P.Coval
+#+EMAIL: philippe.coval@huawei.com andrei.gherzan@huawei.com
+#+OPTIONS: num:nil, timestamp:nil, toc:nil, tags:nil, tag:nil, ^:nil
+#+REVEAL_DEFAULT_FRAG_STYLE: appear
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: https://oniroproject.org/images/shapes.png
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_OPACITY: 0.15
+#+REVEAL_EXTRA_CSS: ../oniro-template/local.css
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Presentations slides">
+#+REVEAL_HLEVEL: 3
+#+REVEAL_INIT_OPTIONS: transition:'zoom'
+#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/gh/hakimel/reveal.js@4.1.0/
+#+REVEAL_SLIDE_FOOTER:
+#+REVEAL_SLIDE_HEADER:
+#+REVEAL_THEME: night
+#+REVEAL_PLUGINS: (highlight)
+#+MACRO: tags-on-export (eval (format "%s" (cond ((org-export-derived-backend-p org-export-current-backend 'md) "#+OPTIONS: tags:1") ((org-export-derived-backend-p org-export-current-backend 'reveal) "#+OPTIONS: tags:nil num:nil reveal_single_file:t"))))
+
+#+begin_export html
+<!--
+SPDX-License-Identifier: CC-BY-4.0
+SPDX-License-URL: https://spdx.org/licenses/CC-BY-4.0.html
+SPDX-FileCopyrightText: Huawei Inc.
+-->
+#+end_export
+
+#+ATTR_HTML: :width 10% :align right
+https://docs.oniroproject.org/en/latest/_static/ONIRO.svg
+
+#+BEGIN_NOTES
+
+Context:
+https://gitlab.eclipse.org/groups/eclipse-wg/oniro-wg/proposal-incubation-stage-oniro/-/wikis/Events/Virtual-IoT#
+
+Sources:
+https://booting.oniroproject.org/rzr/oniro-presentations/
+
+Preview:
+https://www.volatile.rzr.cloudns.org/docs/oniro-blueprints/
+
+# META #
+
+# TODO ##
+
+#+END_NOTES
+
+* Presentation                                                  :toscalix:1m:
+  #+ATTR_REVEAL: :frag (fade-in)
+  - We're a part of:
+    - [[https://projects.eclipse.org/projects/oniro/][Eclipse Oniro]] project
+    - [[https://www.ostc-eu.org/][Huawei OpenSource Techology Center]]
+  - Philippe Coval
+    - Senior Technical Marketing
+  -  Sebastian Serewa
+    - TODO
+* What's Oniro Project?                                         :toscalix:2m:
+  #+ATTR_REVEAL: :frag (fade-in)
+  - An open source distributed operating system
+    - Targeting IoT devices
+  - Defragment development for embedded sys:
+    - Avoid technology silos
+    - Unified tooling, common policies
+
+* Who is hosting Oniro?                                         :toscalix:1m:
+  :PROPERTIES:
+  :reveal_background: https://www.eclipse.org/org/artwork/images/eclipse_foundation_logo_wo.png
+  :reveal_background_opacity: 0.07
+  :END:
+   #+ATTR_REVEAL: :frag (fade-in)
+  - An [[https://projects.eclipse.org/projects/oniro][Eclipse Foundation]] top level project
+    - supported by an EF working group
+  - Designed to be [[https://gitee.com/openharmony][OpenHarmony]] compatible
+    - project hosted @ [[https://www.openatom.org/][OpenAtom]] Foundation
+
+* What's Oniro Platform?                                        :toscalix:2m:
+  #+ATTR_REVEAL: :frag (fade-in)
+  - Standard software base
+    - for making products and solutions
+  - Based on mature open source projects
+    - Reuse what's best on the "OSS market"
+    - Fill gaps
+  - Multiple kernels (CPU, MCU) supported
+    - Linux, Zephyr, LiteOS...
+  - Common build tooling ([[http://www.openembedded.org/wiki][bitbake]] OE/Yocto)
+  - Point of convergence
+    - For product-based projects
+   
+* Oniro provides                                                :sserewa::1m:
+  #+ATTR_REVEAL: :frag (fade-in)
+  - Defines and implements best practices:
+    #+ATTR_REVEAL: :frag (fade-in)
+    - Open development community
+      - CI/CD, Testing
+    - Legal:
+      - IP Compliance
+    - Security, Privacy
+    - OTA Updates...
+  - Blueprint projects:
+    - MVPs for feature validation, showcase, commumity support
+
+* Oniro's requirements
+  #+ATTR_REVEAL: :frag (fade-in)
+  - Requirements based projects
+    - Identify features
+    - Propose use cases
+    - Specify bluerprints MVP
+   
+* Oniro as a base                                                 :pcoval:1m:
+  - Oniro is Multiple flavour Operating System
+    - (Linux or RTOS)
+  - Built from source using yocto/OE's bitbake
+  - Can "virtually" support any FLOSS software
+    
+* Software integration                                            :pcoval:1m:
+  - Packaging is done using bitbake recipes
+    - Upstreamed into OE/Yocto or community layers
+    - http://layers.openembedded.org
+  - Because not only oniro is using bitbake
+    - bitbake support can be tracked downstream 
+
+* LVGL Example
+  - cross kernel UI Framework: LVGL
+  - Propose bitbake support upstream:
+    - https://github.com/lvgl/lvgl/issues/2534
+  - Upstreamed into OE's layer:
+    https://github.com/openembedded/meta-openembedded/tree/master/meta-oe/recipes-graphics/lvgl
+  - Layer is integrated back to oniro:
+    - https://booting.oniroproject.org/distro/oniro/-/blob/kirkstone/manifests/default.xml#L43
+    #+BEGIN_SRC xml
+    <project name="meta-openembedded" remote="openembedded" revision="7889158dcd187546fc5e99fd81d0779cad3e8d17" path="meta-openembedded" />
+    #+END_SRC
+  - Learn more:    
+    - https://fosdem.org/2022/schedule/event/lvgl/          
+      
+* Summary
+  - Oniro is the Eclipse Foundation OS
+    - made of existing FLOSS components
+    - such as OE/Yocto's bitbake build system
+    - ready to host more packages
+
+* Resources and more:                                                 :QA:5m:
+  - https://OniroProject.org/
+    - https://docs.OniroProject.org/
+    - https://docs.oniroproject.org/projects/blueprints/
+    - https://booting.OniroProject.org/
+  - https://eclipse.org/
+  - https://yoctoproject.org/
+  - https://zephyrproject.org/
+
+* + Extras ?                                                          :extra:
+  - [[https://www.youtube.com/playlist?list=PLy7t4z5SYNaQBDReZmeHAknEchYmu0LLa][Oniro playlist]]
+  - [[https://forum.ostc-eu.org/t/openharmony-at-fosdem-21/180][Fosdem 2021]]
+  - [[https://www.eclipsecon.org/2021][EclipseCon 2021]]
+  - [[https://www.sfscon.it/programs/2021/#][SFSCON2021]]
+
+* Video Playback                                                      :extra:
+  @@html:<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/p-gSvehb-As?rel=0#OniroWelcome" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>@@
+
+  #+BEGIN_NOTES
+  TODO: update once published at:
+  https://fosdem.org/2022/archives/
+  #+END_NOTES
+
+#  LocalWords:  defragment reproducibility
+
+
+* 25 https://gitlab.eclipse.org/groups/eclipse-wg/oniro-wg/proposal-incubation-stage-oniro/-/wikis/Events/Virtual-IoT#
+
+
+https://riscv.org/wp-content/uploads/2021/03/zephyr-color.svg
+https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg
+
+
+https://calendar.google.com/calendar/u/0/r?cid=dTVqNjhzNzEwcmVxbXIzN3ZkNzhqZGxibTRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
