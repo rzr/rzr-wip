@@ -73,7 +73,7 @@ Everyone is welcome now to join the oniro project at https://oniroproject.org/
   | Year | Nickname | OpenHarmony | Yocto base | Zephyr base   |
   |------+----------+-------------+------------+---------------|
   | 2021 | jasmine  | (2)         | dunfell    | v1.0.0-beta-5 |
-  | 2022 | goofy    | (3)         | kirkstone  | ?             |
+  | 2022 | goofy    | (3)         | kirkstone  | 3.1 (TBC)     |
   |------+----------+-------------+------------+---------------|
 
 * Video Playback
