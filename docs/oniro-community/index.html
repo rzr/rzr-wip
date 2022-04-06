@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(root)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2 class="author">root</h2><p class="date">Created: 2022-04-06 Wed 08:26</p>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-org8a0ad3e">1. What's Oniro Project?&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2m">2m</span></span></a></li>
+<li><a href="#/slide-orgbeb102e">2. Interact with Oniro:</a></li>
+<li><a href="#/slide-org6440bf1">3. OpenSource Community</a></li>
+<li><a href="#/slide-org6c729fe">4. A Flexible platform</a></li>
+<li><a href="#/slide-org2fc6df8">5. Oniro relies on many other components:</a></li>
+<li><a href="#/slide-org17e059c">6. Example</a></li>
+<li><a href="#/slide-orgc018a1d">7. Ideas</a></li>
+<li><a href="#/slide-org0209bd5">8. OSS communities</a></li>
+<li><a href="#/slide-orga4f923c">9. Oniro is a platform</a></li>
+<li><a href="#/slide-org3f3cb1a">10. Build platform</a></li>
+<li><a href="#/slide-orge6a2451">11. Create blueprint</a></li>
+</ul>
+</div>
+</div>
+</section>
+<aside class="notes">
+<p>
+
+</p>
+
+<p>
+## Abstract
+</p>
+
+<p>
+Welcome to Oniro community for building your IoT devices
+</p>
+
+<p>
+Join Oniro's community to contribute to the Operating System for ALL connected devices and learn how to build your own!
+</p>
+
+<p>
+First, The Eclipse Oniro project will be introduced
+we'll learn its differentiation and how it fit along famous existing
+projects like Linux, OpenEmbedded/Yocto or Zephyr
+but also OpenHarmony from OpenAtom.
+</p>
+
+<p>
+Then some uses cases will be demonstrated, we'll learn more why
+Oniro Blueprint approach is going beyond proof of concepts
+and making a solid base to build IoT products.
+</p>
+
+<p>
+Finally, some way will be proposed,
+Because project is open it's possible to join the working group to decide the future of Oniro.
+It's also possible to evaluate Oniro and even contribute to it or make/port applications to it.
+Some recipes for elaborating prototypes will be shared to inspire makers among you.
+</p>
+
+</aside>
+
+<p>
+<a href="https://conference-hall.io/speaker/talk/FPzMhZZHKypoXEPVKCbH">https://conference-hall.io/speaker/talk/FPzMhZZHKypoXEPVKCbH</a>
+</p>
+
+<p>
+Oniro: Rejoindre la communauté Oniro &#x2026;
+&#x2026; pour participer au système d'exploitation OpenSource pour TOUT les objets connectés
+</p>
+
+<p>
+Premièrement, le projet Eclipse Oniro y sera présenté
+on y apprendra sa différentiation et
+son positionnement parmi d'autres projets open source
+tel que Linux, OpenEmbedded/Yocto ou Zephyr
+mais aussi OpenHarmony d'OpenAtom.
+</p>
+
+<p>
+Ensuite quelques cas d'usages seront démontrés,
+et nous verrons en quoi l'approche des Blueprints Oniro
+est une base solide pour aller au delà de la preuve de concept
+et devenir une base pour créer des produits IoT.
+</p>
+
+<p>
+Finalement, différentes approches pour participer a Oniro vous seront proposées.
+Du fait de son ouverture il est déja possible de rejoindre le working group pour décider du futur d'Oniro.
+Il est également possible d'évaluer la plateforme et même d'y contribuer
+ou bien de créer une simple application.
+Également quelques recettes pour l'élaboration de prototypes seront partagées
+pour inspirer les "markers" parmi vous.
+</p>
+
+
+<p>
+Oniro cooperation flows
+</p>
+
+<p>
+Oniro cooperation models
+</p>
+
+<p>
+First Eclipse Oniro will be presented,
+then we'll learn relationship to other opensource projects
+like Linux Open/Embedded or Zephyr
+but also OpenHardmony from OpenAtom Foundation.
+Some use cases will be demonstrated,
+and tips to join the Oniro project will be also shared.
+</p>
+
+<section>
+<section id="slide-org8a0ad3e">
+<h2 id="org8a0ad3e"><span class="section-number-2">1</span> What's Oniro Project?&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2m">2m</span></span></h2>
+<ul>
+<li class="fragment fade-in">An open source distributed operating system
+<ul>
+<li>Targeting IoT devices</li>
+
+</ul></li>
+<li class="fragment fade-in">Defragment development for embedded sys:
+<ul>
+<li>Avoid technology silos</li>
+<li>Unified tooling, common policies</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgbeb102e">
+<h2 id="orgbeb102e"><span class="section-number-2">2</span> Interact with Oniro:</h2>
+<ul>
+<li>Download and build sources, feedback welcome
+<ul>
+<li><a href="https://oniroproject.org/">https://oniroproject.org/</a> (Resources)</li>
+
+</ul></li>
+<li>Online: Gitlab, chat, lists, social media etc</li>
+<li>Offline:
+<ul>
+<li>Join future events <a href="https://foss-north.se/2022/">FOSSNorth</a>, <a href="https://app.swapcard.com/widget/event/iotswc-2022/exhibitor/RXhoaWJpdG9yXzc0NDkxNw==">IotWc22</a>&#x2026;)</li>
+<li>Watch previous ones: (<a href="https://stands.fosdem.org/stands/oniro_project/">FOSDEM22</a>, EclipseCon, SFSCON21, LinaroConnect&#x2026;)</li>
+
+</ul></li>
+<li>Join us:
+<ul>
+<li><a href="https://oniroproject.org/join-us/">https://oniroproject.org/join-us/</a></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org6440bf1">
+<h2 id="org6440bf1"><span class="section-number-2">3</span> OpenSource Community</h2>
+<ul>
+<li>Opensource values
+<ul>
+<li>Coooperation: build on (and with) others
+<ul>
+<li>Upstream first policy, Avoid NIH</li>
+
+</ul></li>
+<li>Transparency:
+<ul>
+<li>Problems well identified are half resolved</li>
+
+</ul></li>
+<li>Community:
+<ul>
+<li>Opensource without community is just software</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org6c729fe">
+<h2 id="org6c729fe"><span class="section-number-2">4</span> A Flexible platform</h2>
+<ul>
+<li>Oniro is layered architecture
+<ul>
+<li>relies on OpenEmbedded bitbake build system</li>
+<li>bitbake is kernel agnostic (Linux, Zephyr, FreeRTOS&#x2026;)</li>
+
+</ul></li>
+<li>Libraries, services and applications are grouped by layers
+<ul>
+<li>Oniro is providing those layers:
+<ul>
+<li>meta-oniro-core: Main OS and supported services</li>
+<li>meta-oniro-staging: Patches of other layers</li>
+<li>meta-oniro-blueprints: Examples of devices made on onrio</li>
+<li>docs, ip-policy</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org2fc6df8">
+<h2 id="org2fc6df8"><span class="section-number-2">5</span> Oniro relies on many other components:</h2>
+<ul>
+<li><a href="http://layers.openembedded.org/">http://layers.openembedded.org/</a></li>
+<li>openembedded-core. meta-openembedded</li>
+<li>meta-clang, meta-security, meta-rauc, meta-linaro&#x2026;</li>
+<li>Board support packages:
+<ul>
+<li>meta-raspeberrypi, meta-seco-{intel,imx}, meta-st-*&#x2026;</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org17e059c">
+<h2 id="org17e059c"><span class="section-number-2">6</span> Example</h2>
+<ul>
+<li>meta-flutter is a layer to provide flutter engine
+<ul>
+<li>Automotive Grade Linux uses it (Yocto based)</li>
+
+</ul></li>
+<li>Layer can be downloaded added to oniro core using:
+bitbake-layer add-layer &#x2026;/meta-flutter</li>
+<li>Customisation add applications done in extra layer:
+<a href="https://booting.oniroproject.org/rzr/meta-oniro-blueprint-flutter">https://booting.oniroproject.org/rzr/meta-oniro-blueprint-flutter</a></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc018a1d">
+<h2 id="orgc018a1d"><span class="section-number-2">7</span> Ideas</h2>
+<ul>
+<li>cooperation with related oss communities</li>
+<li>modular design</li>
+<li>well defined interafaces</li>
+<li>use of standards</li>
+<li>fair play (welcome, documentation, processes)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org0209bd5">
+<h2 id="org0209bd5"><span class="section-number-2">8</span> OSS communities</h2>
+<ul>
+<li>Software without community is just software</li>
+<li>Channels</li>
+<li>Events:
+<ul>
+<li>OSS events:  FOSDEM, Fosth North and more</li>
+<li>Markets events: IotWc22</li>
+
+</ul></li>
+<li><p>
+Community feedback matters
+</p>
+<ul>
+<li>Part of roadmap:</li>
+
+</ul>
+<p>
+<a href="https://gitlab.eclipse.org/groups/eclipse-wg/oniro-wg/roadmap-oniro-wg/wishlist-roadmap/-/wikis/home">https://gitlab.eclipse.org/groups/eclipse-wg/oniro-wg/roadmap-oniro-wg/wishlist-roadmap/-/wikis/home</a>
+</p></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga4f923c">
+<h2 id="orga4f923c"><span class="section-number-2">9</span> Oniro is a platform</h2>
+<ul>
+<li>Core develop vs App</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org3f3cb1a">
+<h2 id="org3f3cb1a"><span class="section-number-2">10</span> Build platform</h2>
+<p>
+TEMPLATECONF=../oniro/flavours/linux . ./oe-core/oe-init-build-env
+time bitbake oniro-image-base
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orge6a2451">
+<h2 id="orge6a2451"><span class="section-number-2">11</span> Create blueprint</h2>
+<ul>
+<li>export blueprint=TODO</li>
+<li>bitbake-layers create-layer meta-oniro-blueprint-$blueprint</li>
+<li><a href="https://pypi.org/project/reuse/">https://pypi.org/project/reuse/</a></li>
+<li>pip3 install &#x2013;user reuse</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>
