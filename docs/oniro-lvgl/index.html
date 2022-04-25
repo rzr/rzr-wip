@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <title>LVGL on Oniro</title>
-<meta name="author" content="(Philippe.Coval + Gábor.Kiss-Vámosi #FOSDEM2022)"/>
+<meta name="author" content="Philippe.Coval + Gábor.Kiss-Vámosi #FOSDEM2022"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -28,7 +30,8 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">LVGL on Oniro</h1><h2 class="author">Philippe.Coval + Gábor.Kiss-Vámosi #FOSDEM2022</h2>
+<section id="sec-title-slide"><h1 class="title">LVGL on Oniro</h1><p class="subtitle"></p>
+<h2 class="author">Philippe.Coval + Gábor.Kiss-Vámosi #FOSDEM2022</h2>
 </section>
 <!--
 SPDX-License-Identifier: CC-BY-4.0
@@ -107,9 +110,9 @@ Demos of vending machine (running on Linux+Wayland) or keypad (on Zephyr MCU OS)
 </aside>
 
 <section>
-<section id="slide-org986d3c9" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orgcdf3bf2" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="org986d3c9">Agenda</h2>
+<h2 id="orgcdf3bf2">Agenda</h2>
 <ul>
 <li>Introduction</li>
 <li>LVGL</li>
@@ -122,9 +125,9 @@ Demos of vending machine (running on Linux+Wayland) or keypad (on Zephyr MCU OS)
 </section>
 </section>
 <section>
-<section id="slide-orgc0c7074" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orgbf3f700" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgc0c7074">Introduction</h2>
+<h2 id="orgbf3f700">Introduction</h2>
 <ul>
 <li class="fragment fade-in">Philippe Coval is involved into Oniro Project
 <ul>
@@ -145,9 +148,9 @@ Demos of vending machine (running on Linux+Wayland) or keypad (on Zephyr MCU OS)
 </section>
 </section>
 <section>
-<section id="slide-org57cdbf1" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
+<section id="slide-org5cd7ab8" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org57cdbf1">What is LVGL?</h2>
+<h2 id="org5cd7ab8">What is LVGL?</h2>
 <ul>
 <li class="fragment fade-in">Light and Versatile Graphics Library
 <ul>
@@ -197,9 +200,9 @@ About a year ago we have created LVGL LLC in order to provide a solid background
 </section>
 </section>
 <section>
-<section id="slide-org2877c07" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
+<section id="slide-orgbab9c59" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org2877c07">LVGL UI Demo</h2>
+<h2 id="orgbab9c59">LVGL UI Demo</h2>
 <p>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FYhmi6MamRs#LVGLMusic" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
@@ -215,9 +218,9 @@ TODO: use stable links
 </section>
 </section>
 <section>
-<section id="slide-org75fa342" data-background="https://camo.githubusercontent.com/b9f59645f486900c0f75fb74b2af9fefbda3575ead45de9194d60e8176c02f40/68747470733a2f2f6c76676c2e696f2f6173736574732f696d616765732f6c76676c5f776964676574735f64656d6f2e676966#image.gif" data-background-opacity="0.07">
+<section id="slide-orgf1c5a6f" data-background="https://camo.githubusercontent.com/b9f59645f486900c0f75fb74b2af9fefbda3575ead45de9194d60e8176c02f40/68747470733a2f2f6c76676c2e696f2f6173736574732f696d616765732f6c76676c5f776964676574735f64656d6f2e676966#image.gif" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org75fa342">LVGL Features</h2>
+<h2 id="orgf1c5a6f">LVGL Features</h2>
 <ul>
 <li class="fragment fade-in">Many built in <a href="https://docs.lvgl.io/master/widgets/">Widgets</a>:
 <ul>
@@ -282,9 +285,9 @@ LVGL has binding to Micropython. Micropython is a Python subset, basically it gi
 </section>
 </section>
 <section>
-<section id="slide-org055815a" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
+<section id="slide-org7c63f26" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org055815a">Scalable and Portable</h2>
+<h2 id="org7c63f26">Scalable and Portable</h2>
 <ul>
 <li class="fragment fade-in">Written in C for maximal compatibility
 <ul>
@@ -333,9 +336,9 @@ Just to mention interesting use cases, someone used LVGL to create a UI in virtu
 </section>
 </section>
 <section>
-<section id="slide-orgb09e25f" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
+<section id="slide-org20b4631" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="orgb09e25f">Porting LVGL</h2>
+<h2 id="org20b4631">Porting LVGL</h2>
 <ul>
 <li class="fragment fade-in">Only 2 functions are needed to port LVGL:
 <ol>
@@ -383,9 +386,9 @@ Or even the whole software rendering engine can be replaced. We have built in su
 </section>
 </section>
 <section>
-<section id="slide-org76a02ed" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
+<section id="slide-orgbaae624" data-background="https://lvgl.io/assets/images/img_2.webp#image.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org76a02ed">Design with SquareLine ($)</h2>
+<h2 id="orgbaae624">Design with SquareLine ($)</h2>
 <p>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/UrSkzbuuGaw#Edgeline" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
@@ -419,17 +422,17 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-org736f906" data-background="https://oniroproject.org/images/share.png" data-background-opacity="1">
+<section id="slide-orgd7bd7ba" data-background="https://oniroproject.org/images/share.png" data-background-opacity="1">
 <div class="slide-header"></div>
-<h2 id="org736f906"></h2>
+<h2 id="orgd7bd7ba"></h2>
 
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org6e62097" data-background="https://www.eclipse.org/org/artwork/images/eclipse_foundation_logo_wo.png" data-background-opacity="0.07">
+<section id="slide-org7dc7cf6" data-background="https://www.eclipse.org/org/artwork/images/eclipse_foundation_logo_wo.png" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org6e62097">The Oniro Project</h2>
+<h2 id="org7dc7cf6">The Oniro Project</h2>
 <ul>
 <li class="fragment fade-in">An independent <a href="https://projects.eclipse.org/projects/oniro">Eclipse Foundation project</a></li>
 <li class="fragment fade-in">An open source distributed operating system
@@ -451,9 +454,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orga0470c2" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orga6ab2d6" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orga0470c2">UI Requirements</h2>
+<h2 id="orga6ab2d6">UI Requirements</h2>
 <ul>
 <li class="fragment fade-in">Oniro can support FLOSS toolkits:
 <ul>
@@ -481,9 +484,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-org3f05a49" data-background="https://cdn.fosstodon.org/media_attachments/files/107/269/294/404/602/312/original/67b165042b685e6b.jpeg" data-background-opacity="0.07">
+<section id="slide-orgada6a39" data-background="https://cdn.fosstodon.org/media_attachments/files/107/269/294/404/602/312/original/67b165042b685e6b.jpeg" data-background-opacity="0.07">
 <div class="slide-header"></div>
-<h2 id="org3f05a49">Oniro Linux flavour</h2>
+<h2 id="orgada6a39">Oniro Linux flavour</h2>
 <ul>
 <li class="fragment fade-in">Reference "<a href="https://booting.oniroproject.org/distro/components/vending-machine-ui-application/">Vending machine</a>" <a href="https://fosdem.org/2022/schedule/event/oniro_blueprints/">blueprint</a></li>
 <li class="fragment fade-in">Using lvgl v8 with wayland driver
@@ -510,9 +513,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orgc0cb3c9" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orgce6b085" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgc0cb3c9">Oniro's Vending machine</h2>
+<h2 id="orgce6b085">Oniro's Vending machine</h2>
 <p>
 <iframe width="560" height="315" sandbox="allow-same-origin allow-scripts allow-popups" title="oniroproject-vending-machine-osxp2021" src="https://diode.zone/videos/embed/a939af1f-5e1e-40ab-a006-8fc17e8c37da" frameborder="0" allowfullscreen></iframe>
 </p>
@@ -527,18 +530,18 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orge1377a9" data-background="https://files.mastodon.social/media_attachments/files/107/603/519/184/782/270/original/5ad14fc987d4bcd9.jpeg" data-background-opacity="0.9">
+<section id="slide-org0823ad1" data-background="https://files.mastodon.social/media_attachments/files/107/603/519/184/782/270/original/5ad14fc987d4bcd9.jpeg" data-background-opacity="0.9">
 <div class="slide-header"></div>
-<h2 id="orge1377a9">Oniro's Keypad</h2>
+<h2 id="org0823ad1">Oniro's Keypad</h2>
 
 
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgb6719f5" data-background="https://files.mastodon.social/media_attachments/files/107/603/519/184/782/270/original/5ad14fc987d4bcd9.jpeg" data-background-opacity="0.15">
+<section id="slide-org94fb530" data-background="https://files.mastodon.social/media_attachments/files/107/603/519/184/782/270/original/5ad14fc987d4bcd9.jpeg" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgb6719f5">Oniro Zephyr flavour</h2>
+<h2 id="org94fb530">Oniro Zephyr flavour</h2>
 <ul>
 <li class="fragment fade-in">Oniro <a href="https://fosdem.org/2022/schedule/event/oniro_blueprints/">blueprint</a>: "<a href="https://booting.oniroproject.org/distro/blueprints/keypad">Keypad</a> device"
 <ul>
@@ -578,9 +581,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orgd9923b7" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-org93ce2f4" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgd9923b7">Summary</h2>
+<h2 id="org93ce2f4">Summary</h2>
 <ul>
 <li class="fragment fade-in">LVGL is portable library for MCU</li>
 <li class="fragment fade-in">Also CPU using drivers: Wayland, SDL</li>
@@ -602,9 +605,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-org802dffb" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-org25178c3" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="org802dffb">Resources and more:</h2>
+<h2 id="org25178c3">Resources and more:</h2>
 <ul>
 <li><a href="https://lvgl.io/">https://lvgl.io/</a>
 <ul>
@@ -627,9 +630,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orgc6164a8" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orgfea9d0d" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgc6164a8">Extras ?</h2>
+<h2 id="orgfea9d0d">Extras ?</h2>
 <ul>
 <li><a href="https://forum.ostc-eu.org/t/openharmony-at-fosdem-21/180">Fosdem 2021</a></li>
 <li><a href="https://www.eclipsecon.org/2021">EclipseCon 2021</a></li>
@@ -641,9 +644,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orga0372a2" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-orgc3fd0bd" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orga0372a2">Howto: Vending machine</h2>
+<h2 id="orgc3fd0bd">Howto: Vending machine</h2>
 <p>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/HQ9hD63ypvI#VendingMachine" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
@@ -652,9 +655,9 @@ So that's it in short about LVGL.  Phil will continue from here with the introdu
 </section>
 </section>
 <section>
-<section id="slide-orgc326ca5" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
+<section id="slide-org6ac35f1" data-background="https://oniroproject.org/images/shapes.png" data-background-opacity="0.15">
 <div class="slide-header"></div>
-<h2 id="orgc326ca5">Video Playback</h2>
+<h2 id="org6ac35f1">Video Playback</h2>
 <p>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/p-gSvehb-As#OniroWelcome" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
